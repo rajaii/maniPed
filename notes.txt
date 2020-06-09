@@ -1,0 +1,3 @@
+//will have to use something to validate these fields ie yup from frontend to make sure pw is certain legnth and has symbols lower upper and 1 num
+
+need to implement roles middleware and sub users routes etc for providers and for users, and admin
