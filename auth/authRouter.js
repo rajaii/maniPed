@@ -26,6 +26,29 @@ router.post('/register', async (req, res) => {
 
 });
 
+router.post('/register/admin', async (req, res) => {
+  //will need to have a admin object that has everyones name etc in a separate table
+  //will need to check if req.body.firstName and req.body.lastName is in the admin table before allowing this reg
+  //may also need to make another route with super-special mgmt permissions using the same flow
+  
+  let user = req.body;
+  const hash = bcrypt.hashSync(user.password, 10); // 2 ^ n
+  user.password = hash;
+
+  try {
+    const saved = await Users.add(user);
+    if (saved) {
+      res.status(201).json(saved);
+    } else {
+      res.status(409).json({err: 'profile tied to the entered username and/or email already exists.'});
+    }
+
+  } catch(err) {
+    res.status(500).json(error);
+  }
+
+});
+
 router.post('/login', (req, res) => {
   let { username, password } = req.body;
 
@@ -48,12 +71,45 @@ router.post('/login', (req, res) => {
     });
 });
 
+router.post('/login/admin', (req, res) => {
+  let { username, password } = req.body;
+
+  Users.findBy({ username })
+    .first()
+    .then(user => {
+      if (user && bcrypt.compareSync(password, user.password)) {
+        const token = generateAdminToken(user)
+
+        res.status(200).json({
+          message: `Welcome ${user.username}!`,
+          jwt_token: token
+        });
+      } else {
+        res.status(401).json({ message: 'Invalid Credentials' });
+      }
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+});
+
 function generateToken(user) {
   const payload = {
     subject: user.id,
     username: user.username,
-    roles: ['ADMIN', 'CUSTOMERUSER', 'PROVIDERUSER']
-    //other data
+  };
+  const secret = process.env.JWTSECRET || "manipedisthafuta1234356346+_:>{>:";
+  const options = {
+    expiresIn: '30 min'
+  };
+  return jwt.sign(payload, secret, options)
+}
+
+function generateAdminToken(user) {
+  const payload = {
+    subject: user.id,
+    username: user.username,
+    roles: ['ADMIN'] 
   };
   const secret = process.env.JWTSECRET || "manipedisthafuta1234356346+_:>{>:";
   const options = {
