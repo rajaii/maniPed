@@ -1,3 +1,21 @@
+make user routes for put, delete, post  and start thinking of other routes and implementing
+
+
+
+
+
+
+
+
+
+
+//later will have to further implement the role management to secure it.  As of now checkroles set on users, and will run from login, but
+//will need to implement a reg route for admin that is only linked to the login/admin route see notes on authrouter.js 30-32 and research further when app is done
+
 //will have to use something to validate these fields ie yup from frontend to make sure pw is certain legnth and has symbols lower upper and 1 num
 
-need to implement roles middleware and sub users routes etc for providers and for users, and admin
+
+//when making admin interface do not enter password field for updating profiles, api does not allow that too
+
+
+PROJECT = custy app react and native with api, provider app react and native with api, admin app use custy and provider api with 1 react app
