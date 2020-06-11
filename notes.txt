@@ -1,21 +1,36 @@
-make user routes for put, delete, post  and start thinking of other routes and implementing
+PROJECT = custy app react and native, provider app react and native, admin app with 1 react app all on same api, manigod react app with manigod reg and pre-admin access, and admin interface
+
+plan db logic of how to link these and =>
+
+=> after V make routes for provider login/reg ie '/user/register' vs '/provider/register' ... admin/register finish and manigod/register and login
 
 
 
+DB setup migrations:
 
 
+Later todo:
+Password: enter change password forgot username/password functionality
 
+Migrations:
+add images (user and provider) and gallery (provider) endpoints in db
 
-
-
-
-//later will have to further implement the role management to secure it.  As of now checkroles set on users, and will run from login, but
+Role MGMT:
+//later will have to further implement the role managemen.  As of now checkroles set on users for admin, and will run from login, but
 //will need to implement a reg route for admin that is only linked to the login/admin route see notes on authrouter.js 30-32 and research further when app is done
-
-//will have to use something to validate these fields ie yup from frontend to make sure pw is certain legnth and has symbols lower upper and 1 num
-
-
 //when making admin interface do not enter password field for updating profiles, api does not allow that too
+//will make manigod permissions too to add to the pre-admin table described in the /auth/register/admin route
+
+Validations needed from FE via yup:
+Signup:(see migrations)
+//will have to use something to validate these fields ie yup from frontend to make sure pw is certain legnth and has symbols lower upper and 1 num and zipcode
+
+PAYMENT:
+//find a framework to handle this, but may need to delete that later
+
+DRY:
+in migrations maybe make a function for some of the redundant schemas if they stay the same ie admin and manigods before final implementation.  leave as is now for debugging,
+refactoring, and comments
 
 
-PROJECT = custy app react and native with api, provider app react and native with api, admin app use custy and provider api with 1 react app
+

@@ -19,7 +19,7 @@ server.use(express.json());
 
 server.use('/api/auth', authRouter);
 
-//protect so only admin can access this route
+//double protected authorization of roles so only admin can access this route
 server.use('/api/users', /*restricted, checkRoles('ADMIN'),*/ usersRouter);
 
 

@@ -10,12 +10,14 @@ router.get('/', (req, res) => {
     })
     .catch(err => res.send(err));
 });
-
+ 
+//so admin can help users update info if they are assisting users that are having trouble.  For security purposes only the users can update PW, 
+//and thus pw is omitted from this functionality.
 router.put('/:id', (req, res) => {
   const { id } = req.params;
-  const {firstName, lastName, username, email } = req.body;
+  const {firstName, lastName, username, email, zipcode } = req.body;
 
-  if (!firstName || !lastName || !username || !email) {
+  if (!firstName || !lastName || !username || !email || !zipcode) {
     res.status(400).json({message: 'please provide a field to update the user you are assisting in the database...'});
   } else {
   Users.update(id, req.body)
