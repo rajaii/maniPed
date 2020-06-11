@@ -2,10 +2,10 @@ const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 
-
+//make routes for login and register providers and users
 const Users = require('../users/usersModel.js');
 
-// for endpoints beginning with /api/auth
+// register new 
 router.post('/register', async (req, res) => {
   
   let user = req.body;
@@ -27,9 +27,13 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/register/admin', async (req, res) => {
-  //will need to have a admin object that has everyones name etc in a separate table
+  //will need to have a admin table that has every admins name in a separate table
   //will need to check if req.body.firstName and req.body.lastName is in the admin table before allowing this reg
   //may also need to make another route with super-special mgmt permissions using the same flow
+
+  //set up a table pre-admin, just first name and last name, and only me and joseph (for now) can add to it (another '/login/manigods' route for higher ups, check role manigod). 
+  //the list will be pre-populated after hire by higher mgmt with manigod access, and then they can successfully go through this V route to reg
+  //run a db command to see if the name of the potential admin is on the pre-admin list.  if so, allow them to register an admin profile 
   
   let user = req.body;
   const hash = bcrypt.hashSync(user.password, 10); // 2 ^ n
