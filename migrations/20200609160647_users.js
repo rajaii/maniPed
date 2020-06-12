@@ -146,7 +146,6 @@ exports.up = function(knex) {
 })
 };
 
-//Reviews,  ratings, location, availability, pricing, gallery to display work
 
 exports.down = function(knex) {
   return knex.schema.dropTableIfExists('manigods')
@@ -154,7 +153,8 @@ exports.down = function(knex) {
   .dropTableIfExists('pre-admin')
   .dropTableIfExists('provider-ratings')
   .dropTableIfExists('user_ratings')
-  .dropTableIfExists('providrs')
+  //wont drop because of dependencies in here
+  .dropTableIfExists('providers')
   .dropTableIfExists('users');
 };
 
