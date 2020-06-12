@@ -5,7 +5,7 @@ const cors = require('cors');
 const helmet = require('helmet')
 
 const authRouter = require('../auth/authRouter.js');
-const usersRouter = require('../users/usersRouter.js');
+const usersRouter = require('./endpoints/users/usersRouter.js');
 const restricted = require('../auth/restrictedMiddleware.js');
 const checkRoles = require('../auth/checkRoleMiddleware.js');
 
