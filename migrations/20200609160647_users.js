@@ -81,6 +81,61 @@ exports.up = function(knex) {
       .onDelete('CASCADE');
 })
 
+.createTable('provider_ratings', tbl => {
+  tbl.increments('id');
+  tbl.decimal('rating', [3], [2]);
+  tbl.integer('provider_id')
+    .unsigned()
+    .notNullable()
+    .references('id')
+    .inTable('providers')
+    .onUpdate('CASCADE')
+    .onDelete('CASCADE');
+  tbl.integer('user_id')
+    .unsigned()
+    .notNullable()
+    .references('id')
+    .inTable('users')
+    .onUpdate('CASCADE')
+    .onDelete('CASCADE');
+})
+//can be prepopulated radio inputs for services that send strings up to post from front-end or drop down, or
+// even limited text manually entered by the provider or a combo ie. deal with the exact post mech in FE
+.createTable('services', tbl => {
+  tbl.increments('id');
+  tbl.string('type_of_service')
+    .notNullable()
+  tbl.integer('user_id')
+    .unsigned()
+    .notNullable()
+    .references('id')
+    .inTable('users')
+    .onUpdate('CASCADE')
+    .onDelete('CASCADE');
+  tbl.integer('provider_id')
+    .unsigned()
+    .notNullable()
+    .references('id')
+    .inTable('providers')
+    .onUpdate('CASCADE')
+    .onDelete('CASCADE');
+  tbl.integer('user_rating_id')
+    .unsigned()
+    .notNullable()
+    .references('id')
+    .inTable('user_ratings')
+    .onUpdate('CASCADE')
+    .onDelete('CASCADE');
+  tbl.integer('provider_rating_id')
+    .unsigned()
+    .notNullable()
+    .references('id')
+    .inTable('provider_ratings')
+    .onUpdate('CASCADE')
+    .onDelete('CASCADE');   
+  tbl.timestamp('created_at').defaultTo(knex.fn.now());  
+})
+
 
 .createTable('pre_admin', tbl => {
   tbl.increments('id');
@@ -89,7 +144,8 @@ exports.up = function(knex) {
   tbl.string('last_name')
     .notNullable();
   tbl.string('role')
-    .notNullable();
+    .notNullable()
+  tbl.timestamp('created_at').defaultTo(knex.fn.now());   
 })
 .createTable('admin', tbl => {
   tbl.increments('id');
@@ -109,7 +165,8 @@ exports.up = function(knex) {
     .notNullable();
   //validate from FE make in a way that they can either enter format 00000-0000 or 00000
   tbl.string('zipcode', [10])
-    .notNullable();
+    .notNullable()
+  tbl.timestamp('created_at').defaultTo(knex.fn.now());   
 })
 .createTable('manigods', tbl => {
   //for upper management, maniGods can add to pre-admin so employees can register on the admin application.  This will be pre populated via 
@@ -134,7 +191,8 @@ exports.up = function(knex) {
     .notNullable();
   //validate from FE make in a way that they can either enter format 00000-0000 or 00000
   tbl.string('zipcode', [10])
-    .notNullable();
+    .notNullable()
+  tbl.timestamp('created_at').defaultTo(knex.fn.now());   
 })
 };
 
@@ -143,6 +201,7 @@ exports.down = function(knex) {
   return knex.schema.dropTableIfExists('manigods')
   .dropTableIfExists('admin')
   .dropTableIfExists('pre_admin')
+  .dropTableIfExists('services')
   .dropTableIfExists('provider_ratings')
   .dropTableIfExists('user_ratings')
   .dropTableIfExists('providers')
