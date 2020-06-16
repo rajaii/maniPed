@@ -2,7 +2,7 @@ PROJECT = custy app react and native, provider app react and native, admin app w
 
 plan db logic of how to link these and =>
 
-=> see line 157 in migrations; work on services table with provider and user ids, type of service, date of service timecreated maybe maybe manage ratings in there
+=> 
 
 
 DB setup migrations:
