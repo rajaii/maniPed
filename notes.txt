@@ -3,6 +3,13 @@ PROJECT = custy app react and native, provider app react and native, admin app w
 plan db logic of how to link these and =>
 
 => 
+populate these: adminhelpers.js, adminrouters.js, manigodshelpers.js, manigodsrouters.js, preadminhelpers.js, preadminrouters.js
+
+do after ^:
+import into authrouter and use proper db calls in different login/reg routes
+
+if name in pre-admin and role then proceed with reg of admin 
+
 
 
 DB setup migrations:
