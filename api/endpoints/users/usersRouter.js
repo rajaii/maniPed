@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const Users = require('./usersModel.js');
+const Users = require('./usersHelpers.js');
 
 
 router.get('/', (req, res) => {
@@ -15,9 +15,9 @@ router.get('/', (req, res) => {
 //and thus pw is omitted from this functionality.
 router.put('/:id', (req, res) => {
   const { id } = req.params;
-  const {firstName, lastName, username, email, zipcode } = req.body;
+  const {first_name, last_name, username, email, zipcode } = req.body;
 
-  if (!firstName || !lastName || !username || !email || !zipcode) {
+  if (!first_name || !last_name || !username || !email || !zipcode) {
     res.status(400).json({message: 'please provide a field to update the user you are assisting in the database...'});
   } else {
   Users.update(id, req.body)

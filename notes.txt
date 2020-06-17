@@ -3,12 +3,19 @@ PROJECT = custy app react and native, provider app react and native, admin app w
 plan db logic of how to link these and =>
 
 => 
-populate these: adminhelpers.js, adminrouters.js, manigodshelpers.js, manigodsrouters.js, preadminhelpers.js, preadminrouters.js
+
+populate these:  preadminhelpers.js, preadminrouters.js FOR NOW ONLY WITH THE STUFF NEEDED FOR AUTH
 
 do after ^:
+add checkroles middleware on specific routes in the routers files that need protection not on whole route so no conflict when users try to access
+their own profiles (some done)
+
 import into authrouter and use proper db calls in different login/reg routes
 
 if name in pre-admin and role then proceed with reg of admin 
+
+test all individually in postman:
+log in to register to and update to providers, admin, manigods. And post to preadmin with manigod token.  Test also all role checking.
 
 
 

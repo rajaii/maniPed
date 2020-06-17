@@ -3,7 +3,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 
 //make routes for login and register providers and users
-const Users = require('../api/endpoints/users/usersModel.js');
+const Users = require('../api/endpoints/users/usersHelpers.js');
+const Providers = require('../api/endpoints/providers/providersHelpers.js');
 
 
 // register new customer users
@@ -38,6 +39,51 @@ router.post('/login', (req, res) => {
 
         res.status(200).json({
           message: `Welcome ${user.username}!`,
+          jwt_token: token
+        });
+      } else {
+        res.status(401).json({ message: 'Invalid Credentials' });
+      }
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+});
+
+//register providers
+router.post('/register/providers', async (req, res) => {
+  
+  let provider = req.body;
+  const hash = bcrypt.hashSync(provider.password, 10); // 2 ^ n
+  provider.password = hash;
+
+  try {
+    const saved = await Providers.add(provider);
+    if (saved) {
+      res.status(201).json(saved);
+    } else {
+      res.status(409).json({err: 'profile tied to the entered username and/or email already exists.'});
+    }
+
+  } catch(err) {
+    res.status(500).json(error);
+  }
+
+});
+
+
+//providers login
+router.post('/login/providers', (req, res) => {
+  let { username, password } = req.body;
+
+  Providers.findBy({ username })
+    .first()
+    .then(provider => {
+      if (provider && bcrypt.compareSync(password, provider.password)) {
+        const token = generateToken(provider)
+
+        res.status(200).json({
+          message: `Welcome ${provider.username}!`,
           jwt_token: token
         });
       } else {
