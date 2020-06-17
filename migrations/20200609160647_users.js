@@ -153,6 +153,9 @@ exports.up = function(knex) {
     .notNullable();
   tbl.string('last_name')
     .notNullable();
+  tbl.string('username')
+    .notNullable()
+    .unique();
   //V will be programmatically added to the profile via the pre-admin table after the check to see if they are there ie req.body.role = 'CEO';
   tbl.string('role')
     .notNullable();
@@ -179,6 +182,9 @@ exports.up = function(knex) {
     .notNullable();
   tbl.string('last_name')
     .notNullable();
+  tbl.string('username')
+    .notNullable()
+    .unique();
   //V will be programmatically added to the profile via the p;
   tbl.string('role')
     .notNullable();
