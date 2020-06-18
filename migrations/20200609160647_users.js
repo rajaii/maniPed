@@ -1,5 +1,6 @@
 
 exports.up = function(knex) {
+
   //'users' will contain customer users information for their account and ratings
   return knex.schema.createTable('users', tbl => {
     //!!!!!!!!!!!!!!!!!!!still have to figure out how to add images for the provider  ratings
@@ -24,6 +25,7 @@ exports.up = function(knex) {
         .notNullable()
       tbl.timestamp('created_at').defaultTo(knex.fn.now());   
   })
+
   //information on cosmetic provider users for their profiles and accounts
   .createTable('providers', tbl => {
      //!!!!!!!!!!!!!!!!!!!still have to figure out how to add images for the provider ratings
@@ -59,9 +61,9 @@ exports.up = function(knex) {
       tbl.timestamp('created_at').defaultTo(knex.fn.now());   
       
   })
+
   //ratings will be many to many each custy will have rating from provider vice versa so own table for this but 2 ways rating user ratings ie ratings the users were 
   //given by customers in this table and vice versa in next table
-
   .createTable('user_ratings', tbl => {
     tbl.increments('id');
     tbl.decimal('rating', [3], [2]);
@@ -99,6 +101,7 @@ exports.up = function(knex) {
     .onUpdate('CASCADE')
     .onDelete('CASCADE');
 })
+
 //can be prepopulated radio inputs for services that send strings up to post from front-end or drop down, or
 // even limited text manually entered by the provider or a combo ie. deal with the exact post mech in FE
 .createTable('services', tbl => {
@@ -147,6 +150,7 @@ exports.up = function(knex) {
     .notNullable()
   tbl.timestamp('created_at').defaultTo(knex.fn.now());   
 })
+
 .createTable('admin', tbl => {
   tbl.increments('id');
   tbl.string('first_name')
@@ -171,6 +175,7 @@ exports.up = function(knex) {
     .notNullable()
   tbl.timestamp('created_at').defaultTo(knex.fn.now());   
 })
+
 .createTable('manigods', tbl => {
   //for upper management, maniGods can add to pre-admin so employees can register on the admin application.  This will be pre populated via 
   //seeds on setup, and only manigods can add to this or admin. A separate FE app (login, then register for manigods or pre-admin posts or access 
@@ -200,6 +205,7 @@ exports.up = function(knex) {
     .notNullable()
   tbl.timestamp('created_at').defaultTo(knex.fn.now());   
 })
+
 };
 
 

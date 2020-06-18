@@ -15,9 +15,8 @@ router.get('/', (req, res) => {
 //and thus pw is omitted from this functionality.
 router.put('/:id', (req, res) => {
   const { id } = req.params;
-  const {first_name, last_name, username, email, zipcode } = req.body;
 
-  if (!first_name || !last_name || !username || !email || !zipcode) {
+  if (Object.keys(req.body).length < 1) {
     res.status(400).json({message: 'please provide a field to update the user you are assisting in the database...'});
   } else {
   Users.update(id, req.body)
