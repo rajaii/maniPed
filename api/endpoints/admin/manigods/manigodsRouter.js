@@ -15,9 +15,8 @@ router.get('/', checkRoles('MANIGOD'), (req, res) => {
 
 router.put('/:id', checkRoles('MANIGOD'), (req, res) => {
   const { id } = req.params;
-  const {first_name, last_name, username, role, email, zipcode } = req.body;
 
-  if (!first_name || !last_name || username|| !role || !email || !zipcode ) {
+  if (Object.keys(req.body).length < 1) {
     res.status(400).json({message: 'please provide a field to update the manigod profile...'});
   } else {
   Manigods.update(id, req.body)

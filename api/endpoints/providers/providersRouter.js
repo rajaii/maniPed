@@ -15,11 +15,8 @@ router.get('/', (req, res) => {
 //and thus pw is omitted from this functionality.
 router.put('/:id', (req, res) => {
   const { id } = req.params;
-  const {first_name, last_name, username, email, zipcode, header, availability, services_and_pricing_1,
-        services_and_pricing_2, services_and_pricing_3, services_and_pricing_4, services_and_pricing_5 } = req.body;
 
-  if (!first_name || !last_name || !username || !email || !zipcode || !header || !availability || !services_and_pricing_1 ||
-    !services_and_pricing_2 || !services_and_pricing_3 || !services_and_pricing_4 || !services_and_pricing_5 ) {
+  if (Object.keys(req.body).length < 1) {
     res.status(400).json({message: 'please provide a field to update the provider you are assisting in the database...'});
   } else {
   Providers.update(id, req.body)

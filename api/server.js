@@ -9,6 +9,7 @@ const usersRouter = require('./endpoints/users/usersRouter.js');
 const providersRouter = require('../api/endpoints/providers/providersRouter.js');
 const adminRouter = require('./endpoints/admin/adminRouter.js');
 const manigodsRouter = require('./endpoints/admin/manigods/manigodsRouter.js');
+const preAdminRouter = require('./endpoints/admin/pre_admin/preAdminRouter.js');
 const restricted = require('../auth/restrictedMiddleware.js');
 
 
@@ -28,6 +29,7 @@ server.use('/api/users', /*restricted,*/ usersRouter);
 server.use('/api/providers', /*restricted,*/ providersRouter);
 server.use('/api/admin', /*restricted,*/ adminRouter);
 server.use('/api/manigods', /*restricted,*/ manigodsRouter);
+server.use('/api/preadmin', /*restricted,*/ preAdminRouter);
 
 
 
