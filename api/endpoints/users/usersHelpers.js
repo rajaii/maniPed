@@ -16,14 +16,10 @@ function findBy(filter) {
   return db('users').where(filter);
 }
 
-async function add(user) {
+function add(user) {
   
-  db('users').insert(user)
-  .then(ids => {
-    return findById(ids[0])
-  });
-  
-  
+ return db('users').insert(user, ['id', 'first_name', 'last_name', 'username', 'email', 'password', 'zipcode'])
+   
 }
 
 function update(id, info) {

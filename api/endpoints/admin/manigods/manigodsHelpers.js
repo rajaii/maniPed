@@ -16,15 +16,11 @@ function findBy(filter) {
   return db('manigods').where(filter);
 }
 
-async function add(manigod) {
+function add(manigod) {
   
-  db('manigods').insert(manigod)
-  .then(ids => {
-    return findById(ids[0])
-  });
-  
-  
-}
+  return db('manigods').insert(manigod, ['id', 'first_name', 'last_name', 'username', 'role', 'email', 'password', 'zipcode'])
+    
+ }
 
 function update(id, info) {
   return db('manigods').where('id', Number(id))

@@ -1,52 +1,89 @@
-PROJECT = custy app react and native, provider app react and native, admin app with 1 react app all on same api, manigod react app with manigod reg and pre-admin access, and admin interface
+PROJECT = custy app react and native, provider app react and native, admin app with 1 react app all on same api, manigod react app with 
+manigod reg and pre-admin access, and admin interface
 
-plan db logic of how to link these and =>
+===============================================================================================================================================
+ 
 
-=> think through the preadmin and what is needed for the router and helpers and update
-
-populate these:  go through logic of what needs to be done in preadmin routes and populate the helpers and router accordingly
-
-do after ^:
-add checkroles middleware on specific routes in the routers files that need protection not on whole route so no conflict when users try to access
-their own profiles (some done)
-
-import into authrouter and use proper db calls in different login/reg routes
-
-if name in pre-admin and role then proceed with reg of admin 
-
-test all individually in postman:
-log in to register to and update to providers, admin, manigods. And post to preadmin with manigod token.  Test also all role checking.
+CURRENT =>=>=>: 
 
 
+    __check all routes w/o middleware DONE: manigods (hash pw on put added too), preadmin, PICK UP HERE
 
-DB setup migrations:
+    __password hashing needed on all put routes see manigods router.  This will be used in the update password functionality later. 
+            *import brypt at top see manigodsRouter line 2
+            *add pw hashing see manigodsrouter line 20-22
 
+    __add checkroles middleware on specific routes in the routers files that need protection not on whole route so no conflict when users try to
+    access their own profiles (some done)
 
+    __check all routes with middlewaress
 
-Later todo:
-Password: enter change password forgot username/password functionality
-
-Migrations:
-add images (user and provider) and gallery (provider) endpoints in db
-
-Role MGMT:
-//later will have to further implement the role management.  As of now checkroles set on users for admin, and will run from login, but
-//will need to implement a reg route for admin that is only linked to the login/admin route see notes on authrouter.js 30-32 and research further when app is done
-//when making admin interface do not enter password field for updating profiles, api does not allow that too
-//will make manigod permissions too with /login/monigod and /register/manigod permissions with a separate interface that logs in and reg and then leads to admin app;
-//manigods can add to the pre-admin table described in the /auth/register/admin route if an changes to manigods db email and text 
-//notifications sent to all higher ups
-
-Validations needed from FE via yup:
-Signup:(see migrations)
-//will have to use something to validate these fields ie yup from frontend to make sure pw is certain legnth and has symbols lower upper and 1 num and zipcode
-
-PAYMENT:
-//find a framework to handle this, but may need to delete that later
-
-DRY:
-in migrations maybe make a function for some of the redundant schemas if they stay the same ie admin and manigods before final implementation.  leave as is now for debugging,
-refactoring, and comments
+    __move on to plan rest of routers and routes for api functionality 1 at a time!
 
 
+================================================================================================================================================
+
+TODO:
+
+
+PROGRAMMATICS (tweaks to those features that are added already):
+
+
+    API:
+
+        email/text notifications sent to all higher ups when anyone added to admin or manigods db
+
+        Password: enter change password forgot username/password functionality
+
+        Migrations:
+        add images (user and provider) and gallery (provider) endpoints in db
+
+
+
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+    FRONT-END APPS:
+
+        Validations needed from FE via yup:
+        Signup:(see migrations)
+        //will have to use something to validate these fields ie yup from frontend to make sure pw is certain legnth and has symbols lower upper and 1 num and zipcode
+
+
+        Role MGMT:
+        //Manigods UI app will be local only on manigods machines and accessed via the private repo that only I an d joseph have access too.  not deployed, 
+        //NOTE FOR FE: when making admin interface do not enter password field for updating profiles, api does not allow that too
+
+===============================================================================================================================================
+
+
+PLANNING (possible future features not added in yet):
+
+    Figure out if manigods use same interface as admin as well, or have a public manigods w special permissions that can not add to admin db and 
+    do other super private tranactions on that ie option A: 2 interfaces 1 public; 1 private, or option B: just 1 private and then separate
+     admin accounts (will for forseeable future not need the first option so can get done faster with option B)
+
+    PAYMENT:
+    //find a framework to handle this, but may need to delete that later
+
+
+VERY END before deploy production:
+
+    prettify code
+
+    DRY:
+    in migrations maybe make a function for some of the redundant schemas if they stay the same ie admin and manigods before final implementation.  leave as is now for debugging,
+    refactoring, and comments
+
+
+===============================================================================================================================================
+
+Present:
+
+custy app react and native, provider app react and native, admin app with 1 react app all on same api, manigod react app (local) with 
+manigod reg and pre-admin access, and admin interface all on same api
+
+Upper mgmt can add admin to the preadmin list when hired so then can access and help users or providers
+
+See migrations
 

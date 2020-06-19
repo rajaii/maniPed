@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const bcrypt = require('bcryptjs');
 
 const Manigods = require('./manigodsHelpers.js');
 const checkRoles = require('../../../../auth/checkRoleMiddleware.js');
@@ -16,9 +17,14 @@ router.get('/', checkRoles('MANIGOD'), (req, res) => {
 router.put('/:id', checkRoles('MANIGOD'), (req, res) => {
   const { id } = req.params;
 
+  let mani = req.body;
+  const hash = bcrypt.hashSync(mani.password, 10); 
+  mani.password = hash;
+
   if (Object.keys(req.body).length < 1) {
     res.status(400).json({message: 'please provide a field to update the manigod profile...'});
   } else {
+    
   Manigods.update(id, req.body)
     .then(manigod => {
       res.status(200).json({manigod});
