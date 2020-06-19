@@ -2,9 +2,13 @@ PROJECT = custy app react and native, provider app react and native, admin app w
 
 plan db logic of how to link these and =>
 
-=> think through the preadmin and what is needed for the router and helpers and update
-
-populate these:  go through logic of what needs to be done in preadmin routes and populate the helpers and router accordingly
+=> finish logic for admin login and preadmin check is buggy
+add: to manigods, providers, and preadmin routes  check error sending (if doesnt go through to send prof exists may need to hack later)
+function add(user) {
+  
+ return db('users').insert(user, ['id', 'first_name', 'last_name', 'username', 'email', 'password', 'zipcode'])
+   
+}
 
 do after ^:
 add checkroles middleware on specific routes in the routers files that need protection not on whole route so no conflict when users try to access

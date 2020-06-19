@@ -22,12 +22,13 @@ router.post('/register', async (req, res) => {
     const saved = await Users.add(user);
     if (saved) {
       res.status(201).json(saved);
+      //handle this part possibly by line 31, or something else later.
     } else {
       res.status(409).json({err: 'profile tied to the entered username and/or email already exists.'});
     }
 
   } catch(err) {
-    res.status(500).json(error);
+  res.status(500).json({error: err, /*message: 'profile tied to the entered username and/or email already exists.'*/});
   }
 
 });
@@ -100,7 +101,7 @@ router.post('/login/providers', (req, res) => {
 });
 
 //register admin
-router.post('/register/admin', (req, res) => {
+router.post('/register/admin', async (req, res) => {
   //will need to have a admin table that has every admins name in a separate table
   //will need to check if req.body.firstName and req.body.lastName is in the admin table before allowing this reg
   //may also need to make another route with super-special mgmt permissions using the same flow
@@ -112,41 +113,47 @@ router.post('/register/admin', (req, res) => {
   let admin = req.body;
   const hash = bcrypt.hashSync(admin.password, 10); // 2 ^ n
   admin.password = hash;
-
+  let found = false;
+//tdry other routes again to see if reg works.  see about return argument on insert and keep debugging using this and the precheck logic.  if return argument is issue will need to run it on other routes.  
   
 
-  Preadmin.find()
-  .then(preadmin => {
-    preadmin.map( async (a, i) => {
-    if (a.first_name === req.body.first_name && a.last_name === req.body.last_name && a.role === req.body.role) {
-      try {
-        const a = await Admin.add(admin);
-        if (a) {
-         return res.status(201).json(a);
-    } else {
-      return res.status(409).json({err: 'profile tied to the entered username and/or email already exists.'});
+
+  try {
+  let preadmin = await Preadmin.find();
+  if (preadmin) {
+    for (let i = 0; i < preadmin.length; i++) {
+      console.log(`preadmin.first_name: ${preadmin.first_name}, preadmin.last_name: ${preadmin.last_name}, preadmin.role: ${preadmin.role} `);
+      console.log(`reb.first_name: ${req.body.first_name}, req.last_name: ${req.body.last_name}, req.role: ${req.body.role} `);
+      if (preadmin[i].first_name === req.body.first_name && preadmin[i].last_name === req.body.last_name && preadmin[i].role === req.body.role) {
+        found = true;
+        console.log('found!')
+        break;
+      }
     }
-  } catch(err) {
+  } 
+  
+  } catch (err) {
     res.status(500).json(err);
   }
+  
+  
 
-  // "first_name": "",
-	// "last_name": "",
-	// "role": "",
-	// "username": "",
-	// "email": "",
-	// "password": "",
-	// "zipcode": ""
-        
-      } else if (i === admin.length -1 || a.first_name != req.body.first_name || a.last_name != req.body.last_name || a.role != req.body.role) {
-        res.status(401).json({message: 'admin entered does not match any employee in the employee list. talk to your supervisor...'})
+  if (found) {
+    try {
+      const saved = await Admin.add(admin);
+      console.log(saved)
+      if (saved) {
+        res.status(201).json(saved);
+      } else {
+        res.status(409).json({err: 'profile tied to the entered username and/or email already exists.'});
       }
-    })
-  })
-    .catch(err => {
-      res.status(500).json(err)
-    }) 
-
+  
+    } catch(err) {
+      res.status(500).json(err);
+    }
+  } else {
+    res.status(401).json({message: 'admin entered does not match any employee in the employee list. talk to your supervisor...'})
+  }
 
 });
 
