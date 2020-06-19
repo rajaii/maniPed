@@ -16,15 +16,11 @@ function findBy(filter) {
   return db('providers').where(filter);
 }
 
-async function add(provider) {
+function add(provider) {
   
-  db('providers').insert(provider)
-  .then(ids => {
-    return findById(ids[0])
-  });
-  
-  
-}
+  return db('providers').insert(provider, ['id', 'first_name', 'last_name', 'username', 'email', 'password', 'zipcode'])
+    
+ }
 
 function update(id, info) {
   return db('providers').where('id', Number(id))

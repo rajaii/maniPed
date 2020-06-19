@@ -16,23 +16,19 @@ function findBy(filter) {
   return db('pre_admin').where(filter);
 }
 
-async function add(preAdmin) {
+function add(preadmin) {
   
-  db('pre_admin').insert(preAdmin)
-  .then(ids => {
-    return findById(ids[0])
-  });
-  
-  
-}
+  return db('pre_admin').insert(preadmin, ['id', 'first_name', 'last_name', 'role'])
+    
+ }
 
 function update(id, info) {
     return db('pre_admin').where('id', Number(id))
     .update(info);
   }
   
-  function findById(id) {
-    return db('pre_admin')
-      .where({ id })
-      .first();
-  }
+function findById(id) {
+  return db('pre_admin')
+    .where({ id })
+    .first();
+}

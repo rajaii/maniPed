@@ -28,7 +28,7 @@ router.post('/register', async (req, res) => {
     }
 
   } catch(err) {
-  res.status(500).json({error: err, /*message: 'profile tied to the entered username and/or email already exists.'*/});
+  res.status(500).json({err/*, message: 'profile tied to the entered username and/or email already exists.'*/});
   }
 
 });
@@ -70,7 +70,7 @@ router.post('/register/providers', async (req, res) => {
       res.status(409).json({err: 'profile tied to the entered username and/or email already exists.'});
     }
 
-  } catch(err) {
+  } catch(error) {
     res.status(500).json(error);
   }
 
@@ -122,8 +122,6 @@ router.post('/register/admin', async (req, res) => {
   let preadmin = await Preadmin.find();
   if (preadmin) {
     for (let i = 0; i < preadmin.length; i++) {
-      console.log(`preadmin.first_name: ${preadmin.first_name}, preadmin.last_name: ${preadmin.last_name}, preadmin.role: ${preadmin.role} `);
-      console.log(`reb.first_name: ${req.body.first_name}, req.last_name: ${req.body.last_name}, req.role: ${req.body.role} `);
       if (preadmin[i].first_name === req.body.first_name && preadmin[i].last_name === req.body.last_name && preadmin[i].role === req.body.role) {
         found = true;
         console.log('found!')
