@@ -1,10 +1,11 @@
 const router = require('express').Router();
+const bcrypt = require('bcryptjs');
 
 const Admin = require('./adminHelpers.js');
-const checkRoles = require('../../../auth/checkRoleMiddleware.js');
+const checkRoles = require('../../../auth/checkDoubleRoleMiddleware.js');
 
 
-router.get('/', checkRoles('ADMIN' || 'MANIGOD'), (req, res) => {
+router.get('/', checkRoles('MANIGOD', 'ADMIN'), (req, res) => {
   Admin.find()
     .then(admin => {
       res.status(200).json(admin);
@@ -13,9 +14,14 @@ router.get('/', checkRoles('ADMIN' || 'MANIGOD'), (req, res) => {
 });
  
 
-router.put('/:id', checkRoles('ADMIN' || 'MANIGOD'), (req, res) => {
+router.put('/:id', checkRoles('MANIGOD', 'ADMIN'), (req, res) => {
   const { id } = req.params;
 
+  if (req.body.password) {
+  const hash = bcrypt.hashSync(req.body.password, 10); 
+  req.body.password = hash;
+  }
+  
   if (Object.keys(req.body).length < 1) {
     res.status(400).json({message: 'please provide a field to update the admin profile...'});
   } else {
@@ -24,6 +30,7 @@ router.put('/:id', checkRoles('ADMIN' || 'MANIGOD'), (req, res) => {
       res.status(200).json({admin});
     })
     .catch(err => {
+      console.log(err.message)
       res.status(500).json(err)
     });
   }

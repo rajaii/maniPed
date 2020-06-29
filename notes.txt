@@ -7,18 +7,12 @@ manigod reg and pre-admin access, and admin interface
 CURRENT =>=>=>: 
 
 
-    __check all routes w/o middleware DONE: manigods (hash pw on put added too), preadmin, PICK UP HERE
-
-    __password hashing needed on all put routes see manigods router.  This will be used in the update password functionality later. 
-            *import brypt at top see manigodsRouter line 2
-            *add pw hashing see manigodsrouter line 20-22
-
-    __add checkroles middleware on specific routes in the routers files that need protection not on whole route so no conflict when users try to
-    access their own profiles (some done)
-
-    __check all routes with middlewaress
-
     __move on to plan rest of routers and routes for api functionality 1 at a time!
+
+    __programmatics: bookings migrations helpers, routers etc
+      do get on '/:id' on routes
+
+
 
 
 ================================================================================================================================================
@@ -36,6 +30,9 @@ PROGRAMMATICS (tweaks to those features that are added already):
         Password: enter change password forgot username/password functionality
 
         Migrations:
+
+        add bookings with user, provider, date,...
+
         add images (user and provider) and gallery (provider) endpoints in db
 
 
@@ -59,6 +56,8 @@ PROGRAMMATICS (tweaks to those features that are added already):
 
 PLANNING (possible future features not added in yet):
 
+    services: mani pedi, waxing, hair, 
+
     Figure out if manigods use same interface as admin as well, or have a public manigods w special permissions that can not add to admin db and 
     do other super private tranactions on that ie option A: 2 interfaces 1 public; 1 private, or option B: just 1 private and then separate
      admin accounts (will for forseeable future not need the first option so can get done faster with option B)
@@ -68,6 +67,8 @@ PLANNING (possible future features not added in yet):
 
 
 VERY END before deploy production:
+    
+    UNCOMMENT THE CHECKROLES MIDDLEWARE CALLS ON THE ROUTES
 
     prettify code
 

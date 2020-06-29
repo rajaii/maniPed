@@ -9,7 +9,7 @@ module.exports = {
 };
 
 function find() {
-  return db('pre_admin').select('first_name', 'last_name', 'role');
+  return db('pre_admin').select('id', 'first_name', 'last_name', 'role');
 }
 
 function findBy(filter) {
