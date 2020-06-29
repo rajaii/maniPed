@@ -17,10 +17,11 @@ router.get('/', checkRoles('MANIGOD'), (req, res) => {
 router.put('/:id', checkRoles('MANIGOD'), (req, res) => {
   const { id } = req.params;
 
-  let mani = req.body;
-  const hash = bcrypt.hashSync(mani.password, 10); 
-  mani.password = hash;
-
+  if (req.body.password) {
+  const hash = bcrypt.hashSync(req.body.password, 10); 
+  req.body.password = hash;
+  }
+  
   if (Object.keys(req.body).length < 1) {
     res.status(400).json({message: 'please provide a field to update the manigod profile...'});
   } else {

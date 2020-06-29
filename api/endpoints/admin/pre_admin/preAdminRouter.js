@@ -4,7 +4,7 @@ const Preadmin = require('./preAdminHelpers.js');
 const checkRoles = require('../../../../auth/checkRoleMiddleware.js');
 
 
-router.get('/', /*checkRoles('MANIGOD'),*/ (req, res) => {
+router.get('/', checkRoles('MANIGOD'), (req, res) => {
   Preadmin.find()
     .then(preadmin => {
       res.status(200).json(preadmin);
@@ -13,7 +13,7 @@ router.get('/', /*checkRoles('MANIGOD'),*/ (req, res) => {
 });
  
 
-router.put('/:id', /*checkRoles('MANIGOD'),*/ (req, res) => {
+router.put('/:id', checkRoles('MANIGOD'), (req, res) => {
   const { id } = req.params;
     
   if (Object.keys(req.body).length < 1) {

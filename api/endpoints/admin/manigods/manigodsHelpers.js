@@ -9,7 +9,7 @@ module.exports = {
 };
 
 function find() {
-  return db('manigods').select('id', 'username', 'password');
+  return db('manigods').select('id', 'first_name', 'last_name', 'role', 'username', 'email', 'zipcode');
 }
 
 function findBy(filter) {

@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const bcrypt = require('bcryptjs');
 
 const Providers = require('./providersHelpers.js');
 
@@ -11,13 +12,17 @@ router.get('/', (req, res) => {
     .catch(err => res.send(err));
 });
  
-//so admin can help providers update info if they are assisting users that are having trouble.  For security purposes only the providers can update PW, 
-//and thus pw is omitted from this functionality.
+
 router.put('/:id', (req, res) => {
   const { id } = req.params;
 
+  if (req.body.password) {
+    const hash = bcrypt.hashSync(req.body.password, 10); 
+    req.body.password = hash;
+    }
+
   if (Object.keys(req.body).length < 1) {
-    res.status(400).json({message: 'please provide a field to update the provider you are assisting in the database...'});
+    res.status(400).json({message: 'please provide a field to update the provider...'});
   } else {
   Providers.update(id, req.body)
     .then(providers => {
