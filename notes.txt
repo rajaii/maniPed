@@ -9,20 +9,27 @@ CURRENT =>=>=>:
 
     __move on to plan rest of routers and routes for api functionality 1 at a time!
 
-        6: Future Bookings: migrations, helpers, router, routes, 
-            A: migrations: date of booking (time created) provider_id, user_id, type of service and pricing, date set for booking, 
-            B:helpers: 
+        1: Future Bookings: router, routes,  
+            c: router, pos delete
 
-        5: services: add a booking id for services (to be entered when service completed)
+        2: services: add a booking id for services (to be entered when service completed)
         get, get id, and get userid and get providerid, put, post, delete
-
-        1: users: get to /id, add activated boolean in migrations with checkdoubleroles middlware
-
-        2: providers: get to /id, add activated boolean in migrations with checkdoubleroles middleware on 
 
         3: user_ratings: get, get id and/userid, post, put (for specific rating), delete (for specific rating)
 
         4: provider_ratings: get, get id and /providerid, post, put (for specific rating), delete (for specific rating)
+
+        VVVV EASY helpers migrations and routers done just finish with following:
+        5: users: get to /id, add activated boolean in migrations with checkdoubleroles middlware
+
+        6: providers: get to /id, add activated boolean in migrations with checkdoubleroles middleware on 
+
+        
+
+        __after ^ rollback migrations migrate latest, May need to also dropdb/createdb to start fresh and test:
+        TESTS:
+        bookingsHelpers, bookingsRouter (pay close attention to the getby userid and getby provider id routes and helpers); 
+
 
         
 
@@ -44,6 +51,7 @@ PROGRAMMATICS (tweaks to those features that are added already):
 
 
     API:
+        
 
         email/text notifications sent to all higher ups when anyone added to admin or manigods db
 
@@ -85,6 +93,17 @@ PLANNING (possible future features not added in yet):
     PAYMENT:
     //find a framework to handle this, but may need to delete that later
 
+INTEGRATION:
+
+    RATINGS:
+    may need to tweak the nullability of the ratings and rating ids later when we see the flow of how services are entered from front end when done 
+    
+    ADMIN:
+    may need to pull timestamps (created_at etc) in get calls and format that so admin can see when the profiles created etc.
+
+    BOOKINGS AND SERVICES
+    when making bookings (post see bookingsRouter line 56-57) userId will come from the users data, and provider_id will come from a screen where you click on the provider to book
+    confirmations sent to provider upon user booking, when they click to confirm, the put will be called to change the tbl.boolean comfrimed to 1
 
 VERY END before deploy production:
     
@@ -99,12 +118,5 @@ VERY END before deploy production:
 
 ===============================================================================================================================================
 
-Present:
 
-custy app react and native, provider app react and native, admin app with 1 react app all on same api, manigod react app (local) with 
-manigod reg and pre-admin access, and admin interface all on same api
-
-Upper mgmt can add admin to the preadmin list when hired so then can access and help users or providers
-
-See migrations
 

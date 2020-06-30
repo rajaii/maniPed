@@ -29,7 +29,7 @@ router.put('/:id', checkRoles('MANIGOD'), (req, res) => {
   }
 });
 
-router.post('/', /*checkRoles('MANIGOD'),*/ (req, res) => {
+router.post('/', checkRoles('MANIGOD'), (req, res) => {
     const {first_name, last_name, role } = req.body;
 
     if (!first_name || !last_name || !role ) {

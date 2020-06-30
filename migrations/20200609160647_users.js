@@ -146,7 +146,7 @@ exports.up = function(knex) {
     .notNullable();
   tbl.string('services_and_pricing')
     .notNullable();
-    tbl.integer('provider_id')
+  tbl.integer('provider_id')
     .unsigned()
     .notNullable()
     .references('id')
@@ -160,6 +160,8 @@ exports.up = function(knex) {
     .inTable('users')
     .onUpdate('CASCADE')
     .onDelete('CASCADE');
+  tbl.boolean('confirmed')
+    .defaultTo(0);
   tbl.timestamp('booked_at').defaultTo(knex.fn.now());  
 })
 
