@@ -32,7 +32,7 @@ function update(id, info) {
 
 function findById(id) {
   return db('future_bookings')
-    .where({ })
+    .where({id})
     .first();
 }
 

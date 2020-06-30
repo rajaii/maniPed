@@ -11,28 +11,43 @@ router.get('/', (req, res) => {
     .catch(err => res.send(err));
 });
 
-router.get('/user/:user_id', (req, res) => {
-    const { user_id } = req.params;
+router.get('/:id', validateBookingId, (req, res) => {
+    res.status(200).json(req.booking);
+})
 
-    Bookings.findByUserId(user_id)
-    .then(users_bookings => {
-        res.status(200).json(users_bookings);
-    })
-    .catch(err => {
-        res.status(500).json(err);
-    })
+router.get('/user/:user_id', async (req, res) => {
+    
+    try {
+        const { user_id } = req.params;
+    
+        let user_bookings = await Bookings.findByUserId(user_id)
+        if(user_bookings) {
+            res.status(200).json(user_bookings)
+            
+        } else {
+            res.status(404).json({message: 'invalid user id'});
+        }
+    } catch(error) {
+        res.status(500).json(error);
+    }
+
 });
 
 router.get('/provider/:provider_id', (req, res) => {
-    const { provider_id } = req.params;
+  
+    try {
+        const { provider_id } = req.params;
+    
+        let provider_bookings = await Bookings.findByProviderId(provider_id)
+        if(provider_bookings) {
+            res.status(200).json(provider_bookings)
+        } else {
+            res.status(404).json({message: 'invalid provider id'});
+        }
+    } catch(error) {
+        res.status(500).json(error);
+    }
 
-    Bookings.findByProviderId(provider_id)
-    .then(providers_bookings => {
-        res.status(200).json(providers_bookings);
-    })
-    .catch(err => {
-        res.status(500).json(err);
-    })
 });
  
 
@@ -69,7 +84,7 @@ router.post('/', (req, res) => {
     } 
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', validateBookingId, (req, res) => {
     const { id } = req.params;
 
     Bookings.remove(id)
@@ -79,7 +94,26 @@ router.delete('/:id', (req, res) => {
     .catch(err => {
         res.status(500).json(err);
     });
+
+    
 });
+
+async function validateBookingId(req, res, next) {
+    try {
+    const { id } = req.params;
+
+    let booking = await Bookings.findById(id);
+    if(booking) {
+        req.booking = booking;
+        next();
+    } else {
+        res.status(404).json({message: 'invalid booking id'});
+    }
+} catch(error) {
+    res.status(500).json(error);
+}
+};
+
 
 
 module.exports = router;
