@@ -51,7 +51,7 @@ router.get('/provider/:provider_id', (req, res) => {
 });
  
 
-router.put('/:id', (req, res) => {
+router.put('/:id', validateBookingId, (req, res) => {
   const { id } = req.params;
     
   if (Object.keys(req.body).length < 1) {

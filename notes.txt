@@ -9,10 +9,9 @@ CURRENT =>=>=>:
 
     __move on to plan rest of routers and routes for api functionality 1 at a time!
 
-        1: Future Bookings: router, routes,  
-            c: router, pos delete
-
-        2: services: add a booking id for services (to be entered when service completed)
+        
+        2: services: 
+        router:
         get, get id, and get userid and get providerid, put, post, delete
 
         3: user_ratings: get, get id and/userid, post, put (for specific rating), delete (for specific rating)
@@ -28,7 +27,8 @@ CURRENT =>=>=>:
 
         __after ^ rollback migrations migrate latest, May need to also dropdb/createdb to start fresh and test:
         TESTS:
-        bookingsHelpers, bookingsRouter (pay close attention to the getby userid and getby provider id routes and helpers); 
+        bookingsHelpers, bookingsRouter (pay close attention to the getby userid and getby provider id routes and helpers),
+
 
 
         

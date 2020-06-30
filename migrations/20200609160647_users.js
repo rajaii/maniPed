@@ -107,6 +107,13 @@ exports.up = function(knex) {
   tbl.increments('id');
   tbl.string('type_of_service')
     .notNullable()
+  tbl.integer('booking_id')
+    .unsigned()
+    .notNullable()
+    .references('id')
+    .inTable('future_bookings')
+    .onUpdate('CASCADE')
+    .onDelete('CASCADE');
   tbl.integer('user_id')
     .unsigned()
     .notNullable()
@@ -161,6 +168,8 @@ exports.up = function(knex) {
     .onUpdate('CASCADE')
     .onDelete('CASCADE');
   tbl.boolean('confirmed')
+    .defaultTo(0);
+  tbl.boolean('completed')
     .defaultTo(0);
   tbl.timestamp('booked_at').defaultTo(knex.fn.now());  
 })
@@ -239,6 +248,7 @@ exports.down = function(knex) {
   return knex.schema.dropTableIfExists('manigods')
   .dropTableIfExists('admin')
   .dropTableIfExists('pre_admin')
+  //may need to tweak order here if won't drop, future_bookings last added
   .dropTableIfExists('future_bookings')
   .dropTableIfExists('completed_service')
   .dropTableIfExists('provider_ratings')
