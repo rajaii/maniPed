@@ -103,7 +103,7 @@ exports.up = function(knex) {
 
 //can be prepopulated radio inputs for services that send strings up to post from front-end or drop down, or
 // even limited text manually entered by the provider or a combo ie. deal with the exact post mech in FE
-.createTable('services', tbl => {
+.createTable('completed_services', tbl => {
   tbl.increments('id');
   tbl.string('type_of_service')
     .notNullable()
@@ -136,6 +136,31 @@ exports.up = function(knex) {
     .onUpdate('CASCADE')
     .onDelete('CASCADE');   
   tbl.timestamp('created_at').defaultTo(knex.fn.now());  
+})
+
+.createTable('future_bookings', tbl =>{
+  tbl.increments('id');
+  tbl.date('booking_date')
+    .notNullable();
+  tbl.time('booking_time')
+    .notNullable();
+  tbl.string('services_and_pricing')
+    .notNullable();
+    tbl.integer('provider_id')
+    .unsigned()
+    .notNullable()
+    .references('id')
+    .inTable('providers')
+    .onUpdate('CASCADE')
+    .onDelete('CASCADE');
+  tbl.integer('user_id')
+    .unsigned()
+    .notNullable()
+    .references('id')
+    .inTable('users')
+    .onUpdate('CASCADE')
+    .onDelete('CASCADE');
+  tbl.timestamp('booked_at').defaultTo(knex.fn.now());  
 })
 
 
@@ -212,7 +237,8 @@ exports.down = function(knex) {
   return knex.schema.dropTableIfExists('manigods')
   .dropTableIfExists('admin')
   .dropTableIfExists('pre_admin')
-  .dropTableIfExists('services')
+  .dropTableIfExists('future_bookings')
+  .dropTableIfExists('completed_service')
   .dropTableIfExists('provider_ratings')
   .dropTableIfExists('user_ratings')
   .dropTableIfExists('providers')

@@ -9,8 +9,28 @@ CURRENT =>=>=>:
 
     __move on to plan rest of routers and routes for api functionality 1 at a time!
 
-    __programmatics: bookings migrations helpers, routers etc
-      do get on '/:id' on routes
+        6: Future Bookings: migrations, helpers, router, routes, 
+            A: migrations: date of booking (time created) provider_id, user_id, type of service and pricing, date set for booking, 
+            B:helpers: 
+
+        5: services: add a booking id for services (to be entered when service completed)
+        get, get id, and get userid and get providerid, put, post, delete
+
+        1: users: get to /id, add activated boolean in migrations with checkdoubleroles middlware
+
+        2: providers: get to /id, add activated boolean in migrations with checkdoubleroles middleware on 
+
+        3: user_ratings: get, get id and/userid, post, put (for specific rating), delete (for specific rating)
+
+        4: provider_ratings: get, get id and /providerid, post, put (for specific rating), delete (for specific rating)
+
+        
+
+        
+
+
+
+    
 
 
 
