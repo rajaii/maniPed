@@ -18,7 +18,7 @@ function findBy(filter) {
 
 function add(user) {
   
- return db('users').insert(user, ['id', 'first_name', 'last_name', 'username', 'email', 'password', 'zipcode'])
+ return db('users').insert(user, ['id', 'first_name', 'last_name', 'username', 'email', 'zipcode'])
    
 }
 
@@ -30,5 +30,6 @@ function update(id, info) {
 function findById(id) {
   return db('users')
     .where({ id })
+    .select('id', 'first_name', 'last_name', 'username', 'email', 'zipcode')
     .first();
 }
