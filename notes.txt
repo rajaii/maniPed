@@ -9,10 +9,7 @@ CURRENT =>=>=>:
 
     __move on to plan rest of routers and routes for api functionality 1 at a time!
 
-        
-        2: services: 
-        router:
-        get, get id, and get userid and get providerid, put, post, delete
+    
 
         3: user_ratings: get, get id and/userid, post, put (for specific rating), delete (for specific rating)
 
@@ -97,7 +94,8 @@ API to FE INTEGRATION:
 
     RATINGS:
     may need to tweak the nullability of the ratings and rating ids later when we see the flow of how services are entered from front end when done 
-    
+    see line 70-72 user_ratingsRouter.js: the ids will come from where and the flow of the rating process to the user to rate the provider
+
     ADMIN:
     may need to pull timestamps (created_at etc) in get calls and format that so admin can see when the profiles created etc.
  

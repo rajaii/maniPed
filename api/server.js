@@ -12,6 +12,8 @@ const manigodsRouter = require('./endpoints/admin/manigods/manigodsRouter.js');
 const preAdminRouter = require('./endpoints/admin/pre_admin/preAdminRouter.js');
 const bookingsRouter = require('./endpoints/bookings_and_services/future_bookings/bookingsRouter.js');
 const servicesRouter = require('./endpoints/bookings_and_services/completed_services/servicesRouter.js');
+const user_ratingsRouter = require('./endpoints/ratings/user_ratings/user_ratingsRouter.js');
+const provider_ratingsRouter = require('./endpoints/ratings/provider_ratings/provider_ratingsRouter.js');
 const restricted = require('../auth/restrictedMiddleware.js');
 
 
@@ -34,6 +36,8 @@ server.use('/api/manigods', restricted, manigodsRouter);
 server.use('/api/preadmin', restricted, preAdminRouter);
 server.use('/api/future_bookings', /*restricted,*/ bookingsRouter);
 server.use('/api/services', /*restricted,*/ servicesRouter);
+server.use('/api/user_ratings', /*restricted,*/ user_ratingsRouter);
+server.use('/api/provider_ratings', /*restricted,*/ provider_ratingsRouter);
 
 
 
