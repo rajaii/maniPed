@@ -6,16 +6,15 @@ manigod reg and pre-admin access, and admin interface
 
 CURRENT =>=>=>: 
 
-        __make sure pw's are not given back after reg of admin, users, providers, manigods
-
-        __ make seeds to run on all tables
-
 
    
 
         TESTS:
-       (pay close attention to the getby userid and getby provider id routes and helpers), bookingsHelpers, bookingsRouter, serviceshelpers, 
-       servicesrouter, userratings helpers, userratingsRouter, providerratingsrouter, providerratings helpers, 
+       ==> userratings helpers, userratingsRouter, post working start at top and do all others  
+       
+       providerratingsrouter, providerratings helpers, TWEAK the post to match the userratingsRouter's post and check before doin other routes. see user_ratingsRouter line 81-92 done implement in others too!!!!!!!!!!!!!!!!!!!!!!
+
+       __ make seeds to run on all tables
        
         
          
@@ -92,6 +91,11 @@ API to FE INTEGRATION:
     may need to tweak the nullability of the ratings and rating ids later when we see the flow of how services are entered from front end when done 
     see line 70-72 user_ratingsRouter.js: the ids will come from where and the flow of the rating process to the user to rate the provider
 
+    no lifetime rating database column/table, will compute the rating on a get call to the users/providers ratings and take the avg and post that to the fe,
+
+    after you post the rating user_rating_id for the service needs to be updated in services by taking the id from user_ratings. (service id will be taken from a get by fe that will pull info on the service to 
+    be rated for the rating screen and thus pre populated on the follow up put that will go through with the post see line 82 of userratingsRouter.js)
+
     ADMIN:
     may need to pull timestamps (created_at etc) in get calls and format that so admin can see when the profiles created etc.
  
@@ -114,6 +118,5 @@ VERY END before deploy production:
 
 
 ===============================================================================================================================================
-
 
 

@@ -1,6 +1,10 @@
 const router = require('express').Router();
 
 const User_ratings = require('./user_ratingsHelpers.js');
+const Services = require('../../bookings_and_services/completed_services/servicesHelpers.js');
+
+
+
 
 
 router.get('/', (req, res) => {
@@ -70,14 +74,24 @@ router.post('/', (req, res) => {
     const {rating, /*all but rating will be prepopulated by app service tied to the service/booking they are rating for provider will be the one 
         who served them and userid will come from the user we send the rating screen to */ provider_id, user_id} = req.body;
 
-    if (rating || !provider_id || !user_id) {
+    if (!rating || !provider_id || !user_id) {
       res.status(400).json({message: 'please provide a rating to rate your provider...'});
     } else {
     User_ratings.add(req.body)
       .then(rating => {
-        res.status(201).json({rating});
+        
+        Services.update(2, {"user_rating_id": `${rating[0].id}`})
+        .then(s => {
+          res.status(201).json({s})
+        })
+        .catch(e => {
+          res.status(500).json(err)
+        })
+        res.status(201).json({rating})
+        
       })
       .catch(err => {
+        console.log(err.message)
         res.status(500).json(err);
       });
     } 
