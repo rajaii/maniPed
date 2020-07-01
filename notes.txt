@@ -6,25 +6,19 @@ manigod reg and pre-admin access, and admin interface
 
 CURRENT =>=>=>: 
 
+        __make sure pw's are not given back after reg of admin, users, providers, manigods
 
-    __move on to plan rest of routers and routes for api functionality 1 at a time!
+        __ make seeds to run on all tables
 
-    
 
-        3: user_ratings: get, get id and/userid, post, put (for specific rating), delete (for specific rating)
+   
 
-        4: provider_ratings: get, get id and /providerid, post, put (for specific rating), delete (for specific rating)
-
-        VVVV EASY helpers migrations and routers done just finish with following:
-        5: users: get to /id, add activated boolean in migrations with checkdoubleroles middlware
-
-        6: providers: get to /id, add activated boolean in migrations with checkdoubleroles middleware on 
-
-        
-
-        __after ^ rollback migrations migrate latest, May need to also dropdb/createdb to start fresh and test:
         TESTS:
-        bookingsHelpers, bookingsRouter (pay close attention to the getby userid and getby provider id routes and helpers),
+       (pay close attention to the getby userid and getby provider id routes and helpers), bookingsHelpers, bookingsRouter, serviceshelpers, 
+       servicesrouter, userratings helpers, userratingsRouter, providerratingsrouter, providerratings helpers, 
+       
+        
+         
 
 
 
@@ -91,6 +85,8 @@ PLANNING (possible future features not added in yet):
     //find a framework to handle this, but may need to delete that later
 
 API to FE INTEGRATION:
+    Validation:
+    use yup to make sure emails and zips are validated before requests go through for reg and anything else taht needs emeail or zip.
 
     RATINGS:
     may need to tweak the nullability of the ratings and rating ids later when we see the flow of how services are entered from front end when done 

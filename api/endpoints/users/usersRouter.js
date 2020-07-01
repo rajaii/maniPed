@@ -12,6 +12,9 @@ router.get('/', (req, res) => {
     .catch(err => res.send(err));
 });
  
+router.get('/:id', validateUserId, (req, res) => {
+  res.status(200).json(req.custy);
+})
 
 router.put('/:id', (req, res) => {
   const { id } = req.params;
@@ -34,6 +37,21 @@ router.put('/:id', (req, res) => {
   }
 });
 
+async function validateUserId(req, res, next) {
+  try {
+  const { id } = req.params;
+
+  let u = await Users.findById(id);
+  if(u) {
+      req.custy = u;
+      next();
+  } else {
+      res.status(404).json({message: 'invalid user id'});
+  }
+} catch(error) {
+  res.status(500).json(error);
+}
+};
 
 
 module.exports = router;

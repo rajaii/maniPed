@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 router.get('/:id', validateRatingId, (req, res) => {
     res.status(200).json(req.ratings);
 })
-
+//see what user has rated providers
 router.get('/user/:user_id', async (req, res) => {
     
     try {
@@ -31,8 +31,8 @@ router.get('/user/:user_id', async (req, res) => {
     }
 
 });
-
-router.get('/provider/:provider_id', (req, res) => {
+//see what the particular provider has been rated by users
+router.get('/provider/:provider_id', async (req, res) => {
   
     try {
         const { provider_id } = req.params;
@@ -68,9 +68,9 @@ router.put('/:id', validateRatingId, (req, res) => {
 
 router.post('/', (req, res) => {
     const {rating, /*all but rating will be prepopulated by app service tied to the service/booking they are rating for provider will be the one 
-        who served them and userid will come from the user we send the rating screen to */ provider_id, user_id, service_id } = req.body;
+        who served them and userid will come from the user we send the rating screen to */ provider_id, user_id} = req.body;
 
-    if (rating || service_id || !provider_id || !user_id) {
+    if (rating || !provider_id || !user_id) {
       res.status(400).json({message: 'please provide a rating to rate your provider...'});
     } else {
     User_ratings.add(req.body)

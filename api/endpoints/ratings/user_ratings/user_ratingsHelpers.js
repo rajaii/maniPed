@@ -13,7 +13,7 @@ module.exports = {
 };
 
 function find() {
-  return db('user_ratings').select('id', 'rating', 'user_id', 'provider_id', 'service_id');
+  return db('user_ratings').select('id', 'rating', 'user_id', 'provider_id');
 }
 
 function findBy(filter) {
@@ -22,7 +22,7 @@ function findBy(filter) {
 
 function add(rating) {
   
- return db('user_ratings').insert(rating, ['id', 'rating', 'user_id', 'provider_id', 'service_id'])
+ return db('user_ratings').insert(rating, ['id', 'rating', 'user_id', 'provider_id'])
    
 }
 

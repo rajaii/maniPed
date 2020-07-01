@@ -12,6 +12,9 @@ router.get('/', (req, res) => {
     .catch(err => res.send(err));
 });
  
+router.get('/:id', validateProviderId, (req, res) => {
+  res.status(200).json(req.provider);
+})
 
 router.put('/:id', (req, res) => {
   const { id } = req.params;
@@ -33,6 +36,23 @@ router.put('/:id', (req, res) => {
     });
   }
 });
+
+async function validateProviderId(req, res, next) {
+  try {
+  const { id } = req.params;
+
+  let p = await Providers.findById(id);
+  if(p) {
+      req.provider = p;
+      next();
+  } else {
+      res.status(404).json({message: 'invalid provider id'});
+  }
+} catch(error) {
+  res.status(500).json(error);
+}
+};
+
 
 
 

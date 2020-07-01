@@ -23,6 +23,8 @@ exports.up = function(knex) {
       //validate from FE make in a way that they can either enter format 00000-0000 or 00000
       tbl.string('zipcode', [10])
         .notNullable()
+      tbl.boolean('activated')
+        .defaultTo(1)
       tbl.timestamp('created_at').defaultTo(knex.fn.now());   
   })
 
@@ -57,9 +59,42 @@ exports.up = function(knex) {
       tbl.string('services_and_pricing_3');
       tbl.string('services_and_pricing_4');
       tbl.string('services_and_pricing_5');
+      tbl.boolean('activated')
+        .defaultTo(0)
       tbl.timestamp('created_at').defaultTo(knex.fn.now());   
       
   })
+
+  .createTable('future_bookings', tbl =>{
+    tbl.increments('id');
+    tbl.date('booking_date')
+      .notNullable();
+    tbl.time('booking_time')
+      .notNullable();
+    tbl.string('services_and_pricing')
+      .notNullable();
+    tbl.integer('provider_id')
+      .unsigned()
+      .notNullable()
+      .references('id')
+      .inTable('providers')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE');
+    tbl.integer('user_id')
+      .unsigned()
+      .notNullable()
+      .references('id')
+      .inTable('users')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE');
+    tbl.boolean('confirmed')
+      .defaultTo(0);
+    tbl.boolean('completed')
+      .defaultTo(0);
+    tbl.timestamp('booked_at').defaultTo(knex.fn.now());  
+  })
+
+
 
   //ratings will be many to many each custy will have rating from provider vice versa so own table for this but 2 ways rating user ratings ie ratings the users were 
   //given by users (customers) to providers in this table and vice versa in next table
@@ -80,13 +115,7 @@ exports.up = function(knex) {
       .inTable('providers')
       .onUpdate('CASCADE')
       .onDelete('CASCADE');
-    tbl.integer('service_id')
-      .unsigned()
-      .notNullable()
-      .references('id')
-      .inTable('completed_services')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE');
+
 })
 
 //given by providers to customers
@@ -107,16 +136,9 @@ exports.up = function(knex) {
     .inTable('users')
     .onUpdate('CASCADE')
     .onDelete('CASCADE');
-  tbl.integer('service_id')
-    .unsigned()
-    .notNullable()
-    .references('id')
-    .inTable('completed_services')
-    .onUpdate('CASCADE')
-    .onDelete('CASCADE');
 })
 
-//can be prepopulated radio inputs for services that send strings up to post from front-end or drop down, or
+  //can be prepopulated radio inputs for services that send strings up to post from front-end or drop down, or
 // even limited text manually entered by the provider or a combo ie. deal with the exact post mech in FE
 .createTable('completed_services', tbl => {
   tbl.increments('id');
@@ -158,34 +180,7 @@ exports.up = function(knex) {
   tbl.timestamp('created_at').defaultTo(knex.fn.now());  
 })
 
-.createTable('future_bookings', tbl =>{
-  tbl.increments('id');
-  tbl.date('booking_date')
-    .notNullable();
-  tbl.time('booking_time')
-    .notNullable();
-  tbl.string('services_and_pricing')
-    .notNullable();
-  tbl.integer('provider_id')
-    .unsigned()
-    .notNullable()
-    .references('id')
-    .inTable('providers')
-    .onUpdate('CASCADE')
-    .onDelete('CASCADE');
-  tbl.integer('user_id')
-    .unsigned()
-    .notNullable()
-    .references('id')
-    .inTable('users')
-    .onUpdate('CASCADE')
-    .onDelete('CASCADE');
-  tbl.boolean('confirmed')
-    .defaultTo(0);
-  tbl.boolean('completed')
-    .defaultTo(0);
-  tbl.timestamp('booked_at').defaultTo(knex.fn.now());  
-})
+
 
 
 .createTable('pre_admin', tbl => {
@@ -261,13 +256,12 @@ exports.down = function(knex) {
   return knex.schema.dropTableIfExists('manigods')
   .dropTableIfExists('admin')
   .dropTableIfExists('pre_admin')
-  //may need to tweak order here if won't drop, future_bookings last added
-  .dropTableIfExists('future_bookings')
-  .dropTableIfExists('completed_service')
+  .dropTableIfExists('completed_services')
   .dropTableIfExists('provider_ratings')
   .dropTableIfExists('user_ratings')
+  .dropTableIfExists('future_bookings')
   .dropTableIfExists('providers')
-  .dropTableIfExists('users')
+  .dropTableIfExists('users');
   //if won't drop
   // knex.raw('DROP TABLE manigods')
   // .raw('DROP TABLE admin')

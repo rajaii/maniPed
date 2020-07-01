@@ -33,7 +33,7 @@ router.get('/user/:user_id', async (req, res) => {
 
 });
 
-router.get('/provider/:provider_id', (req, res) => {
+router.get('/provider/:provider_id', async (req, res) => {
   
     try {
         const { provider_id } = req.params;
@@ -49,6 +49,7 @@ router.get('/provider/:provider_id', (req, res) => {
     }
 
 });
+
  
 
 router.put('/:id', validateBookingId, (req, res) => {
