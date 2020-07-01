@@ -80,6 +80,13 @@ exports.up = function(knex) {
       .inTable('providers')
       .onUpdate('CASCADE')
       .onDelete('CASCADE');
+    tbl.integer('service_id')
+      .unsigned()
+      .notNullable()
+      .references('id')
+      .inTable('completed_services')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE');
 })
 
 .createTable('provider_ratings', tbl => {
@@ -97,6 +104,13 @@ exports.up = function(knex) {
     .notNullable()
     .references('id')
     .inTable('users')
+    .onUpdate('CASCADE')
+    .onDelete('CASCADE');
+  tbl.integer('service_id')
+    .unsigned()
+    .notNullable()
+    .references('id')
+    .inTable('completed_services')
     .onUpdate('CASCADE')
     .onDelete('CASCADE');
 })
@@ -130,14 +144,12 @@ exports.up = function(knex) {
     .onDelete('CASCADE');
   tbl.integer('user_rating_id')
     .unsigned()
-    .notNullable()
     .references('id')
     .inTable('user_ratings')
     .onUpdate('CASCADE')
     .onDelete('CASCADE');
   tbl.integer('provider_rating_id')
     .unsigned()
-    .notNullable()
     .references('id')
     .inTable('provider_ratings')
     .onUpdate('CASCADE')

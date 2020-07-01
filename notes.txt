@@ -93,17 +93,20 @@ PLANNING (possible future features not added in yet):
     PAYMENT:
     //find a framework to handle this, but may need to delete that later
 
-INTEGRATION:
+API to FE INTEGRATION:
 
     RATINGS:
     may need to tweak the nullability of the ratings and rating ids later when we see the flow of how services are entered from front end when done 
     
     ADMIN:
     may need to pull timestamps (created_at etc) in get calls and format that so admin can see when the profiles created etc.
-
+ 
     BOOKINGS AND SERVICES
     when making bookings (post see bookingsRouter line 56-57) userId will come from the users data, and provider_id will come from a screen where you click on the provider to book
     confirmations sent to provider upon user booking, when they click to confirm, the put will be called to change the tbl.boolean comfrimed to 1
+
+    post will be used when the provider completes the service.  They will verify to end and then it will post to completed services, and then rating 
+    notifications will go out to both user and provider (immediately to provider like uber does) see line 70-72 of servicesRouter.js
 
 VERY END before deploy production:
     
