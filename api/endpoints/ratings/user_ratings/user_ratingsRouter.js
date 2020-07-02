@@ -42,7 +42,7 @@ router.get('/provider/:provider_id', async (req, res) => {
         const { provider_id } = req.params;
     
         let ratings = await User_ratings.findByProviderId(provider_id)
-        if(ratings) {
+        if(ratings.length > 0) {
             res.status(200).json(ratings)
         } else {
             res.status(404).json({message: 'invalid provider id'});
