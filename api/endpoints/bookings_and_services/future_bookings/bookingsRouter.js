@@ -21,7 +21,7 @@ router.get('/user/:user_id', async (req, res) => {
         const { user_id } = req.params;
     
         let user_bookings = await Bookings.findByUserId(user_id)
-        if(user_bookings) {
+        if(user_bookings.length > 0) {
             res.status(200).json(user_bookings)
             
         } else {
@@ -39,7 +39,7 @@ router.get('/provider/:provider_id', async (req, res) => {
         const { provider_id } = req.params;
     
         let provider_bookings = await Bookings.findByProviderId(provider_id)
-        if(provider_bookings) {
+        if(provider_bookings.length > 0) {
             res.status(200).json(provider_bookings)
         } else {
             res.status(404).json({message: 'invalid provider id'});
