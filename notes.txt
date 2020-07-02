@@ -6,15 +6,17 @@ manigod reg and pre-admin access, and admin interface
 
 CURRENT =>=>=>: 
 
-fixed bug on all user/:uerid routes and provider/:provider_id 
+
    
 
         TESTS:
-       ==> userratings helpers, userratingsRouter, post working start at top and do all others  
-       
-       providerratingsrouter, providerratings helpers, TWEAK the post to match the userratingsRouter's post and check before doin other routes. see user_ratingsRouter line 81-92 done implement in others too!!!!!!!!!!!!!!!!!!!!!!
+            DEBUG knex seed:run:
+             _SEED Error: Error while executing "C:\Users\rosin\a_jProjects\maniPed\seeds\bookings.js" seed: truncate "future_bookings" restart identity - cannot truncate a table referenced in a 
+                          foreign key constraint
+                          may have to add created at in seeds if doesnt run, also knexfile configs were changed, adding seed dir and pool config
 
-       __ make seeds to run on all tables
+            __re-test services route on amount billed column added
+             __ API documentation
        
         
          
@@ -41,7 +43,11 @@ PROGRAMMATICS (tweaks to those features that are added already):
 
 
     API:
-        
+        notifications 24 hours before and 1 hour before appointments to provider and user
+
+        google maps api for directions and showing where provider is on arrival time of appointments
+
+        socket.io messageing for users and providers  with bot messages regarding upcoming appointments
 
         email/text notifications sent to all higher ups when anyone added to admin or manigods db
 
@@ -119,4 +125,7 @@ VERY END before deploy production:
 
 ===============================================================================================================================================
 
+
+do 15 future bookings 5 confirmed 5 completed, 5 unconfirmed
+ ratings
 

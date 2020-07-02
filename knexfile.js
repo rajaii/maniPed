@@ -9,6 +9,14 @@ module.exports = {
       password: process.env.PGPASSWORD, // postgres user password
       database: "maniped", // database name
       // port: 5432,
+    },
+    seeds: {
+      directory: './seeds'
+  },
+},
+  pool: {
+    afterCreate: (conn, done) => {
+      conn.run('PRAGMA foreign_keys = ON', done);
     }
   },
 //for later use; configure in staging and production

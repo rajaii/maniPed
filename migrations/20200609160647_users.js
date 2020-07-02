@@ -144,6 +144,8 @@ exports.up = function(knex) {
   tbl.increments('id');
   tbl.string('type_of_service')
     .notNullable()
+  tbl.string('amount_billed')
+    .notNullable()
   tbl.integer('booking_id')
     .unsigned()
     .notNullable()
