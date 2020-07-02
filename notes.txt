@@ -6,7 +6,7 @@ manigod reg and pre-admin access, and admin interface
 
 CURRENT =>=>=>: 
 
-
+fixed bug on all user/:uerid routes and provider/:provider_id 
    
 
         TESTS:
