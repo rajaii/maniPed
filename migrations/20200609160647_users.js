@@ -97,7 +97,7 @@ exports.up = function(knex) {
 
 
   //ratings will be many to many each custy will have rating from provider vice versa so own table for this but 2 ways rating user ratings ie ratings the users were 
-  //given by users (customers) to providers in this table and vice versa in next table
+  //given by users (customers) to providers in this table for service
   .createTable('user_ratings', tbl => {
     tbl.increments('id');
     tbl.decimal('rating', [3], [2]);
@@ -143,6 +143,8 @@ exports.up = function(knex) {
 .createTable('completed_services', tbl => {
   tbl.increments('id');
   tbl.string('type_of_service')
+    .notNullable()
+  tbl.string('amount_billed')
     .notNullable()
   tbl.integer('booking_id')
     .unsigned()

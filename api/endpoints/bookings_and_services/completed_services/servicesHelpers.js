@@ -12,7 +12,7 @@ module.exports = {
 };
 
 function find() {
-  return db('completed_services').select('id', 'type_of_service', 'booking_id', 'provider_id', 'user_id', 'user_rating_id', 'provider_rating_id', 'created_at');
+  return db('completed_services').select('id', 'type_of_service', 'amount_billed', 'booking_id', 'provider_id', 'user_id', 'user_rating_id', 'provider_rating_id', 'created_at');
 }
 
 function findBy(filter) {
@@ -21,7 +21,7 @@ function findBy(filter) {
 
 function add(service) {
   
- return db('completed_services').insert(service, ['id', 'type_of_service', 'booking_id', 'provider_id', 'user_id', 'user_rating_id', 'provider_rating_id', 'created_at'])
+ return db('completed_services').insert(service, ['id', 'type_of_service','amount_billed', 'booking_id', 'provider_id', 'user_id', 'user_rating_id', 'provider_rating_id', 'created_at'])
    
 }
 

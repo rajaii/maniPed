@@ -25,7 +25,7 @@ router.get('/user/:user_id', async (req, res) => {
         const { user_id } = req.params;
     
         let ratings = await User_ratings.findByUserId(user_id)
-        if(ratings) {
+        if(ratings.length > 0) {
             res.status(200).json(ratings)   
         } else {
             res.status(404).json({message: 'invalid user id'});
@@ -42,7 +42,7 @@ router.get('/provider/:provider_id', async (req, res) => {
         const { provider_id } = req.params;
     
         let ratings = await User_ratings.findByProviderId(provider_id)
-        if(ratings) {
+        if(ratings.length > 0) {
             res.status(200).json(ratings)
         } else {
             res.status(404).json({message: 'invalid provider id'});
@@ -72,15 +72,15 @@ router.put('/:id', validateRatingId, (req, res) => {
 
 router.post('/', (req, res) => {
     const {rating, /*all but rating will be prepopulated by app service tied to the service/booking they are rating for provider will be the one 
-        who served them and userid will come from the user we send the rating screen to */ provider_id, user_id} = req.body;
+        who served them and userid will come from the user we send the rating screen to */ provider_id, user_id, service_id} = req.body;
 
-    if (!rating || !provider_id || !user_id) {
+    if (!rating || !provider_id || !user_id || service_id) {
       res.status(400).json({message: 'please provide a rating to rate your provider...'});
     } else {
     User_ratings.add(req.body)
       .then(rating => {
-        
-        Services.update(2, {"user_rating_id": `${rating[0].id}`})
+        //The service_id will have to be pulled from FE on a get to service to populate the info for service being rated and passed into the req.body
+        Services.update(service_id, {"user_rating_id": `${rating[0].id}`})
         .then(s => {
           res.status(201).json({s})
         })
@@ -117,12 +117,13 @@ async function validateRatingId(req, res, next) {
 
     let ratingList = await User_ratings.findById(id);
     if(ratingList) {
-        req.ratings = ratings;
+        req.ratings = ratingList;
         next();
     } else {
         res.status(404).json({message: 'invalid user_ratings id'});
     }
 } catch(error) {
+  console.log(error.message)
     res.status(500).json(error);
 }
 };
