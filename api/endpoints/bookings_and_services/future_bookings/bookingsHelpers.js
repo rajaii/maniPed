@@ -12,7 +12,7 @@ module.exports = {
 };
 
 function find() {
-  return db('future_bookings').select('id', 'booking_date', 'booking_time', 'services_and_pricing', 'provider_id', 'user_id', 'booked_at');
+  return db('future_bookings').select('id', 'booking_date', 'booking_time', 'services_and_pricing', 'provider_id', 'user_id', 'booked_at', 'confirmed', 'completed');
 }
 
 function findBy(filter) {
