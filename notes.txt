@@ -15,6 +15,9 @@ CURRENT =>=>=>:
         providers: list for work (optional)
 
         users: avatar (optional)
+
+        use tbl.binary for this in schema
+        write routes for above and comment heavy and test when get to fe
         
 
     __FE react user app!!!

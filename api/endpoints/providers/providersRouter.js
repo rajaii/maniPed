@@ -18,7 +18,8 @@ router.get('/:id', validateProviderId, (req, res) => {
   res.status(200).json(req.provider);
 })
 
-router.put('/:id', (req, res) => {
+
+router.put('/:id', upload.single('avatar'), (req, res) => {
   const { id } = req.params;
 
   if (req.body.password) {

@@ -20,14 +20,26 @@ exports.up = function(knex) {
       //validate from FE make so enter at least 1 upper 1 lower and special chars and min length of 10
       tbl.string('password')
         .notNullable();
-      //IMAGES may need tweaking upon integration
-      tbl.binary('avatar_image');
 //validate from FE make in a way that they can either enter format 00000-0000 or 00000
       tbl.string('zipcode', [10])
         .notNullable()
       tbl.boolean('activated')
         .defaultTo(1)
       tbl.timestamp('created_at').defaultTo(knex.fn.now());   
+  })
+
+  .createTable('user_avatars', tbl => {
+    tbl.increments('id');
+    tbl.binary('avatar')
+      .unique();
+    tbl.integer('user_id')
+      .unsigned()
+      .notNullable()
+      .references('id')
+      .inTable('users')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE');
+    
   })
 
   //information on cosmetic provider users for their profiles and accounts
@@ -51,8 +63,6 @@ exports.up = function(knex) {
       //validate from FE make in a way that they can either enter format 00000-0000 or 00000
       tbl.string('zipcode', [10])
         .notNullable();
-      //IMAGE may need tweaking upon integration
-      tbl.binary('avatar_image');
       tbl.string('header');
       //set from preselected list and enter from input type radio on FE and add to db string from there
       tbl.string('availability');
@@ -69,8 +79,11 @@ exports.up = function(knex) {
       
   })
 
+  //WORK IMAGES may need tweaking upon integration, will test w fe
   .createTable('provider_showcase', tbl => {
     tbl.increments('id');
+    tbl.binary('avatar')
+      .unique();
     tbl.binary('image_1')
       .unique();
     tbl.binary('image_2')
