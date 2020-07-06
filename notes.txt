@@ -11,6 +11,12 @@ CURRENT =>=>=>:
 
         add images (user and provider) and gallery (provider) endpoints in db
 
+        providers: avatar necessary
+        providers: list for work (optional)
+
+        users: avatar (optional)
+        
+
     __FE react user app!!!
    
        
