@@ -83,6 +83,7 @@ exports.up = function(knex) {
   .createTable('provider_showcase', tbl => {
     tbl.increments('id');
     tbl.binary('avatar')
+      .notNullable()
       .unique();
     tbl.binary('image_1')
       .unique();

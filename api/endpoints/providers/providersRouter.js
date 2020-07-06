@@ -1,7 +1,5 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
-var multer  = require('multer');
-var upload = multer({ dest: 'uploads/' });
 
 const Providers = require('./providersHelpers.js');
 
@@ -19,7 +17,7 @@ router.get('/:id', validateProviderId, (req, res) => {
 })
 
 
-router.put('/:id', upload.single('avatar'), (req, res) => {
+router.put('/:id', (req, res) => {
   const { id } = req.params;
 
   if (req.body.password) {
