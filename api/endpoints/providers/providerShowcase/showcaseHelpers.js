@@ -11,47 +11,39 @@ module.exports = {
 };
 
 function find() {
-  return db('user_ratings').select('id', 'rating', 'user_id', 'provider_id');
+  return db('provider_showcase').select('id', 'avatar', 'image_1', 'image_2', 'image_3', 'image_4', 'image_5', 'image_6', 'image_7', 'image_8', 'provider_id');
 }
 
 function findBy(filter) {
-  return db('user_ratings').where(filter);
+  return db('provider_showcase').where(filter);
 }
 
 function add(rating) {
   
- return db('user_ratings').insert(rating, ['id', 'rating', 'user_id', 'provider_id'])
+ return db('provider_showcase').insert(rating, ['id', 'avatar', 'image_1', 'image_2', 'image_3', 'image_4', 'image_5', 'image_6', 'image_7', 'image_8', 'provider_id'])
    
 }
 
 function update(id, info) {
-  return db('user_ratings').where('id', Number(id))
+  return db('provider_showcase').where('id', Number(id))
   .update(info);
 }
 
 function findById(id) {
-  return db('user_ratings')
+  return db('provider_showcase')
     .where({id})
     .first();
 }
 
-function findByUserId(id) {
-  return db('user_ratings')
-    .where({user_id: id })
-}
 
 function findByProviderId(id) {
-  return db('user_ratings')
+  return db('provider_showcase')
     .where({provider_id: id })
 }
 
-function findByServiceId(id) {
-    return db('user_ratings')
-      .where({service_id: id })
-  }
 
 function remove(id) {
-  return db('user_ratings')
+  return db('provider_showcase')
   .where({id})
   .del();
 }
