@@ -122,7 +122,6 @@ async function validateRatingId(req, res, next) {
         res.status(404).json({message: 'invalid user_ratings id'});
     }
 } catch(error) {
-  console.log(error.message)
     res.status(500).json(error);
 }
 };

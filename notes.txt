@@ -9,14 +9,12 @@ CURRENT =>=>=>:
         
     Migrations:
 
-        add images (user and provider) and gallery (provider) endpoints in db
+    
 
-        providers: avatar necessary
-        providers: list for work (optional)
+        __make:showcase helpers and showcase router
 
-        users: avatar (optional)
-
-        write routes for above and comment heavy and test when get to fe
+    
+        __Test: avatarsRouter, AvatarHelpers.js 
         
 
     __FE react user app!!!
