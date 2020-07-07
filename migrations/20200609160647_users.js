@@ -28,19 +28,19 @@ exports.up = function(knex) {
       tbl.timestamp('created_at').defaultTo(knex.fn.now());   
   })
 
-  .createTable('user_avatars', tbl => {
-    tbl.increments('id');
-    tbl.binary('avatar')
-      .unique();
-    tbl.integer('user_id')
-      .unsigned()
-      .notNullable()
-      .references('id')
-      .inTable('users')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE');
+  // .createTable('user_avatars', tbl => {
+  //   tbl.increments('id');
+  //   tbl.binary('avatar')
+  //     .unique();
+  //   tbl.integer('user_id')
+  //     .unsigned()
+  //     .notNullable()
+  //     .references('id')
+  //     .inTable('users')
+  //     .onUpdate('CASCADE')
+  //     .onDelete('CASCADE');
     
-  })
+  // })
 
   //information on cosmetic provider users for their profiles and accounts
   .createTable('providers', tbl => {
@@ -79,36 +79,36 @@ exports.up = function(knex) {
       
   })
 
-  //WORK IMAGES may need tweaking upon integration, will test w fe
-  .createTable('provider_showcase', tbl => {
-    tbl.increments('id');
-    tbl.binary('avatar')
-      .notNullable()
-      .unique();
-    tbl.binary('image_1')
-      .unique();
-    tbl.binary('image_2')
-      .unique();
-    tbl.binary('image_3')
-      .unique();
-    tbl.binary('image_4')
-      .unique();
-    tbl.binary('image_5')
-      .unique();
-    tbl.binary('image_6')
-      .unique();
-    tbl.binary('image_7')
-      .unique();
-    tbl.binary('image_8')
-      .unique();
-    tbl.integer('provider_id')
-      .unsigned()
-      .notNullable()
-      .references('id')
-      .inTable('providers')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE');
-  })
+  // //WORK IMAGES may need tweaking upon integration, will test w fe
+  // .createTable('provider_showcase', tbl => {
+  //   tbl.increments('id');
+  //   tbl.binary('avatar')
+  //     .notNullable()
+  //     .unique();
+  //   tbl.binary('image_1')
+  //     .unique();
+  //   tbl.binary('image_2')
+  //     .unique();
+  //   tbl.binary('image_3')
+  //     .unique();
+  //   tbl.binary('image_4')
+  //     .unique();
+  //   tbl.binary('image_5')
+  //     .unique();
+  //   tbl.binary('image_6')
+  //     .unique();
+  //   tbl.binary('image_7')
+  //     .unique();
+  //   tbl.binary('image_8')
+  //     .unique();
+  //   tbl.integer('provider_id')
+  //     .unsigned()
+  //     .notNullable()
+  //     .references('id')
+  //     .inTable('providers')
+  //     .onUpdate('CASCADE')
+  //     .onDelete('CASCADE');
+  // })
 
   .createTable('future_bookings', tbl =>{
     tbl.increments('id');
@@ -307,8 +307,9 @@ exports.down = function(knex) {
   .dropTableIfExists('provider_ratings')
   .dropTableIfExists('user_ratings')
   .dropTableIfExists('future_bookings')
-  .dropTableIfExists('provider_showcase')
+  // .dropTableIfExists('provider_showcase')
   .dropTableIfExists('providers')
+  // .dropTableIfExists('user_avatars')
   .dropTableIfExists('users');
   //if won't drop
   // knex.raw('DROP TABLE manigods')

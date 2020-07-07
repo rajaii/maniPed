@@ -34,17 +34,18 @@ router.get('/', (req, res) => {
   });
    
   
-  router.put('/:id', validateAvatarId, (req, res) => {
+  router.put('/:id', validateAvatarId, upload.single('avatar'), (req, res) => {
     const { id } = req.params;
       
-    if (Object.keys(req.file).length < 1) {
-      res.status(400).json({message: 'please provide an image to update'});
+    if (!req.file || req.file === req.avatar) {
+      res.status(400).json({message: 'please provide a new image to update with...'});
     } else {
     Avatars.update(id, req.file)
       .then(avatar => {
         res.status(200).json({avatar});
       })
       .catch(err => {
+        console.log(err.message)
         res.status(500).json(err)
       });
     }
@@ -60,6 +61,7 @@ router.get('/', (req, res) => {
           res.status(201).json({pic})  
         })
         .catch(err => {
+          console.log(err.message)
           res.status(500).json(err);
         });
       } 

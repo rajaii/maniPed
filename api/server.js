@@ -40,7 +40,7 @@ server.use('/api/future_bookings', /*restricted,*/ bookingsRouter);
 server.use('/api/services', /*restricted,*/ servicesRouter);
 server.use('/api/user_ratings', /*restricted,*/ user_ratingsRouter);
 server.use('/api/provider_ratings', /*restricted,*/ provider_ratingsRouter);
-server.use('api/avatars', /*restricted,*/ avatarsRouter);
+server.use('/api/avatars', /*restricted,*/ avatarsRouter);
 server.use('/api/showcase', /*restricted,*/ showcaseRouter)
 
 

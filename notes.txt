@@ -9,14 +9,6 @@ CURRENT =>=>=>:
         
     Migrations:
 
-    
-
-        __make:showcase helpers and showcase router
-
-    
-        __Test: avatarsRouter, AvatarHelpers.js 
-        
-
     __FE react user app!!!
    
        
@@ -45,6 +37,9 @@ PROGRAMMATICS (tweaks to those features that are added already):
 
 
     API:
+        Cloud storage for photos and then link storage in db for pulling to FE for image display tweak routes/helpers and migrations accordingly 
+        when get there see API to FE INTEGRATION: Images
+
         notifications 24 hours before and 1 hour before appointments to provider and user
 
         google maps api for directions and showing where provider is on arrival time of appointments
@@ -63,13 +58,13 @@ PROGRAMMATICS (tweaks to those features that are added already):
     FRONT-END APPS:
 
         Validations needed from FE via yup:
-        Signup:(see migrations)
-        //will have to use something to validate these fields ie yup from frontend to make sure pw is certain legnth and has symbols lower upper and 1 num and zipcode
+            Signup:(see migrations)
+            //will have to use something to validate these fields ie yup from frontend to make sure pw is certain legnth and has symbols lower upper and 1 num and zipcode
 
 
         Role MGMT:
-        //Manigods UI app will be local only on manigods machines and accessed via the private repo that only I an d joseph have access too.  not deployed, 
-        //NOTE FOR FE: when making admin interface do not enter password field for updating profiles, api does not allow that too
+            //Manigods UI app will be local only on manigods machines and accessed via the private repo that only I an d joseph have access too.  not deployed, 
+            //NOTE FOR FE: when making admin interface do not enter password field for updating profiles, api does not allow that too
 
 ===============================================================================================================================================
 
@@ -83,37 +78,41 @@ PLANNING (possible future features not added in yet):
      admin accounts (will for forseeable future not need the first option so can get done faster with option B)
 
     PAYMENT:
-    //find a framework to handle this, but may need to delete that later
+        //find a framework to handle this, but may need to delete that later
 
 API to FE INTEGRATION:
 
-    images: for images uploads use these sources, backend is done, but FE needs to be added and configured and be tested with it when done.  The 
-    following 2 resources were used, and videos can be found too:
-        https://www.npmjs.com/package/multer
-        https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
+    Images: 
+    
+        for images uploads use these sources, backend is done, but FE needs to be added and configured and be tested with it when done.  The 
+        following 2 resources were used, and videos can be found too:
+            https://www.npmjs.com/package/multer
+            https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
+        ABANDONED THIS CLOUD STORAGE IS MORE EFFECTIVE.  LEAVE ALL ROUTERS/HELPERS UNUSED AND MIGRATIONS COMMENTED OUT UNTIL LATER MAY TWEAK TO USE WITH CLOUD
+        OR DELETE WHAT ISN'T NEEDED LATER.  LOOK INTO CLOUD STORAGE AND POSSIBLE LINK STORAGE IN DB.  MOVE ON FINISH FOR NOW AND IMPLEMENT THIS LATER. 
 
 
     Validation:
-    use yup to make sure emails and zips are validated before requests go through for reg and anything else taht needs emeail or zip.
+        use yup to make sure emails and zips are validated before requests go through for reg and anything else taht needs emeail or zip.
 
     RATINGS:
-    may need to tweak the nullability of the ratings and rating ids later when we see the flow of how services are entered from front end when done 
-    see line 70-72 user_ratingsRouter.js: the ids will come from where and the flow of the rating process to the user to rate the provider
+        may need to tweak the nullability of the ratings and rating ids later when we see the flow of how services are entered from front end when done 
+        see line 70-72 user_ratingsRouter.js: the ids will come from where and the flow of the rating process to the user to rate the provider
 
-    no lifetime rating database column/table, will compute the rating on a get call to the users/providers ratings and take the avg and post that to the fe,
+        no lifetime rating database column/table, will compute the rating on a get call to the users/providers ratings and take the avg and post that to the fe,
 
-    after you post the rating user_rating_id for the service needs to be updated in services by taking the id from user_ratings. (service id will be taken from a get by fe that will pull info on the service to 
-    be rated for the rating screen and thus pre populated on the follow up put that will go through with the post see line 82 of userratingsRouter.js)
+        after you post the rating user_rating_id for the service needs to be updated in services by taking the id from user_ratings. (service id will be taken from a get by fe that will pull info on the service to 
+        be rated for the rating screen and thus pre populated on the follow up put that will go through with the post see line 82 of userratingsRouter.js)
 
     ADMIN:
-    may need to pull timestamps (created_at etc) in get calls and format that so admin can see when the profiles created etc.
- 
+        may need to pull timestamps (created_at etc) in get calls and format that so admin can see when the profiles created etc.
+    
     BOOKINGS AND SERVICES
-    when making bookings (post see bookingsRouter line 56-57) userId will come from the users data, and provider_id will come from a screen where you click on the provider to book
-    confirmations sent to provider upon user booking, when they click to confirm, the put will be called to change the tbl.boolean comfrimed to 1
+        when making bookings (post see bookingsRouter line 56-57) userId will come from the users data, and provider_id will come from a screen where you click on the provider to book
+        confirmations sent to provider upon user booking, when they click to confirm, the put will be called to change the tbl.boolean comfrimed to 1
 
-    post will be used when the provider completes the service.  They will verify to end and then it will post to completed services, and then rating 
-    notifications will go out to both user and provider (immediately to provider like uber does) see line 70-72 of servicesRouter.js
+        post will be used when the provider completes the service.  They will verify to end and then it will post to completed services, and then rating 
+        notifications will go out to both user and provider (immediately to provider like uber does) see line 70-72 of servicesRouter.js
 
 VERY END before deploy production:
     
@@ -122,8 +121,8 @@ VERY END before deploy production:
     prettify code
 
     DRY:
-    in migrations maybe make a function for some of the redundant schemas if they stay the same ie admin and manigods before final implementation.  leave as is now for debugging,
-    refactoring, and comments
+        in migrations maybe make a function for some of the redundant schemas if they stay the same ie admin and manigods before final implementation.  leave as is now for debugging,
+        refactoring, and comments
 
 
 ===============================================================================================================================================
