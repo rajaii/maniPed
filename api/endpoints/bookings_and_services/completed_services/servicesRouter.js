@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 const Services = require('./servicesHelpers.js');
+const Bookings = require('../future_bookings/bookingsHelpers.js');
 
 
 router.get('/', (req, res) => {
@@ -76,9 +77,17 @@ router.post('/', (req, res) => {
     } else {
     Services.add(req.body)
       .then(service => {
-        res.status(201).json({service});
+        Bookings.update(booking_id, {"completed": 1})
+        .then(b => {
+          res.status(200);
+        })
+        .catch(err => {
+          res.status(500).json(err)
+        })
+        res.status(201).json({service: service});
       })
       .catch(err => {
+        console.log(err.message)
         res.status(500).json(err);
       });
     } 

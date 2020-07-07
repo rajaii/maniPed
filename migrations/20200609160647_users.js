@@ -20,12 +20,26 @@ exports.up = function(knex) {
       //validate from FE make so enter at least 1 upper 1 lower and special chars and min length of 10
       tbl.string('password')
         .notNullable();
-      //validate from FE make in a way that they can either enter format 00000-0000 or 00000
+//validate from FE make in a way that they can either enter format 00000-0000 or 00000
       tbl.string('zipcode', [10])
         .notNullable()
       tbl.boolean('activated')
         .defaultTo(1)
       tbl.timestamp('created_at').defaultTo(knex.fn.now());   
+  })
+
+  .createTable('user_avatars', tbl => {
+    tbl.increments('id');
+    tbl.binary('avatar')
+      .unique();
+    tbl.integer('user_id')
+      .unsigned()
+      .notNullable()
+      .references('id')
+      .inTable('users')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE');
+    
   })
 
   //information on cosmetic provider users for their profiles and accounts
@@ -63,6 +77,37 @@ exports.up = function(knex) {
         .defaultTo(0)
       tbl.timestamp('created_at').defaultTo(knex.fn.now());   
       
+  })
+
+  //WORK IMAGES may need tweaking upon integration, will test w fe
+  .createTable('provider_showcase', tbl => {
+    tbl.increments('id');
+    tbl.binary('avatar')
+      .notNullable()
+      .unique();
+    tbl.binary('image_1')
+      .unique();
+    tbl.binary('image_2')
+      .unique();
+    tbl.binary('image_3')
+      .unique();
+    tbl.binary('image_4')
+      .unique();
+    tbl.binary('image_5')
+      .unique();
+    tbl.binary('image_6')
+      .unique();
+    tbl.binary('image_7')
+      .unique();
+    tbl.binary('image_8')
+      .unique();
+    tbl.integer('provider_id')
+      .unsigned()
+      .notNullable()
+      .references('id')
+      .inTable('providers')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE');
   })
 
   .createTable('future_bookings', tbl =>{
@@ -262,6 +307,7 @@ exports.down = function(knex) {
   .dropTableIfExists('provider_ratings')
   .dropTableIfExists('user_ratings')
   .dropTableIfExists('future_bookings')
+  .dropTableIfExists('provider_showcase')
   .dropTableIfExists('providers')
   .dropTableIfExists('users');
   //if won't drop

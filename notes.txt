@@ -6,17 +6,19 @@ manigod reg and pre-admin access, and admin interface
 
 CURRENT =>=>=>: 
 
+        
+    Migrations:
 
+    
+
+        __make:showcase helpers and showcase router
+
+    
+        __Test: avatarsRouter, AvatarHelpers.js 
+        
+
+    __FE react user app!!!
    
-
-        TESTS:
-            DEBUG knex seed:run:
-             _SEED Error: Error while executing "C:\Users\rosin\a_jProjects\maniPed\seeds\bookings.js" seed: truncate "future_bookings" restart identity - cannot truncate a table referenced in a 
-                          foreign key constraint
-                          may have to add created at in seeds if doesnt run, also knexfile configs were changed, adding seed dir and pool config
-
-            __re-test services route on amount billed column added
-             __ API documentation
        
         
          
@@ -51,13 +53,7 @@ PROGRAMMATICS (tweaks to those features that are added already):
 
         email/text notifications sent to all higher ups when anyone added to admin or manigods db
 
-        Password: enter change password forgot username/password functionality
-
-        Migrations:
-
-        add bookings with user, provider, date,...
-
-        add images (user and provider) and gallery (provider) endpoints in db
+        Documentation
 
 
 
@@ -90,6 +86,13 @@ PLANNING (possible future features not added in yet):
     //find a framework to handle this, but may need to delete that later
 
 API to FE INTEGRATION:
+
+    images: for images uploads use these sources, backend is done, but FE needs to be added and configured and be tested with it when done.  The 
+    following 2 resources were used, and videos can be found too:
+        https://www.npmjs.com/package/multer
+        https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
+
+
     Validation:
     use yup to make sure emails and zips are validated before requests go through for reg and anything else taht needs emeail or zip.
 
@@ -125,7 +128,9 @@ VERY END before deploy production:
 
 ===============================================================================================================================================
 
+DEBUGGINGS:
 
-do 15 future bookings 5 confirmed 5 completed, 5 unconfirmed
- ratings
-
+     knex seed:run:
+    _SEED Error: Error while executing "C:\Users\rosin\a_jProjects\maniPed\seeds\bookings.js" seed: truncate "future_bookings" restart identity - cannot truncate a table referenced in a 
+    foreign key constraint
+     may have to add created at in seeds if doesnt run, also knexfile configs were changed, adding seed dir and pool config

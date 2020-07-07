@@ -14,6 +14,8 @@ const bookingsRouter = require('./endpoints/bookings_and_services/future_booking
 const servicesRouter = require('./endpoints/bookings_and_services/completed_services/servicesRouter.js');
 const user_ratingsRouter = require('./endpoints/ratings/user_ratings/user_ratingsRouter.js');
 const provider_ratingsRouter = require('./endpoints/ratings/provider_ratings/provider_ratingsRouter.js');
+const avatarsRouter = require('./endpoints/users/avatars/avatarsRouter.js');
+const showcaseRouter = require('./endpoints/providers/providerShowcase/showcaseRouter.js');
 const restricted = require('../auth/restrictedMiddleware.js');
 
 
@@ -38,6 +40,8 @@ server.use('/api/future_bookings', /*restricted,*/ bookingsRouter);
 server.use('/api/services', /*restricted,*/ servicesRouter);
 server.use('/api/user_ratings', /*restricted,*/ user_ratingsRouter);
 server.use('/api/provider_ratings', /*restricted,*/ provider_ratingsRouter);
+server.use('api/avatars', /*restricted,*/ avatarsRouter);
+server.use('/api/showcase', /*restricted,*/ showcaseRouter)
 
 
 
