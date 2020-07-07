@@ -45,6 +45,7 @@ router.get('/', (req, res) => {
         res.status(200).json({avatar});
       })
       .catch(err => {
+        console.log(err.message)
         res.status(500).json(err)
       });
     }
@@ -60,6 +61,7 @@ router.get('/', (req, res) => {
           res.status(201).json({pic})  
         })
         .catch(err => {
+          console.log(err.message)
           res.status(500).json(err);
         });
       } 
