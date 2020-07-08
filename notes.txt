@@ -6,10 +6,12 @@ manigod reg and pre-admin access, and admin interface
 
 CURRENT =>=>=>: 
 
-        
-    Migrations:
+   =images cloudinary     
+    
 
-    __FE react user app!!!
+    MAY have to make it so in authrouter routes doesn't register without all required fields if can't do that in FE validation
+
+
    
        
         
@@ -84,12 +86,9 @@ API to FE INTEGRATION:
 
     Images: 
     
-        for images uploads use these sources, backend is done, but FE needs to be added and configured and be tested with it when done.  The 
-        following 2 resources were used, and videos can be found too:
-            https://www.npmjs.com/package/multer
-            https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
+        Cloudinary
         ABANDONED THIS CLOUD STORAGE IS MORE EFFECTIVE.  LEAVE ALL ROUTERS/HELPERS UNUSED AND MIGRATIONS COMMENTED OUT UNTIL LATER MAY TWEAK TO USE WITH CLOUD
-        OR DELETE WHAT ISN'T NEEDED LATER.  LOOK INTO CLOUD STORAGE AND POSSIBLE LINK STORAGE IN DB.  MOVE ON FINISH FOR NOW AND IMPLEMENT THIS LATER. 
+        OR DELETE WHAT ISN'T NEEDED LATER. 
 
 
     Validation:
