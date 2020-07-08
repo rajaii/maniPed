@@ -9,7 +9,7 @@ module.exports = {
 };
 
 function find() {
-  return db('manigods').select('id', 'first_name', 'last_name', 'role', 'username', 'email', 'zipcode');
+  return db('manigods').select('id', 'first_name', 'last_name', 'role', 'username', 'email', 'phone_number', 'zipcode');
 }
 
 function findBy(filter) {
@@ -18,7 +18,7 @@ function findBy(filter) {
 
 function add(manigod) {
   
-  return db('manigods').insert(manigod, ['id', 'first_name', 'last_name', 'username', 'role', 'email', 'zipcode'])
+  return db('manigods').insert(manigod, ['id', 'first_name', 'last_name', 'username', 'role', 'email', 'phone_number', 'zipcode'])
     
  }
 
@@ -30,6 +30,6 @@ function update(id, info) {
 function findById(id) {
   return db('manigods')
     .where({ id })
-    .select('id', 'first_name', 'last_name', 'role', 'username', 'email', 'zipcode')
+    .select('id', 'first_name', 'last_name', 'role', 'username', 'email', 'phone_number', 'zipcode')
     .first();
 }

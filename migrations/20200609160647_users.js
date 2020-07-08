@@ -17,6 +17,9 @@ exports.up = function(knex) {
       tbl.string('email')
         .notNullable()
         .unique();
+      tbl.string('phone_number')
+        .notNullable()
+        .unique();
       //validate from FE make so enter at least 1 upper 1 lower and special chars and min length of 10
       tbl.string('password')
         .notNullable();
@@ -34,7 +37,6 @@ exports.up = function(knex) {
   //     .unique();
   //   tbl.integer('user_id')
   //     .unsigned()
-  //     .notNullable()
   //     .references('id')
   //     .inTable('users')
   //     .onUpdate('CASCADE')
@@ -55,6 +57,9 @@ exports.up = function(knex) {
         .unique();
       //validate from FE via yup to make sure is email
       tbl.string('email')
+        .notNullable()
+        .unique();
+      tbl.string('phone_number')
         .notNullable()
         .unique();
       //validate from FE make so enter at least 1 upper 1 lower and special chars and min length of 10
@@ -103,7 +108,6 @@ exports.up = function(knex) {
   //     .unique();
   //   tbl.integer('provider_id')
   //     .unsigned()
-  //     .notNullable()
   //     .references('id')
   //     .inTable('providers')
   //     .onUpdate('CASCADE')
@@ -257,6 +261,10 @@ exports.up = function(knex) {
   tbl.string('email')
     .notNullable()
     .unique();
+  tbl.string('phone_number')
+    notNullable()
+    .unique();
+    
   //validate from FE make so enter at least 1 upper 1 lower and special chars and min length of 10
   tbl.string('password')
     .notNullable();
@@ -286,6 +294,9 @@ exports.up = function(knex) {
   //validate from FE via yup to make sure is email
   tbl.string('email')
     .notNullable()
+    .unique();
+  tbl.string('phone_number')
+    notNullable()
     .unique();
   //validate from FE make so enter at least 1 upper 1 lower and special chars and min length of 10
   tbl.string('password')

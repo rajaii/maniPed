@@ -61,7 +61,7 @@ router.get('/', (req, res) => {
           res.status(201).json({pic})  
         })
         .catch(err => {
-          console.log(err.message)
+          console.log(err)
           res.status(500).json(err);
         });
       } 
