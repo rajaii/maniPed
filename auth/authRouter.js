@@ -28,6 +28,7 @@ router.post('/register', async (req, res) => {
     }
 
   } catch(err) {
+    console.log(err.message)
   res.status(500).json({err/*, message: 'profile tied to the entered username and/or email already exists.'*/});
   }
 

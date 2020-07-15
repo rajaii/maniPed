@@ -16,6 +16,7 @@ const user_ratingsRouter = require('./endpoints/ratings/user_ratings/user_rating
 const provider_ratingsRouter = require('./endpoints/ratings/provider_ratings/provider_ratingsRouter.js');
 const avatarsRouter = require('./endpoints/users/avatars/avatarsRouter.js');
 const showcaseRouter = require('./endpoints/providers/providerShowcase/showcaseRouter.js');
+const availableServicesRouter = require('./endpoints/bookings_and_services/available_services/available_servicesRouter.js');
 const restricted = require('../auth/restrictedMiddleware.js');
 
 
@@ -27,10 +28,11 @@ server.use(helmet());
 server.use(cors());
 server.use(express.json());
 
-server.use('/api/auth', authRouter);
+
 
 //double protected authorization of roles so only admin can access this route  ADD checkRoles on specific requests so no conflict when users 
 //need to access their own profiles
+server.use('/api/auth', authRouter);
 server.use('/api/users', restricted, usersRouter);
 server.use('/api/providers', restricted, providersRouter);
 server.use('/api/admin', restricted, adminRouter);
@@ -41,7 +43,9 @@ server.use('/api/services', /*restricted,*/ servicesRouter);
 server.use('/api/user_ratings', /*restricted,*/ user_ratingsRouter);
 server.use('/api/provider_ratings', /*restricted,*/ provider_ratingsRouter);
 server.use('/api/avatars', /*restricted,*/ avatarsRouter);
-server.use('/api/showcase', /*restricted,*/ showcaseRouter)
+server.use('/api/showcase', /*restricted,*/ showcaseRouter);
+server.use('/api/available_services', /*restricted,*/ availableServicesRouter);
+
 
 
 

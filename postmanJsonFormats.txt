@@ -5,6 +5,7 @@ USERS:
 "last_name": "",
 "username": "",
 "email": "",
+"phone_number": "",
 "password": "",
 "zipcode": ""
 
@@ -16,6 +17,7 @@ PROVIDERS:
 "last_name": "",
 "username": "",
 "email": "",
+"phone_number": "",
 "password": "",
 "zipcode": ""
 
@@ -49,6 +51,7 @@ ADMIN || MANIGODS:
 "username": "",
 "role": ""
 "email": "",
+"phone_number": "",
 "password": "",
 "zipcode": ""
 
