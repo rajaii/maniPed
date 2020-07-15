@@ -231,7 +231,12 @@ exports.up = function(knex) {
   tbl.timestamp('created_at').defaultTo(knex.fn.now());  
 })
 
-
+.createTable('available_services', tbl => {
+  tbl.increments('id');
+  tbl.string('type')
+    .notNullable()
+    .unique();
+})
 
 
 .createTable('pre_admin', tbl => {
@@ -262,7 +267,7 @@ exports.up = function(knex) {
     .notNullable()
     .unique();
   tbl.string('phone_number')
-    notNullable()
+    .notNullable()
     .unique();
     
   //validate from FE make so enter at least 1 upper 1 lower and special chars and min length of 10
@@ -296,7 +301,7 @@ exports.up = function(knex) {
     .notNullable()
     .unique();
   tbl.string('phone_number')
-    notNullable()
+    .notNullable()
     .unique();
   //validate from FE make so enter at least 1 upper 1 lower and special chars and min length of 10
   tbl.string('password')
