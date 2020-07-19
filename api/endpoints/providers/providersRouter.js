@@ -16,6 +16,12 @@ router.get('/:id', validateProviderId, (req, res) => {
   res.status(200).json(req.provider);
 })
 
+router.get('/nearby/:id', (req, res) => {
+  const { zipCode, distance } = req.body
+  //send out get a request to https://www.zipcodeapi.com/rest/process.env.ZIPCODEKEY/radius/json/zipCode/distance/miles
+  //
+})
+
 
 router.put('/:id', (req, res) => {
   const { id } = req.params;

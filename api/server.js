@@ -33,8 +33,8 @@ server.use(express.json());
 //double protected authorization of roles so only admin can access this route  ADD checkRoles on specific requests so no conflict when users 
 //need to access their own profiles
 server.use('/api/auth', authRouter);
-server.use('/api/users', restricted, usersRouter);
-server.use('/api/providers', restricted, providersRouter);
+server.use('/api/users',  restricted, usersRouter);
+server.use('/api/providers', /*restricted,*/ providersRouter);
 server.use('/api/admin', restricted, adminRouter);
 server.use('/api/manigods', restricted, manigodsRouter);
 server.use('/api/preadmin', restricted, preAdminRouter);
@@ -44,7 +44,7 @@ server.use('/api/user_ratings', /*restricted,*/ user_ratingsRouter);
 server.use('/api/provider_ratings', /*restricted,*/ provider_ratingsRouter);
 server.use('/api/avatars', /*restricted,*/ avatarsRouter);
 server.use('/api/showcase', /*restricted,*/ showcaseRouter);
-server.use('/api/available_services', /*restricted,*/ availableServicesRouter);
+server.use('/api/available_services',  availableServicesRouter);
 
 
 
