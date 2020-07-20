@@ -132,3 +132,17 @@ DEBUGGINGS:
     _SEED Error: Error while executing "C:\Users\rosin\a_jProjects\maniPed\seeds\bookings.js" seed: truncate "future_bookings" restart identity - cannot truncate a table referenced in a 
     foreign key constraint
      may have to add created at in seeds if doesnt run, also knexfile configs were changed, adding seed dir and pool config
+
+
+
+==========================================================================================================================================
+
+ZIPCODE API NOTES AND PSEUDO:
+
+use radius finder to find all zipcodes within a radius entered by user to their entered zip code as well,
+map through the providers and pull out all providers whose zip codes match the ones on the radius list.
+
+display these to the user, user can click a buttoon to book now and will go to booking component making a providerfetch call with the
+providers id going into state and the fetch from a provider call that is made to that id when clicking to book
+
+Maybe use caches for optimization(later)
