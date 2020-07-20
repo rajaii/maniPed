@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
+const request = require('request');
+const rp = require('request-promise')
 
 const Providers = require('./providersHelpers.js');
 
@@ -16,12 +18,48 @@ router.get('/:id', validateProviderId, (req, res) => {
   res.status(200).json(req.provider);
 })
 
-router.get('/nearby/:id', (req, res) => {
-  const { zipCode, distance } = req.body
-  //send out get a request to https://www.zipcodeapi.com/rest/process.env.ZIPCODEKEY/radius/json/zipCode/distance/miles
-  //
-})
+//so users can search for a provider who is within x miles of their location for service
+//add /:id
+router.get('/nearby', (req, res) => {
+  console.log('going in')
+  const { zipCode, distance } = req.body;
+  
+  let closeZips = {};
 
+          const options = {
+            uri: `https://www.zipcodeapi.com/rest/${process.env.ZIPCODEKEY}/radius.json/${zipCode}/${distance}/miles`,
+            headers: {
+                'User-Agent': 'Request-Promise'
+            },
+            json: true // Automatically parses the JSON string in the response
+          };
+          rp.get(options)
+          .then(res => {
+            res["zip_codes"].map(z => {
+            closeZips[z.zip_code] = z.city;
+            })
+            console.log(`closeZips: ${JSON.stringify(closeZips)}`)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+          const localProviders = []
+
+          Providers.find()
+          .then(providers => {
+            providers.forEach(p => {
+              if (closeZips[p.zipcode] != undefined || p.zipcode === zipCode) {
+                localProviders.push(p)
+              } 
+            })
+            res.status(200).json(localProviders);
+          })
+          .catch(err => {
+            console.log(`message: ${err.message}`)
+            res.status(500).json(err)
+          })       
+  });
+  
 
 router.put('/:id', (req, res) => {
   const { id } = req.params;
