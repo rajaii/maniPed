@@ -7,11 +7,12 @@ const Providers = require('./providersHelpers.js');
 
 
 
-router.get('/', (req, res) => {
+router.post('/', (req, res) => {
     const { zipCode, distance } = req.body;
+    console.log(JSON.stringify(req.body))
     
     const closeZips = {};
-    
+            
   
             const options = {
               uri: `https://www.zipcodeapi.com/rest/${process.env.ZIPCODEKEY}/radius.json/${zipCode}/${distance}/miles`,
@@ -24,6 +25,7 @@ router.get('/', (req, res) => {
             rp.get(options)
             .then(response => {
                response["zip_codes"].map(z => {
+                 console.log(z)
                closeZips[z.zip_code] = z.city;
              })
              Providers.find()
@@ -31,7 +33,7 @@ router.get('/', (req, res) => {
               let localProviders = providers.filter(p => p["zipcode"] === zipCode); 
 
               for (let i = 0; i < providers.length; i++) { 
-                    if (closeZips[providers[i].zipcode] !== undefined ) {
+                    if (closeZips[providers[i].zipcode] !== undefined /*|| closeZips[providers[i].zipcode] === zipCode  */ ) {
                         localProviders.push(providers[i]);
                     }
                 }
@@ -39,12 +41,13 @@ router.get('/', (req, res) => {
               })
               
             .catch(err => {
-                console.log(err)
+                console.log(err.message)
               res.status(500).json(err)
             })       
               
             })
             .catch(err => {
+              console.log(err.message)
               res.status(500).json(err);
             })
             
