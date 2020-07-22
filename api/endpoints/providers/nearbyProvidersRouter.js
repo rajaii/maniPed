@@ -29,10 +29,10 @@ router.post('/', (req, res) => {
              })
              Providers.find()
             .then(providers => {
-              let localProviders = providers.filter(p => p["zipcode"] === zipCode); 
+              let localProviders = []
 
               for (let i = 0; i < providers.length; i++) { 
-                    if (closeZips[providers[i].zipcode] !== undefined /*|| closeZips[providers[i].zipcode] === zipCode  */ ) {
+                    if (closeZips[providers[i].zipcode] !== undefined || closeZips[providers[i].zipcode] === zipCode) {
                         localProviders.push(providers[i]);
                     }
                 }
