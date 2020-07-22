@@ -25,7 +25,6 @@ router.post('/', (req, res) => {
             rp.get(options)
             .then(response => {
                response["zip_codes"].map(z => {
-                 console.log(z)
                closeZips[z.zip_code] = z.city;
              })
              Providers.find()
@@ -41,13 +40,11 @@ router.post('/', (req, res) => {
               })
               
             .catch(err => {
-                console.log(err.message)
               res.status(500).json(err)
             })       
               
             })
             .catch(err => {
-              console.log(err.message)
               res.status(500).json(err);
             })
             
