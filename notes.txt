@@ -5,27 +5,49 @@ manigod reg and pre-admin access, and admin interface
  
 
 CURRENT =>=>=>: 
+    (later_current)
 
-   =images cloudinary     
+        
+
+        
+
+        <Feed />
+            LAST V
+  !!!!!!!!!!!!!!!!!!!! [   store tokens in cookie (security) or switch to oauth possibly ie figur out protected route bug somehow
+
+            dashboard not working on privateRoute giving this error V  
+
+            Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+
+            figure out how to push (use from login to dash when logged in, use on booking to go to dash when success message discarded) ]!!!!!!!!!!!!!!!!!!!
+
+            
+            
+ =========>  send out success message to user on dash, send out verification email to provider, and verification notice on provider dash FE
+            PSEUDO:
+            1)in bookingsRouter after the post, send an email to both provider to verify, and then to the user to congratulate: exchange contact info
+
+            2)in the put router if they are verifying: send an email notice to the user and provider stating that it has been verified and 
+            also to the provider, and dash notices to both 
+
+
+            3)programmatically send reminders 24 hours and 1 hour before the meerting to both.  Fire up gps on provider and user within hour, have provider
+            tap button to indicate on the way and then show on user app how far they are.
+
+            AFTER ^ intiate logic to complete service, rate, confirmations, messages, emails, etc socketio messageing too
+
+            
+
     
-
-    MAY have to make it so in authrouter routes doesn't register without all required fields if can't do that in FE validation
-
-
-   
-       
-        
-         
+            set up cancellation action, reducer, and mechanism on dashboard somewhere
+            
+            and completed_services reducer and actions so can pull info for feed and make bookings
 
 
 
-        
+            profile tab with ability to edit profile info,add picture adding ability via cloud at this point
 
-        
-
-
-
-    
+            future bookings tab that gets the users bookings for future, may also display in feed.
 
 
 
@@ -39,6 +61,11 @@ PROGRAMMATICS (tweaks to those features that are added already):
 
 
     API:
+
+        make it so frontend provider app and email message go to provider to confirm after booking post made.
+
+        make it so duplicate bookings can not happen.
+
         Cloud storage for photos and then link storage in db for pulling to FE for image display tweak routes/helpers and migrations accordingly 
         when get there see API to FE INTEGRATION: Images
 
@@ -60,18 +87,29 @@ PROGRAMMATICS (tweaks to those features that are added already):
     FRONT-END APPS:
 
         Validations needed from FE via yup:
-            Signup:(see migrations)
-            //will have to use something to validate these fields ie yup from frontend to make sure pw is certain legnth and has symbols lower upper and 1 num and zipcode
+        Signup:(see migrations)
+        //will have to use something to validate these fields ie yup from frontend to make sure pw is certain legnth and has symbols lower upper and 1 num and zipcode
 
 
         Role MGMT:
-            //Manigods UI app will be local only on manigods machines and accessed via the private repo that only I an d joseph have access too.  not deployed, 
-            //NOTE FOR FE: when making admin interface do not enter password field for updating profiles, api does not allow that too
+        //Manigods UI app will be local only on manigods machines and accessed via the private repo that only I an d joseph have access too.  not deployed, 
+        //NOTE FOR FE: when making admin interface do not enter password field for updating profiles, api does not allow that too
+
+        PROVIDER FE:
+        DASH STUFF FOR PROVIDER NOT DONE ON THESE STEPS (was started when making email requests upon booking logic):
+       send out success message to user on dash, send out verification email to provider, and verification notice on provider dash FE
+            PSEUDO:
+            in bookingsRouter after the post, send an email to both provider to verify, and then to the user to congratulate
+
+            in the put router if they are verifying: send an email notice to the user and provider stating that it has been verified and 
+            also to the provider, and dash notices to both 
 
 ===============================================================================================================================================
 
 
 PLANNING (possible future features not added in yet):
+
+    possbily tie available_services to providers and make route do more, just get for fe and post for admin for now done before this.
 
     services: mani pedi, waxing, hair, 
 
@@ -80,48 +118,58 @@ PLANNING (possible future features not added in yet):
      admin accounts (will for forseeable future not need the first option so can get done faster with option B)
 
     PAYMENT:
-        //find a framework to handle this, but may need to delete that later
+    //find a framework to handle this, but may need to delete that later
 
 API to FE INTEGRATION:
 
-    Images: 
-    
-        Cloudinary
-        ABANDONED THIS CLOUD STORAGE IS MORE EFFECTIVE.  LEAVE ALL ROUTERS/HELPERS UNUSED AND MIGRATIONS COMMENTED OUT UNTIL LATER MAY TWEAK TO USE WITH CLOUD
-        OR DELETE WHAT ISN'T NEEDED LATER. 
+    reg/login: 
+        if errors from BE display those to user ie username taken.
 
+        push user on fe to login on successful login, if decide to do on fe look at comments on register.js but props.history.push is a PIA with    
+        react-router-v4 try to do from BE
 
-    Validation:
-        use yup to make sure emails and zips are validated before requests go through for reg and anything else taht needs emeail or zip.
+    images: 
+    For upload and api:
+        https://www.npmjs.com/package/multer
+        https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
+    use Cloudinary
+    ABANDONED THIS CLOUD STORAGE IS MORE EFFECTIVE.  LEAVE ALL ROUTERS/HELPERS UNUSED AND MIGRATIONS COMMENTED OUT UNTIL LATER MAY TWEAK TO USE WITH CLOUD
+    OR DELETE WHAT ISN'T NEEDED LATER. 
+
 
     RATINGS:
-        may need to tweak the nullability of the ratings and rating ids later when we see the flow of how services are entered from front end when done 
-        see line 70-72 user_ratingsRouter.js: the ids will come from where and the flow of the rating process to the user to rate the provider
+    may need to tweak the nullability of the ratings and rating ids later when we see the flow of how services are entered from front end when done 
+    see line 70-72 user_ratingsRouter.js: the ids will come from where and the flow of the rating process to the user to rate the provider
 
-        no lifetime rating database column/table, will compute the rating on a get call to the users/providers ratings and take the avg and post that to the fe,
+    no lifetime rating database column/table, will compute the rating on a get call to the users/providers ratings and take the avg and post that to the fe,
 
-        after you post the rating user_rating_id for the service needs to be updated in services by taking the id from user_ratings. (service id will be taken from a get by fe that will pull info on the service to 
-        be rated for the rating screen and thus pre populated on the follow up put that will go through with the post see line 82 of userratingsRouter.js)
+    after you post the rating user_rating_id for the service needs to be updated in services by taking the id from user_ratings. (service id will be taken from a get by fe that will pull info on the service to 
+    be rated for the rating screen and thus pre populated on the follow up put that will go through with the post see line 82 of userratingsRouter.js)
 
     ADMIN:
-        may need to pull timestamps (created_at etc) in get calls and format that so admin can see when the profiles created etc.
-    
+    may need to pull timestamps (created_at etc) in get calls and format that so admin can see when the profiles created etc.
+ 
     BOOKINGS AND SERVICES
-        when making bookings (post see bookingsRouter line 56-57) userId will come from the users data, and provider_id will come from a screen where you click on the provider to book
-        confirmations sent to provider upon user booking, when they click to confirm, the put will be called to change the tbl.boolean comfrimed to 1
+    when making bookings (post see bookingsRouter line 56-57) userId will come from the users data, and provider_id will come from a screen where you click on the provider to book
+    confirmations sent to provider upon user booking, when they click to confirm, the put will be called to change the tbl.boolean comfrimed to 1
 
-        post will be used when the provider completes the service.  They will verify to end and then it will post to completed services, and then rating 
-        notifications will go out to both user and provider (immediately to provider like uber does) see line 70-72 of servicesRouter.js
+
+    post will be used when the provider completes the service.  They will verify to end and then it will post to completed services, and then rating 
+    notifications will go out to both user and provider (immediately to provider like uber does) see line 70-72 of servicesRouter.js
+
+
 
 VERY END before deploy production:
+
+    
     
     UNCOMMENT THE CHECKROLES MIDDLEWARE CALLS ON THE ROUTES
 
     prettify code
 
     DRY:
-        in migrations maybe make a function for some of the redundant schemas if they stay the same ie admin and manigods before final implementation.  leave as is now for debugging,
-        refactoring, and comments
+    in migrations maybe make a function for some of the redundant schemas if they stay the same ie admin and manigods before final implementation.  leave as is now for debugging,
+    refactoring, and comments
 
 
 ===============================================================================================================================================
@@ -133,16 +181,25 @@ DEBUGGINGS:
     foreign key constraint
      may have to add created at in seeds if doesnt run, also knexfile configs were changed, adding seed dir and pool config
 
+     line 33 and 34 of nav.js in FE desktop set better (more specific) logic to see if user logged in.  prob using authreducer.isLoggedIn will work when 
+     app is running and not cutting in and off, so try that again when deployed and test to see.   
 
 
-==========================================================================================================================================
 
-ZIPCODE API NOTES AND PSEUDO:
 
-use radius finder to find all zipcodes within a radius entered by user to their entered zip code as well,
-map through the providers and pull out all providers whose zip codes match the ones on the radius list.
 
-display these to the user, user can click a buttoon to book now and will go to booking component making a providerfetch call with the
-providers id going into state and the fetch from a provider call that is made to that id when clicking to book
 
-Maybe use caches for optimization(later)
+
+
+
+===========================================================================================================================
+User React app plan:
+Home will have a landing page with login taking customers to their dashboard
+
+components: nav, about, services, login, signup, 
+
+dashboard (when logged in) will have more things ie search for services, providers in area, messaging, etc 
+
+
+================================================================================================================================
+
