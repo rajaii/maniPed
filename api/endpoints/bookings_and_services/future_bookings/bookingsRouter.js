@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const nodeMailer = require('nodemailer');
 
 const Bookings = require('./bookingsHelpers.js');
 
@@ -77,6 +78,7 @@ router.post('/', (req, res) => {
     } else {
     Bookings.add(req.body)
       .then(booking => {
+        //send out emails here
         res.status(201).json({booking});
       })
       .catch(err => {
