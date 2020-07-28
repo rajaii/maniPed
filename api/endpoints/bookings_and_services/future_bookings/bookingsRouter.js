@@ -6,10 +6,10 @@ const Providers = require('../../providers/providersHelpers.js');
 const Users = require('../../users/usersHelpers.js');
 
 const transporter = nodeMailer.createTransport({
-  service: '',
+  service: 'gmail',
   auth: {
     user: 'manipedcustomerservice@gmail.com',
-    pass: `${process.env.GMAILPASS}`
+    pass: 'AliJosephPattaya2025$'
   }
 })
 
@@ -96,48 +96,48 @@ router.post('/', (req, res) => {
         .then(user => {
           username = user.username;
           userEmail = user.email;
+          const userMailOptions = {
+            from: 'manipedcustomerservice@gmail.com',
+            to: `${userEmail}`,
+            subject: 'Completed booking',
+            text: `Congratulations ${user.first_name}, you have just completed a booking for ${booking[0].services_and_pricing} on 
+            the date ${booking[0].booking_date} at ${booking[0].booking_time}. Your booking id is ${booking[0].id}.  You can log in to maniPed at any time
+            to adjust the booking or for further details; just be aware that any changes must be confirmed by the provider.  Thank you for choosing maniPed for your
+            cosmetic needs!`
+          }
+          transporter.sendMail(userMailOptions, function(err, info) {
+            if (err) {
+              console.log(err)
+            } else {
+              console.log(`Email sent, ${info.response}`)
+            }
+          })
+        })
+        .catch(err => {
+          res.status(500).json(err)
         })
         Providers.findById(provider_id)
         .then(provider => {
           providername = provider.username;
           providerEmail = provider.email;
-        })
-        const userMailOptions = {
-          from: 'maniPed',
-          to: `${username}`,
-          subject: 'Completed booking',
-          text: `Congratulations, you have just completed a booking for ${booking.services_and_pricing} with the provider ${providername} on 
-          the date ${booking.booking_date} at ${booking.booking_time}. Your booking id is ${booking.id}.  You can log in to maniPed at any time
-          to adjust the booking, just be aware that any changes must be confirmed by the provider.  Thank you for choosing maniPed for your
-          cosmetic needs!`
-        }
 
-        const providerMailOptions = {
-          from: 'maniPed',
-          to: `${providername}`,
-          subject: 'Customer booking',
-          text: `Congratulations, you have just recieved a booking for ${booking.services_and_pricing} from the user ${username} on 
-          the date ${booking.booking_date} at ${booking.booking_time}. Your booking id is ${booking.id}.  Please log into maniPed and confirm the 
-          booking as soon as possible.  Thank you for partnering with maniPed!`
-        }
-          //change console logs to res.status to break post if email errs out in both
-        transporter.sendMail(userMailOptions, function(err, info) {
-          if (err) {
-            console.log(err)
-          } else {
-            console.log(`Email sent, ${info.response}`)
+          const providerMailOptions = {
+            from: 'manipedcustomerservice@gmail.com',
+            to: `${providerEmail}`,
+            subject: 'Customer booking',
+            text: `Congratulations ${provider.first_name}, you have just recieved a booking for ${booking[0].services_and_pricing} on 
+            the date ${booking[0].booking_date} at ${booking[0].booking_time}. Your booking id is ${booking[0].id}.  Please log into maniPed and confirm the 
+            booking as soon as possible.  Thank you for partnering with maniPed!`
           }
+          transporter.sendMail(providerMailOptions, function(err, info) {
+            if (err) {
+              console.log(err)
+            } else {
+              console.log(`Email sent, ${info.response}`)
+            }
+          })
         })
-
-        transporter.sendMail(providerMailOptions, function(err, info) {
-          if (err) {
-            console.log(err)
-          } else {
-            console.log(`Email sent, ${info.response}`)
-          }
-        })
-
-
+        
         res.status(201).json({booking});
       })
       .catch(err => {
