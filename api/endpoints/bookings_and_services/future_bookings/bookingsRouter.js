@@ -203,7 +203,7 @@ router.put('/:id', validateBookingId, (req, res) => {
           const providerMailOptions = {
             from: 'manipedcustomerservice@gmail.com',
             to: `${providerEmail}`,
-            subject: 'Once of your bookings has been updated',
+            subject: 'One of your bookings has been updated',
             text: `Dear ${provider.first_name}, your booking for ${booking[0].services_and_pricing} on 
             the date ${booking[0].booking_date} at ${booking[0].booking_time} has been updated. Your booking id is ${booking[0].id}.  Log in to the application to confirm the changes, and for further details.
              Thank you for partnering with maniPed!`
