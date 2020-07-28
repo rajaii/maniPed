@@ -25,10 +25,6 @@ function add(booking) {
    
 }
 
-// function update(id, info) {
-//   return db('future_bookings').where('id', Number(id))
-//   .update(info);
-// }
 
 function update(id, info) {
   return db('future_bookings').where('id', Number(id))
