@@ -22,13 +22,8 @@ CURRENT =>=>=>:
             figure out how to push (use from login to dash when logged in, use on booking to go to dash when success message discarded) ]!!!!!!!!!!!!!!!!!!!
 
             
-            
- =========>  send out success message to user on dash, send out verification email to provider, and verification notice on provider dash FE
-            PSEUDO:
-            1)in bookingsRouter after the post, send an email to both provider to verify, and then to the user to congratulate: exchange contact info
-
-            2)in the put router if they are verifying: send an email notice to the user and provider stating that it has been verified and 
-            also to the provider, and dash notices to both 
+        When on Provider DASH          
+ =========> PSEUDO:
 
 
             3)programmatically send reminders 24 hours and 1 hour before the meerting to both.  Fire up gps on provider and user within hour, have provider
