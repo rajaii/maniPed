@@ -2,7 +2,16 @@ const router = require('express').Router();
 const nodeMailer = require('nodemailer');
 
 const Bookings = require('./bookingsHelpers.js');
+const Providers = require('../../providers/providersHelpers.js');
+const Users = require('../../users/usersHelpers.js');
 
+const transporter = nodeMailer.createTransport({
+  service: '',
+  auth: {
+    user: 'manipedcustomerservice@gmail.com',
+    pass: `${process.env.GMAILPASS}`
+  }
+})
 
 router.get('/', (req, res) => {
   Bookings.find()
@@ -78,7 +87,57 @@ router.post('/', (req, res) => {
     } else {
     Bookings.add(req.body)
       .then(booking => {
-        //send out emails here
+        //do a get to users/:id and providers/:id to get the emails out of there
+        let userEmail;
+        let providerEmail;
+        let username;
+        let providername;
+        Users.findById(user_id)
+        .then(user => {
+          username = user.username;
+          userEmail = user.email;
+        })
+        Providers.findById(provider_id)
+        .then(provider => {
+          providername = provider.username;
+          providerEmail = provider.email;
+        })
+        const userMailOptions = {
+          from: 'maniPed',
+          to: `${username}`,
+          subject: 'Completed booking',
+          text: `Congratulations, you have just completed a booking for ${booking.services_and_pricing} with the provider ${providername} on 
+          the date ${booking.booking_date} at ${booking.booking_time}. Your booking id is ${booking.id}.  You can log in to maniPed at any time
+          to adjust the booking, just be aware that any changes must be confirmed by the provider.  Thank you for choosing maniPed for your
+          cosmetic needs!`
+        }
+
+        const providerMailOptions = {
+          from: 'maniPed',
+          to: `${providername}`,
+          subject: 'Customer booking',
+          text: `Congratulations, you have just recieved a booking for ${booking.services_and_pricing} from the user ${username} on 
+          the date ${booking.booking_date} at ${booking.booking_time}. Your booking id is ${booking.id}.  Please log into maniPed and confirm the 
+          booking as soon as possible.  Thank you for partnering with maniPed!`
+        }
+          //change console logs to res.status to break post if email errs out in both
+        transporter.sendMail(userMailOptions, function(err, info) {
+          if (err) {
+            console.log(err)
+          } else {
+            console.log(`Email sent, ${info.response}`)
+          }
+        })
+
+        transporter.sendMail(providerMailOptions, function(err, info) {
+          if (err) {
+            console.log(err)
+          } else {
+            console.log(`Email sent, ${info.response}`)
+          }
+        })
+
+
         res.status(201).json({booking});
       })
       .catch(err => {
