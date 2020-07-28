@@ -25,8 +25,6 @@ CURRENT =>=>=>:
         When on Provider DASH          
  =========> PSEUDO:
 
-            2)put router emails in need to work on changing the json given back so can pull email, name etc out of there.
-
 
             3)programmatically send reminders 24 hours and 1 hour before the meerting to both.  Fire up gps on provider and user within hour, have provider
             tap button to indicate on the way and then show on user app how far they are.

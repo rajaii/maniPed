@@ -1,3 +1,4 @@
+require('dotenv').config();
 const router = require('express').Router();
 const nodeMailer = require('nodemailer');
 
@@ -9,7 +10,7 @@ const transporter = nodeMailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'manipedcustomerservice@gmail.com',
-    pass: 'AliJosephPattaya2025$'
+    pass: process.env.GMAILPASS
   }
 })
 
