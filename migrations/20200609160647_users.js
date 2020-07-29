@@ -327,6 +327,7 @@ exports.down = function(knex) {
   return knex.schema.dropTableIfExists('manigods')
   .dropTableIfExists('admin')
   .dropTableIfExists('pre_admin')
+  .dropTableIfExists('available_services')
   .dropTableIfExists('completed_services')
   .dropTableIfExists('provider_ratings')
   .dropTableIfExists('user_ratings')

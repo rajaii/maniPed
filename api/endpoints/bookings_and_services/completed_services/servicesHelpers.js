@@ -12,7 +12,7 @@ module.exports = {
 };
 
 function find() {
-  return db('completed_services').select('id', 'type_of_service', 'amount_billed', 'booking_id', 'provider_id', 'user_id', 'user_rating_id', 'provider_rating_id', 'created_at');
+  return db('completed_services').select('id', 'type_of_service', 'amount_billed', 'booking_id', 'provider_name', 'provider_id', 'user_name', 'user_id', 'user_rating_id', 'provider_rating_id', 'created_at');
 }
 
 function findBy(filter) {
@@ -21,13 +21,13 @@ function findBy(filter) {
 
 function add(service) {
   
- return db('completed_services').insert(service, ['id', 'type_of_service','amount_billed', 'booking_id', 'provider_id', 'user_id', 'user_rating_id', 'provider_rating_id', 'created_at'])
+ return db('completed_services').insert(service, ['id', 'type_of_service','amount_billed', 'booking_id', 'provider_name', 'provider_id', 'user_name', 'user_id', 'user_rating_id', 'provider_rating_id', 'created_at'])
    
 }
 
 function update(id, info) {
   return db('completed_services').where('id', Number(id))
-  .update(info);
+  .update(info, ['id', 'type_of_service','amount_billed', 'booking_id', 'provider_name', 'provider_id', 'user_name', 'user_id', 'user_rating_id', 'provider_rating_id', 'created_at']);
 }
 
 function findById(id) {

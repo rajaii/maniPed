@@ -87,7 +87,7 @@ router.put('/:id', validateBookingId, (req, res) => {
             to: `${userEmail}`,
             subject: 'Your booking has been confirmed',
             text: `Hello ${user.first_name}, your booking for ${booking[0].services_and_pricing} on 
-            the date ${booking[0].booking_date} at ${booking[0].booking_time} has just been confirmed. Your booking id is ${booking[0].id}.  You can log in to maniPed at any time
+            the date ${booking[0].booking_date} at ${booking[0].booking_time} has just been confirmed by ${booking[0].provider_name}. Your booking id is ${booking[0].id}.  You can log in to maniPed at any time
             to adjust the booking or for further details; just be aware that any changes must be confirmed by the provider.  Thank you for choosing maniPed for your
             cosmetic needs!`
           }
@@ -112,7 +112,7 @@ router.put('/:id', validateBookingId, (req, res) => {
             to: `${providerEmail}`,
             subject: 'Thank you for confirming your booking',
             text: `Dear ${provider.first_name}, you have just confirmed your booking for ${booking[0].services_and_pricing} on 
-            the date ${booking[0].booking_date} at ${booking[0].booking_time}. Your booking id is ${booking[0].id}. Thank you for partnering with maniPed!`
+            the date ${booking[0].booking_date} at ${booking[0].booking_time} with ${booking[0].user_name}. Your booking id is ${booking[0].id}. Thank you for partnering with maniPed!`
           }
           transporter.sendMail(providerMailOptions, function(err, info) {
             if (err) {
@@ -135,7 +135,7 @@ router.put('/:id', validateBookingId, (req, res) => {
             to: `${userEmail}`,
             subject: 'Your service has been completed',
             text: `Hello ${user.first_name}, your booking for ${booking[0].services_and_pricing} on 
-            the date ${booking[0].booking_date} at ${booking[0].booking_time} has just been completed. You can log in to the app to rate your provider for the service. 
+            the date ${booking[0].booking_date} at ${booking[0].booking_time} with ${booking[0].provider_name} has just been completed. You can log in to the app to rate your provider for the service. 
             Thank you for choosing maniPed for your cosmetic needs!`
           }
           transporter.sendMail(userMailOptions, function(err, info) {
@@ -159,7 +159,7 @@ router.put('/:id', validateBookingId, (req, res) => {
             to: `${providerEmail}`,
             subject: 'Service Completed',
             text: `Dear ${provider.first_name}, your booking for ${booking[0].services_and_pricing} on 
-            the date ${booking[0].booking_date} at ${booking[0].booking_time} has been completed. Log in to the application to rate your client.  Thank you for partnering with maniPed!`
+            the date ${booking[0].booking_date} at ${booking[0].booking_time} with ${booking[0].user_name} has been completed. Log in to the application to rate your client.  Thank you for partnering with maniPed!`
           }
           transporter.sendMail(providerMailOptions, function(err, info) {
             if (err) {
@@ -182,7 +182,7 @@ router.put('/:id', validateBookingId, (req, res) => {
             to: `${userEmail}`,
             subject: 'Your booking has been updated',
             text: `Hello ${user.first_name}, your booking for ${booking[0].services_and_pricing} on 
-            the date ${booking[0].booking_date} at ${booking[0].booking_time} has just been updated. Your booking id is ${booking[0].id}.  Thank you for choosing maniPed for your
+            the date ${booking[0].booking_date} at ${booking[0].booking_time} with ${booking[0].provider_name} has just been updated. Your booking id is ${booking[0].id}.  Thank you for choosing maniPed for your
             cosmetic needs!`
           }
           transporter.sendMail(userMailOptions, function(err, info) {
@@ -206,7 +206,7 @@ router.put('/:id', validateBookingId, (req, res) => {
             to: `${providerEmail}`,
             subject: 'One of your bookings has been updated',
             text: `Dear ${provider.first_name}, your booking for ${booking[0].services_and_pricing} on 
-            the date ${booking[0].booking_date} at ${booking[0].booking_time} has been updated. Your booking id is ${booking[0].id}.  Log in to the application to confirm the changes, and for further details.
+            the date ${booking[0].booking_date} at ${booking[0].booking_time} with ${booking[0].user_name} has been updated. Your booking id is ${booking[0].id}.  Log in to the application to confirm the changes, and for further details.
              Thank you for partnering with maniPed!`
           }
           transporter.sendMail(providerMailOptions, function(err, info) {
@@ -233,9 +233,9 @@ router.put('/:id', validateBookingId, (req, res) => {
 
 router.post('/', (req, res) => {
     const {booking_date, booking_time, services_and_pricing, /*the following 2 ids will come from the users data, and the screen where
-     you click on the provider to book*/ provider_id, user_id } = req.body;
+     you click on the provider to book*/ provider_id, user_id, user_name, provider_name } = req.body;
 
-    if (!provider_id || !user_id || !booking_date || !booking_time|| !services_and_pricing) {
+    if (!provider_id || !user_id || !booking_date || !booking_time|| !services_and_pricing || !user_name || !provider_name) {
       res.status(400).json({message: 'please provide all required fields to request a booking...'});
     } else {
     Bookings.add(req.body)
@@ -255,7 +255,7 @@ router.post('/', (req, res) => {
             to: `${userEmail}`,
             subject: 'Completed booking',
             text: `Congratulations ${user.first_name}, you have just completed a booking for ${booking[0].services_and_pricing} on 
-            the date ${booking[0].booking_date} at ${booking[0].booking_time}. Your booking id is ${booking[0].id}.  You can log in to maniPed at any time
+            the date ${booking[0].booking_date} at ${booking[0].booking_time} with the provider ${booking[0].provider_name}. Your booking id is ${booking[0].id}.  You can log in to maniPed at any time
             to adjust the booking or for further details; just be aware that any changes must be confirmed by the provider.  Thank you for choosing maniPed for your
             cosmetic needs!`
           }
@@ -281,7 +281,7 @@ router.post('/', (req, res) => {
             to: `${providerEmail}`,
             subject: 'Customer booking',
             text: `Congratulations ${provider.first_name}, you have just recieved a booking for ${booking[0].services_and_pricing} on 
-            the date ${booking[0].booking_date} at ${booking[0].booking_time}. Your booking id is ${booking[0].id}.  Please log into maniPed and confirm the 
+            the date ${booking[0].booking_date} at ${booking[0].booking_time} with the user ${booking[0].user_name}. Your booking id is ${booking[0].id}.  Please log into maniPed and confirm the 
             booking as soon as possible, or to check further details.  Thank you for partnering with maniPed!`
           }
           transporter.sendMail(providerMailOptions, function(err, info) {
