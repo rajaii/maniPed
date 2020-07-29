@@ -13,20 +13,19 @@ CURRENT =>=>=>:
 
         <Feed />
             LAST V
-  !!!!!!!!!!!!!!!!!!!! [   store tokens in cookie (security) or switch to oauth possibly ie figur out protected route bug somehow
-
-            dashboard not working on privateRoute giving this error V  
-
-            Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
-
-            figure out how to push (use from login to dash when logged in, use on booking to go to dash when success message discarded) ]!!!!!!!!!!!!!!!!!!!
+ 
 
             
         When on Provider DASH          
  =========> PSEUDO:
+            in dash make a tab for future bookings displaying only those confirmed,
+
+            in feed make a tab for profile that will go to an interface to edit profile
+
+            in feed feed future appointments and favorites (highest completeds)
 
 
-            3)programmatically send reminders 24 hours and 1 hour before the meerting to both.  Fire up gps on provider and user within hour, have provider
+            3)programmatically send reminders 24 hours and 1 hour before the meerting to both. Twilio for messaging and for reminders.  Fire up gps on provider and user within hour, have provider
             tap button to indicate on the way and then show on user app how far they are.
 
             AFTER ^ intiate logic to complete service, rate, confirmations, messages, emails, etc socketio messageing too
@@ -80,6 +79,15 @@ PROGRAMMATICS (tweaks to those features that are added already):
 
 
     FRONT-END APPS:
+
+        Before finishing User REACT FE:
+             !!!!!!!!!!!!!!!!!!!! [   store tokens in cookie (security) or switch to oauth possibly ie figur out protected route bug somehow
+
+            dashboard not working on privateRoute giving this error V  
+
+            Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+
+            figure out how to push (use from login to dash when logged in, use on booking to go to dash when success message discarded) ]!!!!!!!!!!!!!!!!!!!
 
         Validations needed from FE via yup:
         Signup:(see migrations)
