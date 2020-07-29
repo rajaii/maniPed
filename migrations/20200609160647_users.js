@@ -122,6 +122,8 @@ exports.up = function(knex) {
       .notNullable();
     tbl.string('services_and_pricing')
       .notNullable();
+    tbl.string('provider_name')
+      .notNullable();
     tbl.integer('provider_id')
       .unsigned()
       .notNullable()
@@ -129,6 +131,8 @@ exports.up = function(knex) {
       .inTable('providers')
       .onUpdate('CASCADE')
       .onDelete('CASCADE');
+    tbl.string('user_name')
+      .notNullable();
     tbl.integer('user_id')
       .unsigned()
       .notNullable()
@@ -202,6 +206,8 @@ exports.up = function(knex) {
     .inTable('future_bookings')
     .onUpdate('CASCADE')
     .onDelete('CASCADE');
+  tbl.string('user_name')
+    .notNullable();
   tbl.integer('user_id')
     .unsigned()
     .notNullable()
@@ -209,6 +215,8 @@ exports.up = function(knex) {
     .inTable('users')
     .onUpdate('CASCADE')
     .onDelete('CASCADE');
+  tbl.string('provider_name')
+    .notNullable();
   tbl.integer('provider_id')
     .unsigned()
     .notNullable()

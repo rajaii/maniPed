@@ -25,7 +25,7 @@ CURRENT =>=>=>:
             in feed feed future appointments and favorites (highest completeds)
 
 
-            3)programmatically send reminders 24 hours and 1 hour before the meerting to both.  Fire up gps on provider and user within hour, have provider
+            3)programmatically send reminders 24 hours and 1 hour before the meerting to both. Twilio for messaging and for reminders.  Fire up gps on provider and user within hour, have provider
             tap button to indicate on the way and then show on user app how far they are.
 
             AFTER ^ intiate logic to complete service, rate, confirmations, messages, emails, etc socketio messageing too
