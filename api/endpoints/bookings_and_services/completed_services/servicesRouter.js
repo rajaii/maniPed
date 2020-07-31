@@ -1,7 +1,19 @@
 const router = require('express').Router();
+const nodeMailer = require('nodemailer');
 
 const Services = require('./servicesHelpers.js');
 const Bookings = require('../future_bookings/bookingsHelpers.js');
+const Users = require('../../users/usersHelpers.js');
+const Providers = require('../../providers/providersHelpers.js');
+
+
+const transporter = nodeMailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'manipedcustomerservice@gmail.com',
+    pass: process.env.GMAILPASS
+  }
+})
 
 
 router.get('/', (req, res) => {
@@ -67,6 +79,8 @@ router.put('/:id', validateServiceId, (req, res) => {
   }
 });
 
+
+
 router.post('/', (req, res) => {
     const {type_of_service, amount_billed, booking_id, /*active booking then provider will close out on a screen that verifies service details and goes to rating screen after
         */ /*the following 2 ids will come from the users data, and the screen where
@@ -78,8 +92,51 @@ router.post('/', (req, res) => {
     Services.add(req.body)
       .then(service => {
         Bookings.update(booking_id, {"completed": 1})
-        .then(b => {
-          res.status(200);
+        .then(booking => {
+            Users.findById(user_id)
+            .then(user => {
+              username = user.username;
+              userEmail = user.email;
+              const userMailOptions = {
+                from: 'manipedcustomerservice@gmail.com',
+                to: `${userEmail}`,
+                subject: 'Your service has been completed',
+                text: `Hello ${user.first_name}, your booking for ${booking[0].services_and_pricing} on the date ${booking[0].booking_date} at ${booking[0].booking_time} with ${booking[0].provider_name} has just been completed.  Your credit card has been billed $${service[0].amount_billed}. You can log in to the app to rate your provider for the service. Thank you for choosing maniPed for your cosmetic needs!`
+              }
+              transporter.sendMail(userMailOptions, function(err, info) {
+                if (err) {
+                  console.log(err)
+                } else {
+                  console.log(`Email sent, ${info.response}`)
+                }
+              })
+            })
+            .catch(err => {
+              res.status(500).json(err)
+            })
+            Providers.findById(provider_id)
+            .then(provider => {
+              providername = provider.username;
+              providerEmail = provider.email;
+          
+              const providerMailOptions = {
+                from: 'manipedcustomerservice@gmail.com',
+                to: `${providerEmail}`,
+                subject: 'Service Completed',
+                text: `Dear ${provider.first_name}, your booking for ${booking[0].services_and_pricing} on the date ${booking[0].booking_date} at ${booking[0].booking_time} with ${booking[0].user_name} has been completed.  Your account will now be credited $${service[0].amount_billed}. Log in to the application to rate your client.  Thank you for partnering with maniPed!`
+              }
+              transporter.sendMail(providerMailOptions, function(err, info) {
+                if (err) {
+                  console.log(err)
+                } else {
+                  console.log(`Email sent, ${info.response}`)
+                }
+              })
+            })
+            .catch(err => {
+              res.status(500).json(err)
+            })
+
         })
         .catch(err => {
           res.status(500).json(err)
@@ -124,3 +181,5 @@ async function validateServiceId(req, res, next) {
 };
 
 module.exports = router;
+
+

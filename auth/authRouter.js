@@ -46,7 +46,8 @@ router.post('/login', (req, res) => {
         res.status(200).json({
           message: `Welcome ${user.username}!`,
           id: user.id,
-          jwt_token: token
+          jwt_token: token,
+          name: `${user.first_name} ${user.last_name[0]}`
         });
       } else {
         res.status(401).json({ message: 'Invalid Credentials' });
