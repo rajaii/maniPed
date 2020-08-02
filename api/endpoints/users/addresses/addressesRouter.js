@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
     .catch(err => res.send(err));
 });
  
-router.get('/:id', validaeAddressesId, (req, res) => {
+router.get('/:id', validateAddressesId, (req, res) => {
   res.status(200).json(req.addresses);
 })
 

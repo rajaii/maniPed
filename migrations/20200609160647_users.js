@@ -13,17 +13,14 @@ exports.up = function(knex) {
       tbl.string('username')
         .notNullable()
         .unique();
-      //validate from FE via yup to make sure is email
       tbl.string('email')
         .notNullable()
         .unique();
       tbl.string('phone_number')
         .notNullable()
         .unique();
-      //validate from FE make so enter at least 1 upper 1 lower and special chars and min length of 10
       tbl.string('password')
         .notNullable();
-//validate from FE make in a way that they can either enter format 00000-0000 or 00000
       tbl.string('address');
       tbl.string('zipcode', [10])
         .notNullable()
