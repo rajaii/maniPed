@@ -26,18 +26,6 @@ exports.up = function(knex) {
         .notNullable()
       tbl.boolean('activated')
         .defaultTo(1)
-      tbl.integer('settings_id')
-        .unsigned()
-        .references('id')
-        .inTable('user_settings')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');  
-      tbl.integer('addresses_id')
-        .unsigned()
-        .references('id')
-        .inTable('addresses')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE'); 
       tbl.timestamp('created_at').defaultTo(knex.fn.now());   
   })
 

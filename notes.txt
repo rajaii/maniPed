@@ -16,9 +16,7 @@ CURRENT =>=>=>:
 
  =========>
 
-            
-
-            post to addresses when making a booking;
+            debugging from yesterday: add address to posting of booking form 
 
             test these ^ before moving on, settingsrouter and helpers, registering check if posting to settings, addressrouter and helpers
             make sure address gets posted upon making a booking
