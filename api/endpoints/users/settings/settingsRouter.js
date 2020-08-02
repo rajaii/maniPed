@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
 
 
 
-router.put('/:id', (req, res) => {
+router.put('/:id', validateUserId, (req, res) => {
   const { user_id } = req.params;
 
 

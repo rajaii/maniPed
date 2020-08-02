@@ -29,7 +29,32 @@ exports.up = function(knex) {
         .notNullable()
       tbl.boolean('activated')
         .defaultTo(1)
+      tbl.integer('settings_id')
+        .unsigned()
+        .references('id')
+        .inTable('user_settings')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE');  
+      tbl.integer('addresses_id')
+        .unsigned()
+        .references('id')
+        .inTable('addresses')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE'); 
       tbl.timestamp('created_at').defaultTo(knex.fn.now());   
+  })
+
+  .createTable('addresses', tbl => {
+    tbl.increments('id');
+    tbl.string('address')
+      .notNullable();
+    tbl.integer('user_id')
+      .unsigned()
+      .references('id')
+      .inTable('users')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE');  
+   
   })
 
   .createTable('user_settings', tbl => {
@@ -152,6 +177,8 @@ exports.up = function(knex) {
       .notNullable();
     tbl.string('services_and_pricing')
       .notNullable();
+    tbl.string('service_address')
+      .notNullable();
     tbl.string('provider_name')
       .notNullable();
     tbl.integer('provider_id')
@@ -269,29 +296,7 @@ exports.up = function(knex) {
   tbl.timestamp('created_at').defaultTo(knex.fn.now());  
 })
 
-.createTable('addresses', tbl => {
-  tbl.increments('id');
-  tbl.string('address')
-    .notNullable();
-  tbl.integer('user_id')
-    .unsigned()
-    .references('id')
-    .inTable('users')
-    .onUpdate('CASCADE')
-    .onDelete('CASCADE');  
-  tbl.integer('future_bookings_id')
-    .unsigned()
-    .references('id')
-    .inTable('future_bookings')
-    .onUpdate('CASCADE')
-    .onDelete('CASCADE');  
-  tbl.integer('completed_services_id')
-    .unsigned()
-    .references('id')
-    .inTable('completed_services')
-    .onUpdate('CASCADE')
-    .onDelete('CASCADE');
-})
+
 
 .createTable('available_services', tbl => {
   tbl.increments('id');
@@ -382,7 +387,6 @@ exports.down = function(knex) {
   .dropTableIfExists('admin')
   .dropTableIfExists('pre_admin')
   .dropTableIfExists('available_services')
-  .dropTableIfExists('addresses')
   .dropTableIfExists('completed_services')
   .dropTableIfExists('provider_ratings')
   .dropTableIfExists('user_ratings')
@@ -392,6 +396,7 @@ exports.down = function(knex) {
   .dropTableIfExists('providers')
   // .dropTableIfExists('user_avatars')
   .dropTableIfExists('user_settings')
+  .dropTableIfExists('addresses')
   .dropTableIfExists('users');
   //if won't drop
   // knex.raw('DROP TABLE manigods')

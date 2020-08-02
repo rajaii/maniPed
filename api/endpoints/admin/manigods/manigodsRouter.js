@@ -14,7 +14,7 @@ router.get('/', checkRoles('MANIGOD'), (req, res) => {
 });
  
 
-router.put('/:id', checkRoles('MANIGOD'), (req, res) => {
+router.put('/:id', validateManigodId, checkRoles('MANIGOD'), (req, res) => {
   const { id } = req.params;
 
   if (req.body.password) {
@@ -35,6 +35,22 @@ router.put('/:id', checkRoles('MANIGOD'), (req, res) => {
     });
   }
 });
+
+async function validateManigodId(req, res, next) {
+  try {
+  const { id } = req.params;
+
+  let m = await Manigods.findById(id);
+  if(m) {
+      req.manigod = m;
+      next();
+  } else {
+      res.status(404).json({message: 'invalid manigod id'});
+  }
+} catch(error) {
+  res.status(500).json(error);
+}
+};
 
 
 

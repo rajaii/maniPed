@@ -16,7 +16,7 @@ router.get('/:id', validateUserId, (req, res) => {
   res.status(200).json(req.custy);
 })
 
-router.put('/:id', (req, res) => {
+router.put('/:id', validateUserId, (req, res) => {
   const { id } = req.params;
 
   if (req.body.password) {

@@ -16,9 +16,13 @@ CURRENT =>=>=>:
 
  =========>
 
-            users/addressesrouter and addresseshelpers.js
-
             
+
+            post to addresses when making a booking;
+
+            test these ^ before moving on, settingsrouter and helpers, registering check if posting to settings, addressrouter and helpers
+            make sure address gets posted upon making a booking
+            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
             make rating component, and actions and reducer, and request logic 
 
