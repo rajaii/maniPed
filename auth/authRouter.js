@@ -8,6 +8,7 @@ const Providers = require('../api/endpoints/providers/providersHelpers.js');
 const Admin = require('../api/endpoints/admin/adminHelpers.js');
 const Manigods = require('../api/endpoints/admin/manigods/manigodsHelpers.js');
 const Preadmin = require('../api/endpoints/admin/pre_admin/preAdminHelpers.js');
+const UserSettings = require('../api/endpoints/users/settings/settingsHelpers.js');
 
 
 
@@ -21,15 +22,22 @@ router.post('/register', async (req, res) => {
   try {
     const saved = await Users.add(user);
     if (saved) {
+      UserSettings.add({user_id: saved.id})
+      .then(settings => {
+        res.status(201).json(settings)
+      })
+      .catch(err => {
+        res.status(500).json({err, message: "error posting to the settings"})
+      })
       res.status(201).json(saved);
       //handle this part possibly by line 31, or something else later.
     } else {
-      res.status(409).json({err: 'profile tied to the entered username and/or email already exists.'});
+      res.status(409).json({message: 'profile tied to the entered username and/or email already exists.'});
     }
 
   } catch(err) {
     console.log(err.message)
-  res.status(500).json({err/*, message: 'profile tied to the entered username and/or email already exists.'*/});
+  res.status(500).json({err, message: 'error entering the user in the db.'});
   }
 
 });

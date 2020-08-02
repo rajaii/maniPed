@@ -14,7 +14,7 @@ router.get('/', checkRoles('MANIGOD', 'ADMIN'), (req, res) => {
 });
  
 
-router.put('/:id', checkRoles('MANIGOD', 'ADMIN'), (req, res) => {
+router.put('/:id', validateAdminId, checkRoles('MANIGOD', 'ADMIN'), (req, res) => {
   const { id } = req.params;
 
   if (req.body.password) {
@@ -35,6 +35,22 @@ router.put('/:id', checkRoles('MANIGOD', 'ADMIN'), (req, res) => {
     });
   }
 });
+
+async function validateAdminId(req, res, next) {
+  try {
+  const { id } = req.params;
+
+  let a = await Admin.findById(id);
+  if(a) {
+      req.admin = a;
+      next();
+  } else {
+      res.status(404).json({message: 'invalid admin id'});
+  }
+} catch(error) {
+  res.status(500).json(error);
+}
+};
 
 
 

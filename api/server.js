@@ -18,6 +18,8 @@ const avatarsRouter = require('./endpoints/users/avatars/avatarsRouter.js');
 const showcaseRouter = require('./endpoints/providers/providerShowcase/showcaseRouter.js');
 const availableServicesRouter = require('./endpoints/bookings_and_services/available_services/available_servicesRouter.js');
 const nearbyProvidersRouter = require('./endpoints/providers/nearbyProvidersRouter.js');
+const userSettingsRouter = require('./endpoints/users/settings/settingsRouter.js');
+const addressesRouter = require('./endpoints/users/addresses/addressesRouter.js');
 const restricted = require('../auth/restrictedMiddleware.js');
 
 
@@ -47,6 +49,8 @@ server.use('/api/avatars', /*restricted,*/ avatarsRouter);
 server.use('/api/showcase', /*restricted,*/ showcaseRouter);
 server.use('/api/available_services',  availableServicesRouter);
 server.use('/api/nearby', nearbyProvidersRouter);
+server.use('/api/user_settings', userSettingsRouter);
+server.use('/api/userserviceaddresses', addressesRouter);
 
 
 

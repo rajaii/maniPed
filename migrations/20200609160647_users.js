@@ -13,22 +13,47 @@ exports.up = function(knex) {
       tbl.string('username')
         .notNullable()
         .unique();
-      //validate from FE via yup to make sure is email
       tbl.string('email')
         .notNullable()
         .unique();
       tbl.string('phone_number')
         .notNullable()
         .unique();
-      //validate from FE make so enter at least 1 upper 1 lower and special chars and min length of 10
       tbl.string('password')
         .notNullable();
-//validate from FE make in a way that they can either enter format 00000-0000 or 00000
+      tbl.string('address');
       tbl.string('zipcode', [10])
         .notNullable()
       tbl.boolean('activated')
         .defaultTo(1)
       tbl.timestamp('created_at').defaultTo(knex.fn.now());   
+  })
+
+  .createTable('addresses', tbl => {
+    tbl.increments('id');
+    tbl.string('address')
+      .notNullable();
+    tbl.integer('user_id')
+      .unsigned()
+      .references('id')
+      .inTable('users')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE');  
+   
+  })
+
+  .createTable('user_settings', tbl => {
+    tbl.increments('id');
+    tbl.boolean('privacy')
+      .defaultTo(0);
+    tbl.boolean('sms')
+      .defaultTo(0);
+    tbl.integer('user_id')
+         .unsigned()
+         .references('id')
+         .inTable('users')
+         .onUpdate('CASCADE')
+         .onDelete('CASCADE');  
   })
 
   // .createTable('user_avatars', tbl => {
@@ -66,23 +91,38 @@ exports.up = function(knex) {
       tbl.string('password')
         .notNullable();
       //validate from FE make in a way that they can either enter format 00000-0000 or 00000
+      tbl.string('address')
+        .notNullable();
       tbl.string('zipcode', [10])
         .notNullable();
       tbl.string('header');
       //set from preselected list and enter from input type radio on FE and add to db string from there
+      tbl.string('about_me');
       tbl.string('availability');
       //entered from radio select inputs, 1 for service, 1 for pricing of that service through frontend and posted as a string separated by |
       //so can separate the service from the price if needbe for gets
-      tbl.string('services_and_pricing_1');
-      tbl.string('services_and_pricing_2');
-      tbl.string('services_and_pricing_3');
-      tbl.string('services_and_pricing_4');
-      tbl.string('services_and_pricing_5');
+      tbl.string('nails_services_and_pricing');
+      tbl.string('hair_services_and_pricing');
+      tbl.string('massage_services_and_pricing');
       tbl.boolean('activated')
         .defaultTo(0)
       tbl.timestamp('created_at').defaultTo(knex.fn.now());   
       
   })
+
+  // .createTable('provider_settings', tbl => {
+  //   tbl.increments('id');
+  //   //populate later
+  //   tbl.integer('provider_id')
+  //     .unsigned()
+  //     .references('id')
+  //     .inTable('providers')
+  //     .onUpdate('CASCADE')
+  //     .onDelete('CASCADE');
+  // })
+
+  // migrations have 2 new tables: user_settings, and provider_settings 
+  // in migrations tbl. ... =>privacy (boolean) for geolocation on/off, addresses (string), sms (boolean),
 
   // //WORK IMAGES may need tweaking upon integration, will test w fe
   // .createTable('provider_showcase', tbl => {
@@ -121,6 +161,8 @@ exports.up = function(knex) {
     tbl.time('booking_time')
       .notNullable();
     tbl.string('services_and_pricing')
+      .notNullable();
+    tbl.string('service_address')
       .notNullable();
     tbl.string('provider_name')
       .notNullable();
@@ -239,6 +281,8 @@ exports.up = function(knex) {
   tbl.timestamp('created_at').defaultTo(knex.fn.now());  
 })
 
+
+
 .createTable('available_services', tbl => {
   tbl.increments('id');
   tbl.string('type')
@@ -333,8 +377,11 @@ exports.down = function(knex) {
   .dropTableIfExists('user_ratings')
   .dropTableIfExists('future_bookings')
   // .dropTableIfExists('provider_showcase')
+  // .dropTableIfExists('provider_settings')
   .dropTableIfExists('providers')
   // .dropTableIfExists('user_avatars')
+  .dropTableIfExists('user_settings')
+  .dropTableIfExists('addresses')
   .dropTableIfExists('users');
   //if won't drop
   // knex.raw('DROP TABLE manigods')

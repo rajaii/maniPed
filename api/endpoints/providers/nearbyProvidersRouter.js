@@ -1,5 +1,6 @@
+require('dotenv').config();
 const router = require('express').Router();
-const rp = require('request-promise')
+const rp = require('request-promise');
 
 const Providers = require('./providersHelpers.js');
 
@@ -9,7 +10,6 @@ const Providers = require('./providersHelpers.js');
 
 router.post('/', (req, res) => {
     const { zipCode, distance } = req.body;
-    console.log(JSON.stringify(req.body))
     
     const closeZips = {};
             
@@ -40,12 +40,14 @@ router.post('/', (req, res) => {
               })
               
             .catch(err => {
-              res.status(500).json(err)
+              console.log(err.message)
+              res.status(500).json({err, message: "error finding provider"})
             })       
               
             })
             .catch(err => {
-              res.status(500).json(err);
+              console.log(err.message)
+              res.status(500).json({err, message: "error doing the zipcodes API get"});
             })
             
     });

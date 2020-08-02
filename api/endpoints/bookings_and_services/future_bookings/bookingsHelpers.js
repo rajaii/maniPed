@@ -12,7 +12,7 @@ module.exports = {
 };
 
 function find() {
-  return db('future_bookings').select('id', 'booking_date', 'booking_time', 'services_and_pricing', 'provider_name', 'provider_id', 'user_name', 'user_id', 'booked_at', 'confirmed', 'completed');
+  return db('future_bookings').select('id', 'booking_date', 'booking_time', 'services_and_pricing', 'service_address', 'provider_name', 'provider_id', 'user_name', 'user_id', 'booked_at', 'confirmed', 'completed');
 }
 
 function findBy(filter) {
@@ -21,14 +21,14 @@ function findBy(filter) {
 
 function add(booking) {
   
- return db('future_bookings').insert(booking, ['id', 'booking_date', 'booking_time', 'services_and_pricing', 'provider_name', 'provider_id', 'user_name', 'user_id', 'booked_at', 'confirmed', 'completed'])
+ return db('future_bookings').insert(booking, ['id', 'booking_date', 'booking_time', 'services_and_pricing', 'service_address', 'provider_name', 'provider_id', 'user_name', 'user_id', 'booked_at', 'confirmed', 'completed'])
    
 }
 
 
 function update(id, info) {
   return db('future_bookings').where('id', Number(id))
-  .update(info, ['id', 'booking_date', 'booking_time', 'services_and_pricing', 'provider_name', 'provider_id', 'user_name', 'user_id', 'booked_at', 'confirmed', 'completed']);
+  .update(info, ['id', 'booking_date', 'booking_time', 'services_and_pricing', 'service_address', 'provider_name', 'provider_id', 'user_name', 'user_id', 'booked_at', 'confirmed', 'completed']);
 }
 
 function findById(id) {

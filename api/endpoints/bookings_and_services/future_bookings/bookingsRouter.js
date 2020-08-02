@@ -5,6 +5,7 @@ const nodeMailer = require('nodemailer');
 const Bookings = require('./bookingsHelpers.js');
 const Providers = require('../../providers/providersHelpers.js');
 const Users = require('../../users/usersHelpers.js');
+const Addresses = require('../../users/addresses/addressesHelpers.js');
 
 const transporter = nodeMailer.createTransport({
   service: 'gmail',
@@ -97,7 +98,7 @@ router.put('/:id', validateBookingId, (req, res) => {
           })
         })
         .catch(err => {
-          res.status(500).json(err)
+          res.status(500).json({err, message: "error sending confirmation email to user"})
         })
         Providers.findById(provider_id)
         .then(provider => {
@@ -119,7 +120,7 @@ router.put('/:id', validateBookingId, (req, res) => {
           })
         })
         .catch(err => {
-          res.status(500).json(err)
+          res.status(500).json({err, message: "error sending confirmation email to provider"})
         })
       } 
        else {
@@ -142,7 +143,7 @@ router.put('/:id', validateBookingId, (req, res) => {
           })
         })
         .catch(err => {
-          res.status(500).json(err)
+          res.status(500).json({err, message: "error sending update email to user"})
         })
         Providers.findById(provider_id)
         .then(provider => {
@@ -164,7 +165,7 @@ router.put('/:id', validateBookingId, (req, res) => {
           })
         })
         .catch(err => {
-          res.status(500).json(err)
+          res.status(500).json({err, message: "error sending update email to provider"})
         })
       }
 
@@ -172,21 +173,28 @@ router.put('/:id', validateBookingId, (req, res) => {
     })
     .catch(err => {
       console.log(err.message)
-      res.status(500).json(err)
+      res.status(500).json({err, message: "error updating booking"})
     });
   }
 });
 
 router.post('/', (req, res) => {
-    const {booking_date, booking_time, services_and_pricing, /*the following 2 ids will come from the users data, and the screen where
+    const {booking_date, booking_time, services_and_pricing, service_address, /*the following 2 ids will come from the users data, and the screen where
      you click on the provider to book*/ provider_id, user_id, user_name, provider_name } = req.body;
 
-    if (!provider_id || !user_id || !booking_date || !booking_time|| !services_and_pricing || !user_name || !provider_name) {
+    if (!provider_id || !user_id || !booking_date || !booking_time|| !services_and_pricing || !service_address || !user_name || !provider_name) {
       res.status(400).json({message: 'please provide all required fields to request a booking...'});
     } else {
     Bookings.add(req.body)
       .then(booking => {
         //do a get to users/:id and providers/:id to get the emails out of there
+        Addresses.add({address: booking.service_address, user_id: booking.user_id})
+        .then(a => {
+          res.status(201).json(a)
+        })
+        .catch(err => {
+          res.status(500).json({err, message: "error adding address to addresses upon post"});
+        })
         let userEmail;
         let providerEmail;
         let username;
@@ -211,7 +219,7 @@ router.post('/', (req, res) => {
           })
         })
         .catch(err => {
-          res.status(500).json(err)
+          res.status(500).json({err, message: "error sending email to user"})
         })
         
         Providers.findById(provider_id)
@@ -234,14 +242,14 @@ router.post('/', (req, res) => {
           })
         })
         .catch(err => {
-          res.status(500).json(err)
+          res.status(500).json({err, message: "error sending email to provider"});
         })
         
         
         res.status(201).json({booking});
       })
       .catch(err => {
-        res.status(500).json(err);
+        res.status(500).json({err, message: "error adding booking"});
       });
     } 
 });

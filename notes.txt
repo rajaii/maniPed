@@ -2,30 +2,66 @@ PROJECT = custy app react and native, provider app react and native, admin app w
 manigod reg and pre-admin access, and admin interface
 
 ===============================================================================================================================================
- 
+ Color combos :
+ #CC1559 - maroonish
+  #FF5EAA- pink one
+  #96B3D3- blueish one
+  #FFFFFF- white
+   #585858- dark grey
+   #646464- light grey
+   src: https://www.colorcombos.com/color-scheme-240.html
+
 
 CURRENT =>=>=>: 
-    (later_current)
 
-        
+ =========>
 
-        
+            debugging from yesterday: add address to posting of booking form 
 
-        <Feed />
-            LAST V
- 
+            test these ^ before moving on, settingsrouter and helpers, registering check if posting to settings, addressrouter and helpers
+            make sure address gets posted upon making a booking
+            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+            make rating component, and actions and reducer, and request logic 
+
+            Add in past_services on subfeed: rate this provider 
+            (opens up a rating component whose request is linked to the ids to put the rating for them) or book this provider ( Opens up a booking screen for the provider, popuate with the ids here) again
+
+            add in wishlist a messge provider button that takes to the messaging to them 
+
+            //NOT SUREadd in profile, edit profile button or functionality         
+
+            populate settings handleclick
+
+            make db for settings plan and set logic:
+
+                user_settings display set up now: privacy,  (added programmatically after bookings posted in post),
+                account linked to puts on user/:id and cn edit profile from settings, become a manipedologist lined to a route that will send applications somehow(do later),  sms notfications (on/off)    
+
+            set the state properties mentioned on comment found on feedSub line 16 and 17
+
+            make the respective components (populate settings last just make it bones intially) and have them conditionally render on ^
+
+            make settings component 
             
-        When on Provider DASH          
- =========> PSEUDO:
-            in dash make a tab for future bookings displaying only those confirmed,
 
-            in feed make a tab for profile that will go to an interface to edit profile
+            implement photos with cloud for profiels, and move on to V
 
-            in feed feed future appointments and favorites (highest completeds)
+            implement socket.io or twilio for mesaging and reminders
 
+            implement google maps api for geolocation when 1 hr to apt
 
-            3)programmatically send reminders 24 hours and 1 hour before the meerting to both. Twilio for messaging and for reminders.  Fire up gps on provider and user within hour, have provider
+                [
+        
+            make it so they can message their provider in feed too.
+
+            if click on profile conditionally render profile component under the feedsub and allow to edit, if click on past services 
+            render a past services component which will conditionally render another component for that, and for wishlist the same in this component 
+            they can message the upcoming provider to notify them or remind them to confirm.
+            
+                ]
+
+            3)programmatically send reminders 24 hours and 1 hour before the meerting to both. TWILIO for this and for messaging  Fire up gps on provider and user within hour, have provider
             tap button to indicate on the way and then show on user app how far they are.
 
             AFTER ^ intiate logic to complete service, rate, confirmations, messages, emails, etc socketio messageing too

@@ -19,7 +19,7 @@ router.get('/:id', validateProviderId, (req, res) => {
 
 
 
-router.put('/:id', (req, res) => {
+router.put('/:id', validateProviderId, (req, res) => {
   const { id } = req.params;
 
   if (req.body.password) {
