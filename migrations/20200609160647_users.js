@@ -24,6 +24,7 @@ exports.up = function(knex) {
       tbl.string('password')
         .notNullable();
 //validate from FE make in a way that they can either enter format 00000-0000 or 00000
+      tbl.string('address');
       tbl.string('zipcode', [10])
         .notNullable()
       tbl.boolean('activated')
