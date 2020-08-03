@@ -28,16 +28,16 @@ function update(user_id, info) {
   .update(info, ['id', 'privacy', 'sms', 'user_id']);
 }
 
-function findByUserId(user_id) {
-  return db('user_settings')
-    .where({user_id})
-    .first();
-}
-
 // function findByUserId(user_id) {
 //   return db('user_settings')
 //     .where({user_id})
+//     .first();
 // }
+
+function findByUserId(user_id) {
+  return db('user_settings')
+    .where({user_id})
+}
 
 
 function remove(user_id) {

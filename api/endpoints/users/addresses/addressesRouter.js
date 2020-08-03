@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
     .catch(err => res.send(err));
 });
  
-router.get('/:id', validateAddressesId, (req, res) => {
+router.get('/:user_id', validateUserId, (req, res) => {
   res.status(200).json(req.addresses);
 })
 
@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
 
 
 
-router.put('/:id', validateAddressesId, (req, res) => {
+router.put('/:user_id', validateUserId, (req, res) => {
   const { id } = req.params;
 
 
@@ -56,6 +56,22 @@ async function validateAddressesId(req, res, next) {
       next();
   } else {
       res.status(404).json({message: 'invalid addresses id'});
+  }
+} catch(error) {
+  res.status(500).json(error);
+}
+};
+
+async function validateUserId(req, res, next) {
+  try {
+  const { user_id } = req.params;
+
+  let a = await Addresses.findById(user_id);
+  if(a) {
+      req.addresses = a;
+      next();
+  } else {
+      res.status(404).json({message: 'invalid user id'});
   }
 } catch(error) {
   res.status(500).json(error);

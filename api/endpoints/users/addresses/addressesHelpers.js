@@ -17,27 +17,23 @@ function findBy(filter) {
   return db('addresses').where(filter);
 }
 
-function add(service) {
+function add(address) {
   
- return db('addresses').insert(service, ['id', 'address', 'user_id'])
+ return db('addresses').insert(address, ['id', 'address', 'user_id'])
    
 }
 
-function update(id, info) {
-  return db('addresses').where('user_id', Number(id))
+function update(user_id, info) {
+  return db('addresses').where('user_id', Number(user_id))
   .update(info, ['id', 'address', 'user_id']);
 }
 
-function findById(id) {
-  return db('addresses')
-    .where({id})
-    .first();
-}
 
-// function findById(id) {
-//   return db('addresses')
-//     .where({id})
-// }
+
+function findById(user_id) {
+  return db('addresses')
+    .where({user_id})
+}
 
 
 function remove(id) {
