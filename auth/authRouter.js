@@ -22,7 +22,8 @@ router.post('/register', async (req, res) => {
   try {
     const saved = await Users.add(user);
     if (saved) {
-      UserSettings.add({user_id: saved.id})
+      console.log(saved)
+      UserSettings.add({user_id: saved[0].id})
       .then(settings => {
         res.status(201).json(settings)
       })

@@ -13,12 +13,12 @@ router.get('/', (req, res) => {
     .catch(err => res.send(err));
 });
  
-router.get('/:id', validateUserId, (req, res) => {
+router.get('/:user_id', validateUserId, (req, res) => {
   res.status(200).json(req.settings);
 })
 
 router.post('/', (req, res) => {
-    Services.add(req.body)
+    UserSettings.add(req.body)
     .then(service => {
         res.status(201).json(service)
     })
@@ -29,18 +29,20 @@ router.post('/', (req, res) => {
 
 
 
-router.put('/:id', validateUserId, (req, res) => {
+router.put('/:user_id', validateUserId, (req, res) => {
   const { user_id } = req.params;
+  
 
 
   if (Object.keys(req.body).length < 1) {
     res.status(400).json({message: 'please provide a field to update the settings...'});
   } else {
-  Settings.update(user_id, req.body)
+  UserSettings.update(user_id, req.body)
     .then(settings => {
       res.status(200).json({settings});
     })
     .catch(err => {
+      console.log(err.message)
       res.status(500).json(err)
     });
   }
@@ -48,9 +50,10 @@ router.put('/:id', validateUserId, (req, res) => {
 
 async function validateUserId(req, res, next) {
   try {
-  const { userId } = req.params;
-
-  let s = await Settings.findByUserId(userId);
+  const { user_id } = req.params;
+  console.log(user_id)
+  let s = await UserSettings.findByUserId(user_id);
+  
   if(s) {
       req.settings = s;
       next();
@@ -58,6 +61,7 @@ async function validateUserId(req, res, next) {
       res.status(404).json({message: 'invalid user id'});
   }
 } catch(error) {
+  console.log(error.message)
   res.status(500).json(error);
 }
 };
