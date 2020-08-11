@@ -46,6 +46,10 @@ router.put('/:user_id', validateUserId, (req, res) => {
   }
 });
 
+router.delete('/:id', (req, res) => {
+  //finish here
+})
+
 async function validateAddressesId(req, res, next) {
   try {
   const { id } = req.params;
