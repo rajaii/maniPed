@@ -16,6 +16,15 @@ CURRENT =>=>=>:
 
  =========>
 
+            delete route on addressesRouter, and ability to delete addresses from FE
+                button nxt to address that triggers an action to api call to delete the address with addressid and reducer update
+            
+            and put profile, and corresponding reducers, so can edit profile from fe    
+                onclick each opens a form (component, feedsub is getting meessy lol may need to refactor into sub components later on all else) 
+                that can input the new info to local state and then dispatch action  put passing in id of user and state as body, to api and reducer 
+
+
+
 
             make rating component, and actions and reducer, and request logic , and ability to cancel/delete a booking, or delete addressses
             or anything else in the feedsub or app think deletes
@@ -23,22 +32,11 @@ CURRENT =>=>=>:
             Add in past_services on subfeed: rate this provider 
             (opens up a rating component whose request is linked to the ids to put the rating for them) or book this provider ( Opens up a booking screen for the provider, popuate with the ids here) again
 
+             set up cancellation action, reducer, and mechanism on dashboard somewhere for future bookings and wishlist
+            
             add in wishlist a messge provider button that takes to the messaging to them 
 
-            //NOT SUREadd in profile, edit profile button or functionality         
-
-            populate settings handleclick
-
-            make db for settings plan and set logic:
-
-                user_settings display set up now: privacy,  (added programmatically after bookings posted in post),
-                account linked to puts on user/:id and cn edit profile from settings, become a manipedologist lined to a route that will send applications somehow(do later),  sms notfications (on/off)    
-
-            set the state properties mentioned on comment found on feedSub line 16 and 17
-
-            make the respective components (populate settings last just make it bones intially) and have them conditionally render on ^
-
-            make settings component 
+            maybe add a rebook button on completed services so can book again??
             
 
             implement photos with cloud for profiels, and move on to V
@@ -62,18 +60,10 @@ CURRENT =>=>=>:
 
             AFTER ^ intiate logic to complete service, rate, confirmations, messages, emails, etc socketio messageing too
 
-            
-
-    
-            set up cancellation action, reducer, and mechanism on dashboard somewhere
-            
-            and completed_services reducer and actions so can pull info for feed and make bookings
-
-
-
+        
             profile tab with ability to edit profile info,add picture adding ability via cloud at this point
 
-            future bookings tab that gets the users bookings for future, may also display in feed.
+            
 
 
 
