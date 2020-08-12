@@ -46,8 +46,15 @@ router.put('/:user_id', validateUserId, (req, res) => {
   }
 });
 
-router.delete('/:id', (req, res) => {
-  //finish here
+router.delete('/:id', validateAddressesId, (req, res) => {
+  Addresses.remove(req.params.id)
+  .then(a => {
+    res.status(200).json(a)
+  })
+  .catch(err => {
+    console.log(err.message)
+    res.status(500).json(err)
+  })
 })
 
 async function validateAddressesId(req, res, next) {
