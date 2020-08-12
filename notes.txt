@@ -16,8 +16,6 @@ CURRENT =>=>=>:
 
  =========>
 
-            delete route on addressesRouter, and ability to delete addresses from FE
-                button nxt to address that triggers an action to api call to delete the address with addressid and reducer update
             
             and put profile, and corresponding reducers, so can edit profile from fe    
                 onclick each opens a form (component, feedsub is getting meessy lol may need to refactor into sub components later on all else) 
@@ -62,6 +60,10 @@ CURRENT =>=>=>:
 
         
             profile tab with ability to edit profile info,add picture adding ability via cloud at this point
+
+            add the button on ligin for forgot pw and functionality 
+
+            add verify email address upon register
 
             
 
