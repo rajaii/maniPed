@@ -17,9 +17,7 @@ CURRENT =>=>=>:
  =========>
 
             
-            and put profile, and corresponding reducers, so can edit profile from fe    
-                onclick each opens a form (component, feedsub is getting meessy lol may need to refactor into sub components later on all else) 
-                that can input the new info to local state and then dispatch action  put passing in id of user and state as body, to api and reducer 
+            finish debugging edit profile 
 
 
 
@@ -65,7 +63,10 @@ CURRENT =>=>=>:
 
             add verify email address upon register
 
-            
+            for every email addition/put need to send confirmation emails upon request to verify
+
+            later later must go through and send user proper errors from reducer if for example username is taken or email is taken on 
+            puts and posts
 
 
 
