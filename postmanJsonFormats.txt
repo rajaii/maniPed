@@ -31,7 +31,10 @@ BOOKINGS:
 "booking_time": "",
 "services_and_pricing": "",
 "provider_id": "",
-"user_id": ""
+"user_id": "",
+"user_name": "",
+"provider_name": "",
+"service_address": ""
 
 
 ===========================================================================
