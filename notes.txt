@@ -15,12 +15,7 @@ manigod reg and pre-admin access, and admin interface
 CURRENT =>=>=>: 
 
  =========>
-
-            
-            finish debugging edit profile 
-
-
-
+            in bookingsrouter run logic to not add duplicate addresses see line 194 debugging
 
             make rating component, and actions and reducer, and request logic , and ability to cancel/delete a booking, or delete addressses
             or anything else in the feedsub or app think deletes

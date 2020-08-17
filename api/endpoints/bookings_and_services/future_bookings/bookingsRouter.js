@@ -188,14 +188,36 @@ router.post('/', (req, res) => {
     Bookings.add(req.body)
       .then(booking => {
         //do a get to users/:id and providers/:id to get the emails out of there
-        Addresses.add({address: booking[0].service_address, user_id: booking[0].user_id})
+        //add logic to not add duplicate addresses here:
+        
+        Addresses.findById(user_id)
         .then(a => {
-          console.log('success adding address')
+          let addressInDb = false;
+           for (let i = 0; i < a.length; i++) {
+             if (a[i].address === booking[0].service_address) {
+               addressInDb = true;
+               console.log('address already in db');
+               break;
+             } 
+            }
+            if (!addressInDb) {
+              Addresses.add({address: booking[0].service_address, user_id: booking[0].user_id})
+                  .then(a => {
+                    console.log({messageFromDev: 'success adding address', requestReturned: a})
+                  })
+                  .catch(err => {
+                    console.log({error: err.message, messageFromDev: `error adding address to addresses upoon request`})
+                  })
+            }
+
         })
         .catch(err => {
-          console.log("error adding address to addresses upon post")
-          res.status(500).json({err, message: "error adding address to addresses upon post"});
+          console.log({error: err.message, messageFromDev: `error finding addresses for user_id ${user_id}`})
         })
+        
+
+        
+        
         let userEmail;
         let providerEmail;
         let username;
@@ -252,7 +274,7 @@ router.post('/', (req, res) => {
         res.status(201).json({booking});
       })
       .catch(err => {
-        console.log("error adding booking")
+        console.log(err, "error adding booking")
         res.status(500).json({err, message: "error adding booking"});
       });
     } 
