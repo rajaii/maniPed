@@ -191,47 +191,7 @@ exports.up = function(knex) {
 
 
 
-  //ratings will be many to many each custy will have rating from provider vice versa so own table for this but 2 ways rating user ratings ie ratings the users were 
-  //given by users (customers) to providers in this table for service
-  .createTable('user_ratings', tbl => {
-    tbl.increments('id');
-    tbl.decimal('rating', [3], [2]);
-    tbl.integer('user_id')
-      .unsigned()
-      .notNullable()
-      .references('id')
-      .inTable('users')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE');
-    tbl.integer('provider_id')
-      .unsigned()
-      .notNullable()
-      .references('id')
-      .inTable('providers')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE');
-
-})
-
-//given by providers to customers
-.createTable('provider_ratings', tbl => {
-  tbl.increments('id');
-  tbl.decimal('rating', [3], [2]);
-  tbl.integer('provider_id')
-    .unsigned()
-    .notNullable()
-    .references('id')
-    .inTable('providers')
-    .onUpdate('CASCADE')
-    .onDelete('CASCADE');
-  tbl.integer('user_id')
-    .unsigned()
-    .notNullable()
-    .references('id')
-    .inTable('users')
-    .onUpdate('CASCADE')
-    .onDelete('CASCADE');
-})
+  
 
   //can be prepopulated radio inputs for services that send strings up to post from front-end or drop down, or
 // even limited text manually entered by the provider or a combo ie. deal with the exact post mech in FE
@@ -279,6 +239,63 @@ exports.up = function(knex) {
     .onUpdate('CASCADE')
     .onDelete('CASCADE');   
   tbl.timestamp('created_at').defaultTo(knex.fn.now());  
+})
+
+//ratings will be many to many each custy will have rating from provider vice versa so own table for this but 2 ways rating user ratings ie ratings the users were 
+  //given by users (customers) to providers in this table for service
+  .createTable('user_ratings', tbl => {
+    tbl.increments('id');
+    tbl.decimal('rating', [3], [2]);
+    tbl.integer('user_id')
+      .unsigned()
+      .notNullable()
+      .references('id')
+      .inTable('users')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE');
+    tbl.integer('provider_id')
+      .unsigned()
+      .notNullable()
+      .references('id')
+      .inTable('providers')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE');
+    tbl.integer('service_id')
+      .unsigned()
+      .notNullable()
+      .references('id')
+      .inTable('completed_services')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE');
+
+
+})
+
+//given by providers to customers
+.createTable('provider_ratings', tbl => {
+  tbl.increments('id');
+  tbl.decimal('rating', [3], [2]);
+  tbl.integer('provider_id')
+    .unsigned()
+    .notNullable()
+    .references('id')
+    .inTable('providers')
+    .onUpdate('CASCADE')
+    .onDelete('CASCADE');
+  tbl.integer('user_id')
+    .unsigned()
+    .notNullable()
+    .references('id')
+    .inTable('users')
+    .onUpdate('CASCADE')
+    .onDelete('CASCADE');
+  tbl.integer('service_id')
+    .unsigned()
+    .notNullable()
+    .references('id')
+    .inTable('completed_services')
+    .onUpdate('CASCADE')
+    .onDelete('CASCADE');
 })
 
 
@@ -372,9 +389,10 @@ exports.down = function(knex) {
   .dropTableIfExists('admin')
   .dropTableIfExists('pre_admin')
   .dropTableIfExists('available_services')
-  .dropTableIfExists('completed_services')
   .dropTableIfExists('provider_ratings')
   .dropTableIfExists('user_ratings')
+  .dropTableIfExists('completed_services')
+  
   .dropTableIfExists('future_bookings')
   // .dropTableIfExists('provider_showcase')
   // .dropTableIfExists('provider_settings')
