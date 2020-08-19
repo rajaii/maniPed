@@ -189,9 +189,7 @@ exports.up = function(knex) {
     tbl.timestamp('booked_at').defaultTo(knex.fn.now());  
   })
 
-
-
-  //ratings will be many to many each custy will have rating from provider vice versa so own table for this but 2 ways rating user ratings ie ratings the users were 
+//ratings will be many to many each custy will have rating from provider vice versa so own table for this but 2 ways rating user ratings ie ratings the users were 
   //given by users (customers) to providers in this table for service
   .createTable('user_ratings', tbl => {
     tbl.increments('id');
@@ -210,6 +208,8 @@ exports.up = function(knex) {
       .inTable('providers')
       .onUpdate('CASCADE')
       .onDelete('CASCADE');
+    
+
 
 })
 
@@ -231,7 +231,10 @@ exports.up = function(knex) {
     .inTable('users')
     .onUpdate('CASCADE')
     .onDelete('CASCADE');
+  
 })
+
+  
 
   //can be prepopulated radio inputs for services that send strings up to post from front-end or drop down, or
 // even limited text manually entered by the provider or a combo ie. deal with the exact post mech in FE
@@ -280,6 +283,8 @@ exports.up = function(knex) {
     .onDelete('CASCADE');   
   tbl.timestamp('created_at').defaultTo(knex.fn.now());  
 })
+
+
 
 
 
@@ -375,6 +380,8 @@ exports.down = function(knex) {
   .dropTableIfExists('completed_services')
   .dropTableIfExists('provider_ratings')
   .dropTableIfExists('user_ratings')
+  
+  
   .dropTableIfExists('future_bookings')
   // .dropTableIfExists('provider_showcase')
   // .dropTableIfExists('provider_settings')

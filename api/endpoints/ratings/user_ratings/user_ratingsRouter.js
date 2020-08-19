@@ -25,10 +25,10 @@ router.get('/user/:user_id', async (req, res) => {
         const { user_id } = req.params;
     
         let ratings = await User_ratings.findByUserId(user_id)
-        if(ratings.length > 0) {
+        if(ratings) {
             res.status(200).json(ratings)   
         } else {
-            res.status(404).json({message: 'invalid user id'});
+            res.status(404).json({message: "error finding ratings"});
         }
     } catch(error) {
         res.status(500).json(error);
