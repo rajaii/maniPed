@@ -16,16 +16,11 @@ CURRENT =>=>=>:
 
  =========>
 
-            make rating component, and actions and reducer, and request logic ,
+           =====> just addded e.persist in this.rateService feedsub.js.  Need to figure out how to render the stuff under the service clicked on
+           and also how to pass the appropriate stuff to the rate component.  Will be tied together ie b using attributes.  Gotta debug the logic.
+              
 
-                -tweaked migrations so rollback, and migrate: latest and add user, provider, and a few bookings that are completed and confirmed for dev/testing
-
-                -make 2 requests/actions: 1st get to user_ratings where user_rating_id and provider_rating_id and services_id === completed_services.id to see if rating exists if it does, 
-                render an already rated component that tells user they already did it and dismiss it, and if not render the rating component
-
-                -have a fetch_USER_RAtings and a post user_ratings action and reducers done
-
-                -wire the post through to RateService.js and the get to feedSub.js (to run the logic and thus display the alreadyrated component)
+                -wire the post through to RateService.js
 
                 -make styling and add body programmatically from click of rate value to the post.  add handlechange to set state, and handlesubmit to send request.
                     if rating done, give a success message w dismiss

@@ -45,7 +45,9 @@ COMPLETED_SERVICES:
 "amount_billed": "",
 "booking_id": ,
 "user_id": ,
-"provider_id": 
+"provider_id": ,
+"user_name: "",
+"provider_name: ""
 
 ===========================================================================
 
