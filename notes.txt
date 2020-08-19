@@ -16,8 +16,12 @@ CURRENT =>=>=>:
 
  =========>
 
-           =====> just addded e.persist in this.rateService feedsub.js.  Need to figure out how to render the stuff under the service clicked on
-           and also how to pass the appropriate stuff to the rate component.  Will be tied together ie b using attributes.  Gotta debug the logic.
+           =====> 
+           When posting a user_rating the id is not being added to the services table fix that route then continue working on the rating/ratingError
+           display issue ALSO e.persist not working anymore for some reason debug...
+
+            if rate component being displayed in right place and right time (error too) then need to post a rating and
+            need to check if rated service error works and then move on to style and wire thorugh the rating component and error component
               
 
                 -wire the post through to RateService.js
