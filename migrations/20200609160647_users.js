@@ -208,9 +208,6 @@ exports.up = function(knex) {
       .inTable('providers')
       .onUpdate('CASCADE')
       .onDelete('CASCADE');
-    
-
-
 })
 
 //given by providers to customers
