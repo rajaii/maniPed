@@ -15,10 +15,9 @@ manigod reg and pre-admin access, and admin interface
 CURRENT =>=>=>: 
 
  =========>
+            after V make 5 new services, confirm and complete and rate and see if it gets the user_rating_id on the completed services table
 
-           =====> 
-           When posting a user_rating the id is not being added to the services table fix that route then continue working on the rating/ratingError
-           display issue ALSO e.persist not working anymore for some reason debug...
+           =====> fixed e.persist issue, now debugging .filter in feedsub.rateservice
 
             if rate component being displayed in right place and right time (error too) then need to post a rating and
             need to check if rated service error works and then move on to style and wire thorugh the rating component and error component

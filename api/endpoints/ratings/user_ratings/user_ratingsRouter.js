@@ -74,7 +74,7 @@ router.post('/', (req, res) => {
     const {rating, /*all but rating will be prepopulated by app service tied to the service/booking they are rating for provider will be the one 
         who served them and userid will come from the user we send the rating screen to */ provider_id, user_id, service_id} = req.body;
 
-    if (!rating || !provider_id || !user_id || service_id) {
+    if (!rating || !provider_id || !user_id || !service_id) {
       res.status(400).json({message: 'please provide a rating to rate your provider...'});
     } else {
     User_ratings.add(req.body)
@@ -82,10 +82,10 @@ router.post('/', (req, res) => {
         //The service_id will have to be pulled from FE on a get to service to populate the info for service being rated and passed into the req.body
         Services.update(service_id, {"user_rating_id": `${rating[0].id}`})
         .then(s => {
-          res.status(200);
+          console.log({message: 'success updating the service with user_rating_id', s})
         })
         .catch(e => {
-          res.status(500).json(err)
+          console.log({message: "errror updating the service with user_rating_id", e})
         })
         res.status(201).json({rating})
         
