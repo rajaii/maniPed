@@ -15,12 +15,11 @@ manigod reg and pre-admin access, and admin interface
 CURRENT =>=>=>: 
 
  =========>
-            after V make 5 new services, confirm and complete and rate and see if it gets the user_rating_id on the completed services table
+            make 5 new services, confirm and complete and rate and see if it gets the user_rating_id on the completed services table
+            and test that the rate service component is being rendered properly too  before doing one or 2 of these
 
-           =====> fixed e.persist issue, now debugging .filter in feedsub.rateservice
 
-            if rate component being displayed in right place and right time (error too) then need to post a rating and
-            need to check if rated service error works and then move on to style and wire thorugh the rating component and error component
+            if ^ done then move on to style and wire thorugh the rating component and error component to redux
               
 
                 -wire the post through to RateService.js
@@ -214,7 +213,7 @@ VERY END before deploy production:
 
 ===============================================================================================================================================
 
-DEBUGGINGS:
+DEBUGGINGS and Potential debuggings:
 
      knex seed:run:
     _SEED Error: Error while executing "C:\Users\rosin\a_jProjects\maniPed\seeds\bookings.js" seed: truncate "future_bookings" restart identity - cannot truncate a table referenced in a 
@@ -224,6 +223,12 @@ DEBUGGINGS:
      line 33 and 34 of nav.js in FE desktop set better (more specific) logic to see if user logged in.  prob using authreducer.isLoggedIn will work when 
      app is running and not cutting in and off, so try that again when deployed and test to see.   
 
+    Strings are getting passed to the values being pulled from e.target in FeedSub.rateService().  There was a bug in persistance, and pulling 
+    properties from e.target so I dug under the hood and pulled them from e.target.attributes.user_id.nodeValue, etc.  This must be stringifying
+    the values because those are being set as attributes from a mapping of this.props.completedServices, which pulls from the table completed_services.
+    upon closer inspection you will note that those ids are all being added as integers in the sql knex migrations.createTable(completed_services)
+    (migrations line 238 - 282).  I fixed the issue by using the loosely typed comparison operator ==.  The app will work as intended, but noting for 
+    potential future bugs that may be related (probably not though).  
 
 
 
