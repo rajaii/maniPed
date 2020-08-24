@@ -77,7 +77,8 @@ router.post('/', (req, res) => {
     if (!rating || !provider_id || !user_id || !service_id) {
       res.status(400).json({message: 'please provide a rating to rate your provider...'});
     } else {
-    User_ratings.add(req.body)
+      const body = { rating, provider_id, user_id }
+    User_ratings.add(body)
       .then(rating => {
         //The service_id will have to be pulled from FE on a get to service to populate the info for service being rated and passed into the req.body
         Services.update(service_id, {"user_rating_id": `${rating[0].id}`})
@@ -91,7 +92,8 @@ router.post('/', (req, res) => {
         
       })
       .catch(err => {
-        res.status(500).json(err);
+        console.log(err.message)
+        res.status(500).json({message: 'failed to add rating', err});
       });
     } 
 });
