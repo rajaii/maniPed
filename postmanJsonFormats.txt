@@ -75,7 +75,7 @@ PREADMIN:
 
 USER_RATINGS
 
-"rating":
+"rating": 
 "service_id": "",
 "user_id": "",
 "provider_id": ""

@@ -15,24 +15,9 @@ manigod reg and pre-admin access, and admin interface
 CURRENT =>=>=>: 
 
  =========>
-            make 5 new services, confirm and complete and rate and see if it gets the user_rating_id on the completed services table
-            and test that the rate service component is being rendered properly too  before doing one or 2 of these
-
-
-            if ^ done then move on to style and wire thorugh the rating component and error component to redux
-              
-
-                -wire the post through to RateService.js
-
-                -make styling and add body programmatically from click of rate value to the post.  add handlechange to set state, and handlesubmit to send request.
-                    if rating done, give a success message w dismiss
-                    else give a message that there was an error processing request, and try again dismiss  make an error component that can be rendered everywhere in the app
-                    when such instances occur.
-
-                
-
-            
-             and ability to cancel/delete a booking, or delete addressses or anything else in the feedsub or app think deletes
+    
+             
+                ==> populate deletebooking functions on feed and feedsub.js and wire to button and test
 
             Add in past_services on subfeed: rate this provider 
             (opens up a rating component whose request is linked to the ids to put the rating for them) or book this provider ( Opens up a booking screen for the provider, popuate with the ids here) again
