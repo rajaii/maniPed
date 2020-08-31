@@ -17,21 +17,15 @@ CURRENT =>=>=>:
  =========>
     
              
-                ==> populate deletebooking functions on feed and feedsub.js and wire to button and test
+        ==> cloudinary docs npm install cloudinary
 
-            Add in past_services on subfeed: rate this provider 
-            (opens up a rating component whose request is linked to the ids to put the rating for them) or book this provider ( Opens up a booking screen for the provider, popuate with the ids here) again
-
-             set up cancellation action, reducer, and mechanism on dashboard somewhere for future bookings and wishlist
-            
-            add in wishlist a messge provider button that takes to the messaging to them 
-
-            maybe add a rebook button on completed services so can book again??
-            
+            installing gave warnings, cloudinary and nodemailier interacting weirdly, may cause issues later
 
             implement photos with cloud for profiels, and move on to V
 
             implement socket.io or twilio for mesaging and reminders
+
+            add in wishlist a messge provider button that takes to the messaging to them 
 
             implement google maps api for geolocation when 1 hr to apt
 
@@ -51,7 +45,7 @@ CURRENT =>=>=>:
             AFTER ^ intiate logic to complete service, rate, confirmations, messages, emails, etc socketio messageing too
 
         
-            profile tab with ability to edit profile info,add picture adding ability via cloud at this point
+            profile tab add picture adding ability via cloud at this point
 
             add the button on ligin for forgot pw and functionality 
 
@@ -63,6 +57,8 @@ CURRENT =>=>=>:
             puts and posts
 
             display users rating on profile.
+
+            set up so if logged in home button goes to dashboard and login and signup are hidden
 
 
 
@@ -222,14 +218,5 @@ DEBUGGINGS and Potential debuggings:
 
 
 
-===========================================================================================================================
-User React app plan:
-Home will have a landing page with login taking customers to their dashboard
 
-components: nav, about, services, login, signup, 
-
-dashboard (when logged in) will have more things ie search for services, providers in area, messaging, etc 
-
-
-================================================================================================================================
 
