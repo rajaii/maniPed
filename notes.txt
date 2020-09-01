@@ -18,6 +18,7 @@ CURRENT =>=>=>:
     
              
         ==> cloudinary docs npm install cloudinary
+                working on the widget uploadPreset and pouring the docs
 
             installing gave warnings, cloudinary and nodemailier interacting weirdly, may cause issues later
 
