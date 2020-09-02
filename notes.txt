@@ -17,7 +17,11 @@ CURRENT =>=>=>:
  =========>
     
              
-        ==> cloudinary docs npm install cloudinary
+        ==>
+            flow of cloud:
+                line 41-43 of editprofile in fe.  do all server stuff here then do fe there for user and will be raedy to set up for provider when time comes api ready
+
+         cloudinary docs npm install cloudinary
                 working on the widget uploadPreset and pouring the docs
 
             installing gave warnings, cloudinary and nodemailier interacting weirdly, may cause issues later
@@ -182,7 +186,7 @@ API to FE INTEGRATION:
 
 VERY END before deploy production:
 
-    
+    enter notification url in upload presets of cloudinary act settings > upload > maniped_preset
     
     UNCOMMENT THE CHECKROLES MIDDLEWARE CALLS ON THE ROUTES
 
