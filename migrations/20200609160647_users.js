@@ -96,11 +96,30 @@ exports.up = function(knex) {
       tbl.string('nails_services_and_pricing');
       tbl.string('hair_services_and_pricing');
       tbl.string('massage_services_and_pricing');
+      tbl.binary('work_image_url_1')
+      .unique();
+      tbl.binary('work_image_url_2')
+        .unique();
+      tbl.binary('work_image_url_3')
+        .unique();
+      tbl.binary('work_image_url_4')
+        .unique();
+      tbl.binary('work_image_url_5')
+        .unique();
+      tbl.binary('work_image_url_6')
+        .unique();
+      tbl.binary('work_image_url_7')
+        .unique();
+      tbl.binary('work_image_url_8')
+        .unique();
       tbl.boolean('activated')
         .defaultTo(0)
       tbl.timestamp('created_at').defaultTo(knex.fn.now());   
       
   })
+
+   // migrations have 2 new tables: user_settings, and provider_settings 
+  // in migrations tbl. ... =>privacy (boolean) for geolocation on/off, addresses (string), sms (boolean),
 
   // .createTable('provider_settings', tbl => {
   //   tbl.increments('id');
@@ -113,35 +132,8 @@ exports.up = function(knex) {
   //     .onDelete('CASCADE');
   // })
 
-  // migrations have 2 new tables: user_settings, and provider_settings 
-  // in migrations tbl. ... =>privacy (boolean) for geolocation on/off, addresses (string), sms (boolean),
-
-  // //WORK IMAGES may need tweaking upon integration, will test w fe
-  // .createTable('provider_showcase', tbl => {
-  //   tbl.increments('id');
-  //   tbl.binary('work_image_url_1')
-  //     .unique();
-  //   tbl.binary('work_image_url_2')
-  //     .unique();
-  //   tbl.binary('work_image_url_3')
-  //     .unique();
-  //   tbl.binary('work_image_url_4')
-  //     .unique();
-  //   tbl.binary('work_image_url_5')
-  //     .unique();
-  //   tbl.binary('work_image_url_6')
-  //     .unique();
-  //   tbl.binary('work_image_url_7')
-  //     .unique();
-  //   tbl.binary('work_image_url_8')
-  //     .unique();
-  //   tbl.integer('provider_id')
-  //     .unsigned()
-  //     .references('id')
-  //     .inTable('providers')
-  //     .onUpdate('CASCADE')
-  //     .onDelete('CASCADE');
-  // })
+ 
+ 
 
   .createTable('future_bookings', tbl =>{
     tbl.increments('id');

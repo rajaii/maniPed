@@ -37,21 +37,7 @@ router.put('/:id', validateUserId, (req, res) => {
   }
 });
 
-async function validateUserId(req, res, next) {
-  try {
-  const { id } = req.params;
 
-  let u = await Users.findById(id);
-  if(u) {
-      req.custy = u;
-      next();
-  } else {
-      res.status(404).json({message: 'invalid user id'});
-  }
-} catch(error) {
-  res.status(500).json(error);
-}
-};
 
 
 module.exports = router;
