@@ -40,7 +40,6 @@ router.put('/:id', validateUserId, (req, res) => {
 async function validateUserId(req, res, next) {
   try {
   const { id } = req.params;
-
   let u = await Users.findById(id);
   if(u) {
       req.custy = u;

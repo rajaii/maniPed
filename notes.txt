@@ -20,6 +20,8 @@ CURRENT =>=>=>:
         ==>
             flow of cloud:
                 line 41-43 of editprofile in fe.  do all server stuff here then do fe there for user and will be raedy to set up for provider when time comes api ready
+                put request to users, add in profile_img_url;
+                
 
          cloudinary docs npm install cloudinary
                 working on the widget uploadPreset and pouring the docs
@@ -31,6 +33,8 @@ CURRENT =>=>=>:
             implement socket.io or twilio for mesaging and reminders
 
             add in wishlist a messge provider button that takes to the messaging to them 
+
+            add stripe for payments or another payment package
 
             implement google maps api for geolocation when 1 hr to apt
 
