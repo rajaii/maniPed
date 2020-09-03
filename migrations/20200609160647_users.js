@@ -26,6 +26,8 @@ exports.up = function(knex) {
         .notNullable()
       tbl.boolean('activated')
         .defaultTo(1)
+      tbl.string('profile_img_url')
+        .unique();
       tbl.timestamp('created_at').defaultTo(knex.fn.now());   
   })
 
@@ -56,18 +58,6 @@ exports.up = function(knex) {
          .onDelete('CASCADE');  
   })
 
-  // .createTable('user_avatars', tbl => {
-  //   tbl.increments('id');
-  //   tbl.binary('avatar')
-  //     .unique();
-  //   tbl.integer('user_id')
-  //     .unsigned()
-  //     .references('id')
-  //     .inTable('users')
-  //     .onUpdate('CASCADE')
-  //     .onDelete('CASCADE');
-    
-  // })
 
   //information on cosmetic provider users for their profiles and accounts
   .createTable('providers', tbl => {
@@ -95,6 +85,8 @@ exports.up = function(knex) {
         .notNullable();
       tbl.string('zipcode', [10])
         .notNullable();
+      tbl.string('profile_img_url')
+        .unique();
       tbl.string('header');
       //set from preselected list and enter from input type radio on FE and add to db string from there
       tbl.string('about_me');
@@ -127,24 +119,21 @@ exports.up = function(knex) {
   // //WORK IMAGES may need tweaking upon integration, will test w fe
   // .createTable('provider_showcase', tbl => {
   //   tbl.increments('id');
-  //   tbl.binary('avatar')
-  //     .notNullable()
+  //   tbl.binary('work_image_url_1')
   //     .unique();
-  //   tbl.binary('image_1')
+  //   tbl.binary('work_image_url_2')
   //     .unique();
-  //   tbl.binary('image_2')
+  //   tbl.binary('work_image_url_3')
   //     .unique();
-  //   tbl.binary('image_3')
+  //   tbl.binary('work_image_url_4')
   //     .unique();
-  //   tbl.binary('image_4')
+  //   tbl.binary('work_image_url_5')
   //     .unique();
-  //   tbl.binary('image_5')
+  //   tbl.binary('work_image_url_6')
   //     .unique();
-  //   tbl.binary('image_6')
+  //   tbl.binary('work_image_url_7')
   //     .unique();
-  //   tbl.binary('image_7')
-  //     .unique();
-  //   tbl.binary('image_8')
+  //   tbl.binary('work_image_url_8')
   //     .unique();
   //   tbl.integer('provider_id')
   //     .unsigned()

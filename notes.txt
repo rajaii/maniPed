@@ -32,6 +32,8 @@ CURRENT =>=>=>:
 
             add in wishlist a messge provider button that takes to the messaging to them 
 
+            add stripe for payments or another payment package
+
             implement google maps api for geolocation when 1 hr to apt
 
                 [
