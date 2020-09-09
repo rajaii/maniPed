@@ -15,59 +15,29 @@ manigod reg and pre-admin access, and admin interface
 CURRENT =>=>=>: 
 
  =========>
-    
-             
-        ==>
-            flow of cloud:
-                line 41-43 of editprofile in fe.  do all server stuff here then do fe there for user and will be raedy to set up for provider when time comes api ready
-                put request to users, add in profile_img_url;
-                
 
-         cloudinary docs npm install cloudinary
-                working on the widget uploadPreset and pouring the docs
-
-            installing gave warnings, cloudinary and nodemailier interacting weirdly, may cause issues later
-
-            implement photos with cloud for profiels, and move on to V
-
-            implement socket.io or twilio for mesaging and reminders
-
-            add in wishlist a messge provider button that takes to the messaging to them 
-
-            add stripe for payments or another payment package
-
-            implement google maps api for geolocation when 1 hr to apt
-
-                [
-        
-            make it so they can message their provider in feed too.
-
-            if click on profile conditionally render profile component under the feedsub and allow to edit, if click on past services 
-            render a past services component which will conditionally render another component for that, and for wishlist the same in this component 
-            they can message the upcoming provider to notify them or remind them to confirm.
-            
-                ]
-
-            3)programmatically send reminders 24 hours and 1 hour before the meerting to both. TWILIO for this and for messaging  Fire up gps on provider and user within hour, have provider
-            tap button to indicate on the way and then show on user app how far they are.
-
-            AFTER ^ intiate logic to complete service, rate, confirmations, messages, emails, etc socketio messageing too
-
-        
-            profile tab add picture adding ability via cloud at this point
+ 
+         ==>  
+         
+             add stripe for payments or another payment package
 
             add the button on ligin for forgot pw and functionality 
 
             add verify email address upon register
 
-            for every email addition/put need to send confirmation emails upon request to verify
-
-            later later must go through and send user proper errors from reducer if for example username is taken or email is taken on 
-            puts and posts
+            for every email addition/put need to send confirmation emails upon request to verify if email not sent do not update if not verified in 
+            24 hours set back to email from before
 
             display users rating on profile.
 
             set up so if logged in home button goes to dashboard and login and signup are hidden
+
+            set up protected routes or cookie login.  figure way around the bug from before.
+    
+             
+        
+
+         
 
 
 
@@ -81,13 +51,6 @@ PROGRAMMATICS (tweaks to those features that are added already):
 
 
     API:
-
-        make it so frontend provider app and email message go to provider to confirm after booking post made.
-
-        make it so duplicate bookings can not happen.
-
-        Cloud storage for photos and then link storage in db for pulling to FE for image display tweak routes/helpers and migrations accordingly 
-        when get there see API to FE INTEGRATION: Images
 
         notifications 24 hours before and 1 hour before appointments to provider and user
 
@@ -111,14 +74,6 @@ PROGRAMMATICS (tweaks to those features that are added already):
 
             dashboard not working on privateRoute giving this error V  
 
-            Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
-
-            figure out how to push (use from login to dash when logged in, use on booking to go to dash when success message discarded) ]!!!!!!!!!!!!!!!!!!!
-
-        Validations needed from FE via yup:
-        Signup:(see migrations)
-        //will have to use something to validate these fields ie yup from frontend to make sure pw is certain legnth and has symbols lower upper and 1 num and zipcode
-
 
         Role MGMT:
         //Manigods UI app will be local only on manigods machines and accessed via the private repo that only I an d joseph have access too.  not deployed, 
@@ -140,14 +95,8 @@ PLANNING (possible future features not added in yet):
 
     possbily tie available_services to providers and make route do more, just get for fe and post for admin for now done before this.
 
-    services: mani pedi, waxing, hair, 
+    services: nails, massage, hair, waxing 
 
-    Figure out if manigods use same interface as admin as well, or have a public manigods w special permissions that can not add to admin db and 
-    do other super private tranactions on that ie option A: 2 interfaces 1 public; 1 private, or option B: just 1 private and then separate
-     admin accounts (will for forseeable future not need the first option so can get done faster with option B)
-
-    PAYMENT:
-    //find a framework to handle this, but may need to delete that later
 
 API to FE INTEGRATION:
 
@@ -157,13 +106,7 @@ API to FE INTEGRATION:
         push user on fe to login on successful login, if decide to do on fe look at comments on register.js but props.history.push is a PIA with    
         react-router-v4 try to do from BE
 
-    images: 
-    For upload and api:
-        https://www.npmjs.com/package/multer
-        https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
-    use Cloudinary
-    ABANDONED THIS CLOUD STORAGE IS MORE EFFECTIVE.  LEAVE ALL ROUTERS/HELPERS UNUSED AND MIGRATIONS COMMENTED OUT UNTIL LATER MAY TWEAK TO USE WITH CLOUD
-    OR DELETE WHAT ISN'T NEEDED LATER. 
+    
 
 
     RATINGS:
@@ -172,19 +115,9 @@ API to FE INTEGRATION:
 
     no lifetime rating database column/table, will compute the rating on a get call to the users/providers ratings and take the avg and post that to the fe,
 
-    after you post the rating user_rating_id for the service needs to be updated in services by taking the id from user_ratings. (service id will be taken from a get by fe that will pull info on the service to 
-    be rated for the rating screen and thus pre populated on the follow up put that will go through with the post see line 82 of userratingsRouter.js)
 
     ADMIN:
     may need to pull timestamps (created_at etc) in get calls and format that so admin can see when the profiles created etc.
- 
-    BOOKINGS AND SERVICES
-    when making bookings (post see bookingsRouter line 56-57) userId will come from the users data, and provider_id will come from a screen where you click on the provider to book
-    confirmations sent to provider upon user booking, when they click to confirm, the put will be called to change the tbl.boolean comfrimed to 1
-
-
-    post will be used when the provider completes the service.  They will verify to end and then it will post to completed services, and then rating 
-    notifications will go out to both user and provider (immediately to provider like uber does) see line 70-72 of servicesRouter.js
 
 
 
@@ -196,29 +129,43 @@ VERY END before deploy production:
 
     prettify code
 
-    DRY:
-    in migrations maybe make a function for some of the redundant schemas if they stay the same ie admin and manigods before final implementation.  leave as is now for debugging,
-    refactoring, and comments
 
 
 ===============================================================================================================================================
 
 DEBUGGINGS and Potential debuggings:
 
-     knex seed:run:
-    _SEED Error: Error while executing "C:\Users\rosin\a_jProjects\maniPed\seeds\bookings.js" seed: truncate "future_bookings" restart identity - cannot truncate a table referenced in a 
-    foreign key constraint
-     may have to add created at in seeds if doesnt run, also knexfile configs were changed, adding seed dir and pool config
+    does not have info before pushing to dashboard after login, fix prob w async await 
 
-     line 33 and 34 of nav.js in FE desktop set better (more specific) logic to see if user logged in.  prob using authreducer.isLoggedIn will work when 
-     app is running and not cutting in and off, so try that again when deployed and test to see.   
+=====================================================================================================================================
 
-    Strings are getting passed to the values being pulled from e.target in FeedSub.rateService().  There was a bug in persistance, and pulling 
-    properties from e.target so I dug under the hood and pulled them from e.target.attributes.user_id.nodeValue, etc.  This must be stringifying
-    the values because those are being set as attributes from a mapping of this.props.completedServices, which pulls from the table completed_services.
-    upon closer inspection you will note that those ids are all being added as integers in the sql knex migrations.createTable(completed_services)
-    (migrations line 238 - 282).  I fixed the issue by using the loosely typed comparison operator ==.  The app will work as intended, but noting for 
-    potential future bugs that may be related (probably not though).  
+AFTER PROVIDER DESKTOP DONE DO THESE: {  
+              implement socket.io or twilio for mesaging and reminders
+
+            add in wishlist a messge provider button that takes to the messaging to them
+
+             [
+        
+            make it so they can message their provider in feed too. 
+            they can message the upcoming provider to notify them or remind them to confirm.
+            
+                ]
+
+                 implement google maps api for geolocation when 1 hr to apt
+
+                 
+            3)programmatically send reminders 24 hours and 1 hour before the meerting to both. TWILIO for this and for messaging  Fire up gps on provider and user within hour, have provider
+            tap button to indicate on the way and then show on user app how far they are.
+
+            later later must go through and send user proper errors from reducer if for example username is taken or email is taken on 
+            puts and posts
+
+            upon complettion of service add a notification to user with a rating screen and notify them that they can rate later in the past services
+            section of app
+
+             }
+
+
 
 
 
