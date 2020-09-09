@@ -15,36 +15,8 @@ manigod reg and pre-admin access, and admin interface
 CURRENT =>=>=>: 
 
  =========>
-    
-             
-        
 
-         after provider app done {  
-              implement socket.io or twilio for mesaging and reminders
-
-            add in wishlist a messge provider button that takes to the messaging to them
-
-             [
-        
-            make it so they can message their provider in feed too. 
-            they can message the upcoming provider to notify them or remind them to confirm.
-            
-                ]
-
-                 implement google maps api for geolocation when 1 hr to apt
-
-                 
-            3)programmatically send reminders 24 hours and 1 hour before the meerting to both. TWILIO for this and for messaging  Fire up gps on provider and user within hour, have provider
-            tap button to indicate on the way and then show on user app how far they are.
-
-            later later must go through and send user proper errors from reducer if for example username is taken or email is taken on 
-            puts and posts
-
-            upon complettion of service add a notification to user with a rating screen and notify them that they can rate later in the past services
-            section of app
-
-             }
-
+ 
          ==>  
          
              add stripe for payments or another payment package
@@ -61,6 +33,11 @@ CURRENT =>=>=>:
             set up so if logged in home button goes to dashboard and login and signup are hidden
 
             set up protected routes or cookie login.  figure way around the bug from before.
+    
+             
+        
+
+         
 
 
 
@@ -160,7 +137,36 @@ DEBUGGINGS and Potential debuggings:
 
     does not have info before pushing to dashboard after login, fix prob w async await 
 
-    
+=====================================================================================================================================
+
+AFTER PROVIDER DESKTOP DONE DO THESE: {  
+              implement socket.io or twilio for mesaging and reminders
+
+            add in wishlist a messge provider button that takes to the messaging to them
+
+             [
+        
+            make it so they can message their provider in feed too. 
+            they can message the upcoming provider to notify them or remind them to confirm.
+            
+                ]
+
+                 implement google maps api for geolocation when 1 hr to apt
+
+                 
+            3)programmatically send reminders 24 hours and 1 hour before the meerting to both. TWILIO for this and for messaging  Fire up gps on provider and user within hour, have provider
+            tap button to indicate on the way and then show on user app how far they are.
+
+            later later must go through and send user proper errors from reducer if for example username is taken or email is taken on 
+            puts and posts
+
+            upon complettion of service add a notification to user with a rating screen and notify them that they can rate later in the past services
+            section of app
+
+             }
+
+
+
 
 
 
