@@ -27,7 +27,8 @@ CURRENT =>=>=>:
                     set up button on fe to add payment method on main page
                     set up an action/reducer to see when booking apts if they are setup with a payment method, if not redirect to stripes enter pmt 
                     info to book
-                    
+                    implement functionality on completes services post to also implement the payment to the custy
+
                 }
 
              [
