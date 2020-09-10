@@ -3,6 +3,7 @@ const express = require('express');
 const server = express();
 const cors = require('cors');
 const helmet = require('helmet')
+/////////////////////////////////////////delter after learning done
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 const authRouter = require('../auth/authRouter.js');
@@ -27,7 +28,8 @@ const restricted = require('../auth/restrictedMiddleware.js');
 server.get('/', (req, res) => {
     res.status(200).send('<h1>Welcome to the maniPed API!!</h1>');
 });
-
+server.use(cors());
+///////////////////////////////////////////////delete after learning
 server.post("/create-checkout-session", async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -50,9 +52,9 @@ server.post("/create-checkout-session", async (req, res) => {
   
     res.json({ id: session.id });
   });
-
+///////////////////////////////////////////////////////////////
 server.use(helmet());
-server.use(cors());
+
 server.use(express.json());
 
 
