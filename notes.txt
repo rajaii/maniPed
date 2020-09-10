@@ -19,7 +19,12 @@ CURRENT =>=>=>:
  
          ==>  
          
-             add stripe for payments or another payment package
+             add stripe for payments
+             when wiring to FE
+             [
+                 Your Stripe.js integration needs the id field from the Session creation API 
+                 response, so be sure to make it available to the JavaScript or HTML file you call redirectToCheckout from.
+             ]
 
             add the button on ligin for forgot pw and functionality 
 
