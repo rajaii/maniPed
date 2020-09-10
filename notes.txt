@@ -19,7 +19,22 @@ CURRENT =>=>=>:
  
          ==>  
          
-             add stripe for payments or another payment package
+             add stripe for payments
+             when wiring to FE
+                {
+                    PSEUDO
+                    set up stripe setup on be,
+                    set up button on fe to add payment method on main page
+                    set up an action/reducer to see when booking apts if they are setup with a payment method, if not redirect to stripes enter pmt 
+                    info to book
+                    implement functionality on completes services post to also implement the payment to the custy
+
+                }
+
+             [
+                 Your Stripe.js integration needs the id field from the Session creation API 
+                 response, so be sure to make it available to the JavaScript or HTML file you call redirectToCheckout from.
+             ]
 
             add the button on ligin for forgot pw and functionality 
 
@@ -122,6 +137,8 @@ API to FE INTEGRATION:
 
 
 VERY END before deploy production:
+
+    set stripe test keys to live secret key
 
     enter notification url in upload presets of cloudinary act settings > upload > maniped_preset
     
