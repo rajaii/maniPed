@@ -52,6 +52,13 @@ server.post("/create-checkout-session", async (req, res) => {
   
     res.json({ id: session.id });
   });
+
+  server.get('/card-wallet', async (req, res) => {
+    const intent =  await stripe.setupIntents.create({
+      customer: customer.id,
+    });
+    res.render('card_wallet', { client_secret: intent.client_secret });
+  });
 ///////////////////////////////////////////////////////////////
 server.use(helmet());
 
