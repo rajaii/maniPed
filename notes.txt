@@ -15,16 +15,7 @@ manigod reg and pre-admin access, and admin interface
 CURRENT =>=>=>: 
 
  =========>
- note: may need to add:
-
- const expressHandlebars = require('express-handlebars');
-const app = express();
-
-app.engine('.hbs', expressHandlebars({ extname: '.hbs' }));
-app.set('view engine', '.hbs');
-app.set('views', './views');
-
-in server if setuppmt not working
+    https://stripe.com/docs/payments/save-and-reuse
  
          ==>  
          

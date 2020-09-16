@@ -1,10 +1,18 @@
 require('dotenv').config();
+///////////////////////////
+const expressHandlebars = require('express-handlebars');
 const express = require('express');
 const server = express();
 const cors = require('cors');
 const helmet = require('helmet')
-/////////////////////////////////////////delter after learning done
+
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
+
+
+
+server.engine('.hbs', expressHandlebars({ extname: '.hbs' }));
+server.set('view engine', '.hbs');
+server.set('views', './views');
 
 const authRouter = require('../auth/authRouter.js');
 const usersRouter = require('./endpoints/users/usersRouter.js');
@@ -29,35 +37,14 @@ server.get('/', (req, res) => {
     res.status(200).send('<h1>Welcome to the maniPed API!!</h1>');
 });
 server.use(cors());
-///////////////////////////////////////////////delete after learning
-server.post("/create-checkout-session", async (req, res) => {
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      line_items: [
-        {
-          price_data: {
-            currency: "usd",
-            product_data: {
-              name: "T-shirt",
-            },
-            unit_amount: 2000,
-          },
-          quantity: 1,
-        },
-      ],
-      mode: "payment",
-      success_url: "http://localhost:4000/success",
-      cancel_url: "http://localhost:4000/cancel",
-    });
-  
-    res.json({ id: session.id });
-  });
-
+  // const customer = await stripe.customers.create();
   server.get('/card-wallet', async (req, res) => {
+    const customer = await stripe.customers.create();
     const intent =  await stripe.setupIntents.create({
       customer: customer.id,
     });
-    res.render('card_wallet', { client_secret: intent.client_secret });
+    // res.render('card_wallet', { client_secret: intent.client_secret });
+    res.status(200).json({client_secret: intent.client_secret})
   });
 ///////////////////////////////////////////////////////////////
 server.use(helmet());
