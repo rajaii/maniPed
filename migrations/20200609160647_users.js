@@ -28,6 +28,7 @@ exports.up = function(knex) {
         .defaultTo(1)
       tbl.string('profile_img_url')
         .unique();
+      tbl.string('stripe_custyid');
       tbl.timestamp('created_at').defaultTo(knex.fn.now());   
   })
 

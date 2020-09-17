@@ -1,18 +1,10 @@
 require('dotenv').config();
-///////////////////////////
-const expressHandlebars = require('express-handlebars');
 const express = require('express');
+
 const server = express();
 const cors = require('cors');
 const helmet = require('helmet')
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET);
-
-
-
-server.engine('.hbs', expressHandlebars({ extname: '.hbs' }));
-server.set('view engine', '.hbs');
-server.set('views', './views');
 
 const authRouter = require('../auth/authRouter.js');
 const usersRouter = require('./endpoints/users/usersRouter.js');
@@ -30,6 +22,7 @@ const availableServicesRouter = require('./endpoints/bookings_and_services/avail
 const nearbyProvidersRouter = require('./endpoints/providers/nearbyProvidersRouter.js');
 const userSettingsRouter = require('./endpoints/users/settings/settingsRouter.js');
 const addressesRouter = require('./endpoints/users/addresses/addressesRouter.js');
+const stripeRouter = require('./endpoints/users/stripe.js');
 const restricted = require('../auth/restrictedMiddleware.js');
 
 
@@ -37,18 +30,7 @@ server.get('/', (req, res) => {
     res.status(200).send('<h1>Welcome to the maniPed API!!</h1>');
 });
 server.use(cors());
-  // const customer = await stripe.customers.create();
-  server.get('/card-wallet', async (req, res) => {
-    const customer = await stripe.customers.create();
-    const intent =  await stripe.setupIntents.create({
-      customer: customer.id,
-    });
-    // res.render('card_wallet', { client_secret: intent.client_secret });
-    res.status(200).json({client_secret: intent.client_secret})
-  });
-///////////////////////////////////////////////////////////////
 server.use(helmet());
-
 server.use(express.json());
 
 
@@ -71,6 +53,7 @@ server.use('/api/available_services',  availableServicesRouter);
 server.use('/api/nearby', nearbyProvidersRouter);
 server.use('/api/user_settings', userSettingsRouter);
 server.use('/api/userserviceaddresses', addressesRouter);
+server.use('/api/stripepayments', stripeRouter);
 
 
 
