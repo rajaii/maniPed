@@ -21,4 +21,6 @@ router.get('/:id/card-wallet/', async (req, res) => {
     res.status(200).json({client_secret: intent.client_secret})
   });
 
+
+
 module.exports = router;
