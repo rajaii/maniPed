@@ -17,24 +17,15 @@ CURRENT =>=>=>:
  =========>
     https://stripe.com/docs/payments/save-and-reuse
  
-         ==>  
-         
-             add stripe for payments
-             when wiring to FE
-                {
-                    PSEUDO
-                    set up stripe setup on be,
-                    set up button on fe to add payment method on main page
-                    set up an action/reducer to see when booking apts if they are setup with a payment method, if not redirect to stripes enter pmt 
-                    info to book
-                    implement functionality on completes services post to also implement the payment to the custy
+          
+     ==>   add stripe for payments:
+                
+                will need to send the card info object somehow to the db for the user to save in server
+                will also need to add the means to collect payments and then wire it into the post for completed services.
+                send name in reciept, wire CardSetupForm.js to redux and pull from state follow stripes instructions on cardsetup form too.
+                fix bug see feedsub.js line 296
 
-                }
-
-             [
-                 Your Stripe.js integration needs the id field from the Session creation API 
-                 response, so be sure to make it available to the JavaScript or HTML file you call redirectToCheckout from.
-             ]
+            
 
             add the button on ligin for forgot pw and functionality 
 
