@@ -133,6 +133,9 @@ API to FE INTEGRATION:
 
 VERY END before deploy production:
 
+    make desktops responsive,
+    rego through and change how tag userids if changed to cookies.
+
     set stripe test keys to live secret key
 
     enter notification url in upload presets of cloudinary act settings > upload > maniped_preset
