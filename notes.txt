@@ -20,8 +20,12 @@ CURRENT =>=>=>:
           
      ==>   add stripe for payments:
                 
-                will need to send the card info object somehow to the db for the user to save in server
+                
                 will also need to add the means to collect payments and then wire it into the post for completed services.
+                => working on last part of this line 122 services router and last portion of above page on docs.  Need to add that whole flow docs
+                mention.
+                also will need to add all the other stuff in the flow that is commented in the react code.
+
                 send name in reciept, wire CardSetupForm.js to redux and pull from state follow stripes instructions on cardsetup form too.
                 fix bug see feedsub.js line 296
 
@@ -128,6 +132,9 @@ API to FE INTEGRATION:
 
 
 VERY END before deploy production:
+
+    make desktops responsive,
+    rego through and change how tag userids if changed to cookies.
 
     set stripe test keys to live secret key
 

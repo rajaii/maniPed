@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const nodeMailer = require('nodemailer');
+const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 const Services = require('./servicesHelpers.js');
 const Bookings = require('../future_bookings/bookingsHelpers.js');
@@ -92,9 +93,46 @@ router.post('/', (req, res) => {
     Services.add(req.body)
       .then(service => {
         Bookings.update(booking_id, {"completed": 1})
+        
         .then(booking => {
             Users.findById(user_id)
-            .then(user => {
+            .then(async user => {
+            
+              const paymentMethods = await stripe.paymentMethods.list({
+                customer: user.stripe_custyid,
+                type: 'card',
+              });
+
+              try {
+                const paymentIntent = await stripe.paymentIntents.create({
+                  amount: service[0].amount_billed * 100 /* because is in pennies for stripe*/,
+                  currency: 'usd',
+                  customer: user.stripe_custyid,
+                  payment_method: paymentMethods.id,
+                  off_session: true,
+                  confirm: true,
+                });
+                //start here adding logic on what to do on success
+              } catch (err) {
+                // Error code will be authentication_required if authentication is needed
+                console.log('Error code is: ', err.code);
+                const paymentIntentRetrieved = await stripe.paymentIntents.retrieve(err.raw.payment_intent.id);
+                console.log('PI retrieved: ', paymentIntentRetrieved.id);
+              }
+
+              stripe.confirmCardPayment(intent.client_secret, {
+                payment_method: intent.last_payment_error.payment_method.id
+              }).then(function(result) {
+                if (result.error) {
+                  // Show error to your customer
+                  console.log(result.error.message);
+                } else {
+                  if (result.paymentIntent.status === 'succeeded') {
+                    // The payment is complete!
+                  }
+                }
+              });
+
               username = user.username;
               userEmail = user.email;
               const userMailOptions = {
