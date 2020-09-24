@@ -94,25 +94,27 @@ router.post('/', (req, res) => {
       .then(service => {
         Bookings.update(booking_id, {"completed": 1})
         
-        .then(booking => {
+        .then(async booking => {
             Users.findById(user_id)
             .then(async user => {
-            
+              console.log('stripe sucty id', user.name)
               const paymentMethods = await stripe.paymentMethods.list({
                 customer: user.stripe_custyid,
                 type: 'card',
               });
+              console.log("in here", paymentMethods.id)
 
               try {
+                
                 const paymentIntent = await stripe.paymentIntents.create({
-                  amount: service[0].amount_billed * 100 /* because is in pennies for stripe*/,
+                  amount: service[0].amount_billed * 100,
                   currency: 'usd',
                   customer: user.stripe_custyid,
                   payment_method: paymentMethods.id,
                   off_session: true,
                   confirm: true,
                 });
-                //start here adding logic on what to do on success
+                //logic here on what to do next
               } catch (err) {
                 // Error code will be authentication_required if authentication is needed
                 console.log('Error code is: ', err.code);
@@ -129,6 +131,7 @@ router.post('/', (req, res) => {
                 } else {
                   if (result.paymentIntent.status === 'succeeded') {
                     // The payment is complete!
+                    console.log('success')
                   }
                 }
               });
@@ -143,14 +146,14 @@ router.post('/', (req, res) => {
               }
               transporter.sendMail(userMailOptions, function(err, info) {
                 if (err) {
-                  console.log(err)
+                  console.log("error sending email to the user", err)
                 } else {
                   console.log(`Email sent, ${info.response}`)
                 }
               })
             })
             .catch(err => {
-              res.status(500).json(err)
+              console.log("error finding user by id line 155 servicesRouter.js", err)
             })
             Providers.findById(provider_id)
             .then(provider => {
@@ -165,19 +168,19 @@ router.post('/', (req, res) => {
               }
               transporter.sendMail(providerMailOptions, function(err, info) {
                 if (err) {
-                  console.log(err)
+                  console.log("error sending email to the provider line 170 servicesRouter.js", err)
                 } else {
                   console.log(`Email sent, ${info.response}`)
                 }
               })
             })
             .catch(err => {
-              res.status(500).json(err)
+              console.log("error finding provider line 177 servicesRouter.js", err)
             })
 
         })
         .catch(err => {
-          res.status(500).json(err)
+          res.status(500).json("error updating the booking line 182 servicesRouter.js", err)
         })
         res.status(201).json({service: service});
       })

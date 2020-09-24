@@ -29,6 +29,8 @@ CURRENT =>=>=>:
                 send name in reciept, wire CardSetupForm.js to redux and pull from state follow stripes instructions on cardsetup form too.
                 fix bug see feedsub.js line 296
 
+                make it won't let them book without entering payment information. 
+
             
 
             add the button on ligin for forgot pw and functionality 
