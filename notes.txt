@@ -20,10 +20,7 @@ CURRENT =>=>=>:
           
      ==>   add stripe for payments:
 
-                MAY NEED TO MOVE CLIENT SECRET FROM DB
-
-                trouble integrating.  saving card then not charging on completed services, see FE line 42 carSetupFormjs (this was not done and prob
-                has to do with the integration failure) and be line 123 in servicesRouter.js -this is where it breaks.
+                paymentIntent.last_payment_error.payment_method.id is null and can not pull the id on servicesRouter line 124 last bug
 
                 when integration done:
                     add spinner and error messages to user in cardSetupform's logic (under component in docs)
