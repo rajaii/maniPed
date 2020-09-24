@@ -19,6 +19,9 @@ CURRENT =>=>=>:
  
           
      ==>   add stripe for payments:
+
+                trouble integrating.  saving card then not charging on completed services, see FE line 42 carSetupFormjs (this was not done and prob
+                has to do with the integration failure) and be line 101 in servicesRouter.js -this is where it breaks.
                 
                 
                 will also need to add the means to collect payments and then wire it into the post for completed services.
