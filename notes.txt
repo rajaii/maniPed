@@ -15,24 +15,25 @@ manigod reg and pre-admin access, and admin interface
 CURRENT =>=>=>: 
 
  =========>
-    https://stripe.com/docs/payments/save-and-reuse
+    https://stripe.com/docs/payments/save-and-reuse : custom
  
           
      ==>   add stripe for payments:
 
+                MAY NEED TO MOVE CLIENT SECRET FROM DB
+
                 trouble integrating.  saving card then not charging on completed services, see FE line 42 carSetupFormjs (this was not done and prob
-                has to do with the integration failure) and be line 101 in servicesRouter.js -this is where it breaks.
-                
-                
-                will also need to add the means to collect payments and then wire it into the post for completed services.
-                => working on last part of this line 122 services router and last portion of above page on docs.  Need to add that whole flow docs
-                mention.
-                also will need to add all the other stuff in the flow that is commented in the react code.
+                has to do with the integration failure) and be line 123 in servicesRouter.js -this is where it breaks.
 
-                send name in reciept, wire CardSetupForm.js to redux and pull from state follow stripes instructions on cardsetup form too.
-                fix bug see feedsub.js line 296
+                when integration done:
+                    add spinner and error messages to user in cardSetupform's logic (under component in docs)
 
-                make it won't let them book without entering payment information. 
+                    also will need to add all the other stuff in the flow that is commented in the react code.
+
+                    send name in reciept, wire CardSetupForm.js to redux and pull from state follow stripes instructions on cardsetup form too.
+                    fix bug see feedsub.js line 296
+
+                     make it won't let them book without entering payment information. 
 
             
 

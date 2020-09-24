@@ -101,15 +101,14 @@ router.post('/', (req, res) => {
                 customer: user.stripe_custyid,
                 type: 'card',
               });
-              console.log("in here", paymentMethods.id)
-
+              let paymentIntent
               try {
                 
-                const paymentIntent = await stripe.paymentIntents.create({
+                paymentIntent = await stripe.paymentIntents.create({
                   amount: service[0].amount_billed * 100,
                   currency: 'usd',
                   customer: user.stripe_custyid,
-                  payment_method: paymentMethods.id,
+                  payment_method: paymentMethods.data[0].id,
                   off_session: true,
                   confirm: true,
                 });
@@ -120,9 +119,9 @@ router.post('/', (req, res) => {
                 const paymentIntentRetrieved = await stripe.paymentIntents.retrieve(err.raw.payment_intent.id);
                 console.log('PI retrieved: ', paymentIntentRetrieved.id);
               }
-
-              stripe.confirmCardPayment(intent.client_secret, {
-                payment_method: intent.last_payment_error.payment_method.id
+              console.log("paymentIntent:", paymentIntent)
+              stripe.confirmCardPayment(paymentIntent.client_secret, {
+                payment_method: paymentIntent.last_payment_error.payment_method.id
               }).then(function(result) {
                 if (result.error) {
                   // Show error to your customer
