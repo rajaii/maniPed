@@ -9,7 +9,7 @@ module.exports = {
 };
 
 function find() {
-  return db('users').select('id', 'first_name', 'last_name', 'username', 'email', 'address', 'zipcode', 'phone_number', 'profile_img_url', 'activated');
+  return db('users').select('id', 'first_name', 'last_name', 'username', 'email', 'address', 'zipcode', 'phone_number', 'profile_img_url', 'stripe_custyid', 'activated');
 }
 
 function findBy(filter) {
@@ -30,6 +30,6 @@ function update(id, info) {
 function findById(id) {
   return db('users')
     .where({ id })
-    .select('id', 'first_name', 'last_name', 'username', 'email', 'address', 'zipcode', 'phone_number', 'profile_img_url', 'activated')
+    .select('id', 'first_name', 'last_name', 'username', 'email', 'address', 'zipcode', 'phone_number', 'profile_img_url','stripe_custyid', 'activated')
     .first();
 }

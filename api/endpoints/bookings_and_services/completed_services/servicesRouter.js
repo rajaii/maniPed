@@ -97,9 +97,9 @@ router.post('/', (req, res) => {
         .then(async booking => {
             Users.findById(user_id)
             .then(async user => {
-              console.log('stripe sucty id', user.name)
+              console.log('stripe sucty id', user)
               const paymentMethods = await stripe.paymentMethods.list({
-                customer: user.stripe_custyid,
+                customer: user[0].stripe_custyid,
                 type: 'card',
               });
               console.log("in here", paymentMethods.id)
@@ -109,7 +109,7 @@ router.post('/', (req, res) => {
                 const paymentIntent = await stripe.paymentIntents.create({
                   amount: service[0].amount_billed * 100,
                   currency: 'usd',
-                  customer: user.stripe_custyid,
+                  customer: user[0].stripe_custyid,
                   payment_method: paymentMethods.id,
                   off_session: true,
                   confirm: true,
