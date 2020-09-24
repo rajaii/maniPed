@@ -94,34 +94,34 @@ router.post('/', (req, res) => {
       .then(service => {
         Bookings.update(booking_id, {"completed": 1})
         
-        .then(booking => {
+        .then(async booking => {
             Users.findById(user_id)
             .then(async user => {
-            
               const paymentMethods = await stripe.paymentMethods.list({
                 customer: user.stripe_custyid,
                 type: 'card',
               });
-
+              let paymentIntent
               try {
-                const paymentIntent = await stripe.paymentIntents.create({
-                  amount: service[0].amount_billed * 100 /* because is in pennies for stripe*/,
+                
+                paymentIntent = await stripe.paymentIntents.create({
+                  amount: service[0].amount_billed * 100,
                   currency: 'usd',
                   customer: user.stripe_custyid,
-                  payment_method: paymentMethods.id,
+                  payment_method: paymentMethods.data[0].id,
                   off_session: true,
                   confirm: true,
                 });
-                //start here adding logic on what to do on success
+                //logic here on what to do next
               } catch (err) {
                 // Error code will be authentication_required if authentication is needed
                 console.log('Error code is: ', err.code);
                 const paymentIntentRetrieved = await stripe.paymentIntents.retrieve(err.raw.payment_intent.id);
                 console.log('PI retrieved: ', paymentIntentRetrieved.id);
               }
-
-              stripe.confirmCardPayment(intent.client_secret, {
-                payment_method: intent.last_payment_error.payment_method.id
+              console.log("paymentIntent:", paymentIntent)
+              stripe.confirmCardPayment(paymentIntent.client_secret, {
+                payment_method: paymentIntent.last_payment_error.payment_method.id
               }).then(function(result) {
                 if (result.error) {
                   // Show error to your customer
@@ -129,6 +129,7 @@ router.post('/', (req, res) => {
                 } else {
                   if (result.paymentIntent.status === 'succeeded') {
                     // The payment is complete!
+                    console.log('success')
                   }
                 }
               });
@@ -143,14 +144,14 @@ router.post('/', (req, res) => {
               }
               transporter.sendMail(userMailOptions, function(err, info) {
                 if (err) {
-                  console.log(err)
+                  console.log("error sending email to the user", err)
                 } else {
                   console.log(`Email sent, ${info.response}`)
                 }
               })
             })
             .catch(err => {
-              res.status(500).json(err)
+              console.log("error finding user by id line 155 servicesRouter.js", err)
             })
             Providers.findById(provider_id)
             .then(provider => {
@@ -165,19 +166,19 @@ router.post('/', (req, res) => {
               }
               transporter.sendMail(providerMailOptions, function(err, info) {
                 if (err) {
-                  console.log(err)
+                  console.log("error sending email to the provider line 170 servicesRouter.js", err)
                 } else {
                   console.log(`Email sent, ${info.response}`)
                 }
               })
             })
             .catch(err => {
-              res.status(500).json(err)
+              console.log("error finding provider line 177 servicesRouter.js", err)
             })
 
         })
         .catch(err => {
-          res.status(500).json(err)
+          res.status(500).json("error updating the booking line 182 servicesRouter.js", err)
         })
         res.status(201).json({service: service});
       })
