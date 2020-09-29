@@ -101,10 +101,10 @@ router.post('/', (req, res) => {
                 customer: `${user.stripe_custyid}`,
                 type: 'card',
               });
-              let paymentIntent
+              
               try {
                 
-                paymentIntent = await stripe.paymentIntents.create({
+               const paymentIntent = await stripe.paymentIntents.create({
                   amount: service[0].amount_billed * 100,
                   currency: 'usd',
                   customer: `${user.stripe_custyid}`,
@@ -113,27 +113,30 @@ router.post('/', (req, res) => {
                   confirm: true,
                 });
                 //logic here on what to do next
+                console.log(paymentIntent)
               } catch (err) {
                 // Error code will be authentication_required if authentication is needed
                 console.log('Error code is: ', err.code);
                 const paymentIntentRetrieved = await stripe.paymentIntents.retrieve(err.raw.payment_intent.id);
                 console.log('PI retrieved: ', paymentIntentRetrieved.id);
+              //   //the following should run if payment fails but haven't had a way to test that yet.
+              //   stripe.confirmCardPayment(paymentIntentRetrieved.client_secret, {
+              //     payment_method: paymentIntentRetrieved.last_payment_error.payment_method.id
+              //   })
+              //   .then(function(result) {
+              //     if (result.error) {
+              //       // Show error to your customer
+              //       console.log(result.error.message);
+              //     } else {
+              //       if (result.paymentIntent.status === 'succeeded') {
+              //         // The payment is complete!
+              //         console.log('success')
+              //       }
+              //     }
+              //   });
               }
-              ////////////////////////V needs to be utilized only when payment fails.
-              stripe.confirmCardPayment(paymentIntent.client_secret, {
-                payment_method: paymentIntent.payment_method
-              })
-              .then(function(result) {
-                if (result.error) {
-                  // Show error to your customer
-                  console.log(result.error.message);
-                } else {
-                  if (result.paymentIntent.status === 'succeeded') {
-                    // The payment is complete!
-                    console.log('success')
-                  }
-                }
-              });
+              
+              
 
               username = user.username;
               userEmail = user.email;
