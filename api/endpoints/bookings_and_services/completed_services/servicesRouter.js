@@ -98,41 +98,45 @@ router.post('/', (req, res) => {
             Users.findById(user_id)
             .then(async user => {
               const paymentMethods = await stripe.paymentMethods.list({
-                customer: user.stripe_custyid,
+                customer: `${user.stripe_custyid}`,
                 type: 'card',
               });
-              let paymentIntent
+              
               try {
                 
-                paymentIntent = await stripe.paymentIntents.create({
+               const paymentIntent = await stripe.paymentIntents.create({
                   amount: service[0].amount_billed * 100,
                   currency: 'usd',
-                  customer: user.stripe_custyid,
+                  customer: `${user.stripe_custyid}`,
                   payment_method: paymentMethods.data[0].id,
                   off_session: true,
                   confirm: true,
                 });
                 //logic here on what to do next
+                console.log(paymentIntent)
               } catch (err) {
                 // Error code will be authentication_required if authentication is needed
                 console.log('Error code is: ', err.code);
                 const paymentIntentRetrieved = await stripe.paymentIntents.retrieve(err.raw.payment_intent.id);
                 console.log('PI retrieved: ', paymentIntentRetrieved.id);
-              }
-              console.log("paymentIntent:", paymentIntent)
-              stripe.confirmCardPayment(paymentIntent.client_secret, {
-                payment_method: paymentIntent.last_payment_error.payment_method.id
-              }).then(function(result) {
-                if (result.error) {
-                  // Show error to your customer
-                  console.log(result.error.message);
-                } else {
-                  if (result.paymentIntent.status === 'succeeded') {
-                    // The payment is complete!
-                    console.log('success')
+              //   //the following should run if payment fails but haven't had a way to test that yet.
+                stripe.confirmCardPayment(paymentIntentRetrieved.client_secret, {
+                  payment_method: paymentIntentRetrieved.last_payment_error.payment_method.id
+                })
+                .then(function(result) {
+                  if (result.error) {
+                    // Show error to your customer
+                    console.log(result.error.message);
+                  } else {
+                    if (result.paymentIntent.status === 'succeeded') {
+                      // The payment is complete!
+                      console.log('success')
+                    }
                   }
-                }
-              });
+                });
+              }
+              
+              
 
               username = user.username;
               userEmail = user.email;
