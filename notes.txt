@@ -20,8 +20,8 @@ CURRENT =>=>=>:
           
      ==>   add stripe for payments:
 
-                paymentIntent.last_payment_error.payment_method.id is null and can not pull the id on servicesRouter line 124 last bug
-                https://stripe.com/docs/payments/payment-intents/verifying-status may help
+                all good and working need to make logic flow for what to do on errors/success.  notes in file on cardSetupform.js and servicesRouter
+                line 122/123 needs to be moved to run on errors.
 
                 when integration done:
                     add spinner and error messages to user in cardSetupform's logic (under component in docs)

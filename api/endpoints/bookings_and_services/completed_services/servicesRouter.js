@@ -119,7 +119,7 @@ router.post('/', (req, res) => {
                 const paymentIntentRetrieved = await stripe.paymentIntents.retrieve(err.raw.payment_intent.id);
                 console.log('PI retrieved: ', paymentIntentRetrieved.id);
               }
-              
+              ////////////////////////V needs to be utilized only when payment fails.
               stripe.confirmCardPayment(paymentIntent.client_secret, {
                 payment_method: paymentIntent.payment_method
               })
