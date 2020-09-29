@@ -120,20 +120,20 @@ router.post('/', (req, res) => {
                 const paymentIntentRetrieved = await stripe.paymentIntents.retrieve(err.raw.payment_intent.id);
                 console.log('PI retrieved: ', paymentIntentRetrieved.id);
               //   //the following should run if payment fails but haven't had a way to test that yet.
-              //   stripe.confirmCardPayment(paymentIntentRetrieved.client_secret, {
-              //     payment_method: paymentIntentRetrieved.last_payment_error.payment_method.id
-              //   })
-              //   .then(function(result) {
-              //     if (result.error) {
-              //       // Show error to your customer
-              //       console.log(result.error.message);
-              //     } else {
-              //       if (result.paymentIntent.status === 'succeeded') {
-              //         // The payment is complete!
-              //         console.log('success')
-              //       }
-              //     }
-              //   });
+                stripe.confirmCardPayment(paymentIntentRetrieved.client_secret, {
+                  payment_method: paymentIntentRetrieved.last_payment_error.payment_method.id
+                })
+                .then(function(result) {
+                  if (result.error) {
+                    // Show error to your customer
+                    console.log(result.error.message);
+                  } else {
+                    if (result.paymentIntent.status === 'succeeded') {
+                      // The payment is complete!
+                      console.log('success')
+                    }
+                  }
+                });
               }
               
               

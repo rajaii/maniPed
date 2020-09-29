@@ -20,8 +20,7 @@ CURRENT =>=>=>:
           
      ==>   add stripe for payments:
 
-                all good and working need to make logic flow for what to do on errors/success.  notes in file on cardSetupform.js and servicesRouter
-                line 122/123 needs to be moved to run on errors.
+                figure out a way to test failure of payment on service post ir line 123 on in services router catch
 
                 when integration done:
                     add spinner and error messages to user in cardSetupform's logic (under component in docs)
