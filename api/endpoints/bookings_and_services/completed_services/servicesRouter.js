@@ -98,7 +98,7 @@ router.post('/', (req, res) => {
             Users.findById(user_id)
             .then(async user => {
               const paymentMethods = await stripe.paymentMethods.list({
-                customer: user.stripe_custyid,
+                customer: `${user.stripe_custyid}`,
                 type: 'card',
               });
               let paymentIntent
@@ -107,7 +107,7 @@ router.post('/', (req, res) => {
                 paymentIntent = await stripe.paymentIntents.create({
                   amount: service[0].amount_billed * 100,
                   currency: 'usd',
-                  customer: user.stripe_custyid,
+                  customer: `${user.stripe_custyid}`,
                   payment_method: paymentMethods.data[0].id,
                   off_session: true,
                   confirm: true,
@@ -119,10 +119,11 @@ router.post('/', (req, res) => {
                 const paymentIntentRetrieved = await stripe.paymentIntents.retrieve(err.raw.payment_intent.id);
                 console.log('PI retrieved: ', paymentIntentRetrieved.id);
               }
-              console.log("paymentIntent:", paymentIntent)
+              
               stripe.confirmCardPayment(paymentIntent.client_secret, {
-                payment_method: paymentIntent.last_payment_error.payment_method.id
-              }).then(function(result) {
+                payment_method: paymentIntent.payment_method
+              })
+              .then(function(result) {
                 if (result.error) {
                   // Show error to your customer
                   console.log(result.error.message);
