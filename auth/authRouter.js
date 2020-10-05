@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const anyid = require('anyid').anyid;
 
 //make routes for login and register providers and users
 const Users = require('../api/endpoints/users/usersHelpers.js');
@@ -18,6 +19,8 @@ router.post('/register', async (req, res) => {
   let user = req.body;
   const hash = bcrypt.hashSync(user.password, 10); // 2 ^ n
   user.password = hash;
+
+  const randomHash = anyid().encode('Aa0').length(128).random().id();
 
   try {
     const saved = await Users.add(user);
@@ -276,10 +279,3 @@ function generateManigodToken(user) {
 module.exports = router;
 
 
-// "first_name": "Joseph",
-// 	"last_name": "fromAdminforputtest",
-// 	"username": "jgod",
-// 	"role": "god",
-// 	"email": "asldfkjasdfasdfasfa.com",
-// 	"password": "password",
-// 	"zipcode": "07760"

@@ -32,6 +32,18 @@ exports.up = function(knex) {
       tbl.timestamp('created_at').defaultTo(knex.fn.now());   
   })
 
+  .createTable('user_verification', tbl => {
+    tbl.increments('id');
+    tbl.string('hash')
+      .notNullable();
+    tbl.integer('user_id')
+      .unsigned()
+      .references('id')
+      .inTable('users')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE'); 
+  })
+
   .createTable('addresses', tbl => {
     tbl.increments('id');
     tbl.string('address')
