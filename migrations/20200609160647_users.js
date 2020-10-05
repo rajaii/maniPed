@@ -25,11 +25,23 @@ exports.up = function(knex) {
       tbl.string('zipcode', [10])
         .notNullable()
       tbl.boolean('activated')
-        .defaultTo(1)
+        .defaultTo(0)
       tbl.string('profile_img_url')
         .unique();
       tbl.string('stripe_custyid');
       tbl.timestamp('created_at').defaultTo(knex.fn.now());   
+  })
+
+  .createTable('user_verification', tbl => {
+    tbl.increments('id');
+    tbl.string('hash')
+      .notNullable();
+    tbl.integer('user_id')
+      .unsigned()
+      .references('id')
+      .inTable('users')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE'); 
   })
 
   .createTable('addresses', tbl => {
@@ -117,6 +129,18 @@ exports.up = function(knex) {
         .defaultTo(0)
       tbl.timestamp('created_at').defaultTo(knex.fn.now());   
       
+  })
+
+  .createTable('provider_verification', tbl => {
+    tbl.increments('id');
+    tbl.string('hash')
+      .notNullable();
+    tbl.integer('provider_id')
+      .unsigned()
+      .references('id')
+      .inTable('providers')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE'); 
   })
 
    // migrations have 2 new tables: user_settings, and provider_settings 
