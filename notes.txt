@@ -18,25 +18,17 @@ CURRENT =>=>=>:
     https://stripe.com/docs/payments/save-and-reuse : custom
  
           
-     ==>   add stripe for payments:
+     ==>
+            add the button on ligin for forgot pw and functionality and account verification emia
 
-                figure out a way to test failure of payment on service post ir line 123 on in services router catch
-
-                when integration done:
-                    add spinner and error messages to user in cardSetupform's logic (under component in docs)
-
-                    also will need to add all the other stuff in the flow that is commented in the react code.
-
-                    send name in reciept, wire CardSetupForm.js to redux and pull from state follow stripes instructions on cardsetup form too.
-                    fix bug see feedsub.js line 296
-
-                     make it won't let them book without entering payment information. 
-
-            
-
-            add the button on ligin for forgot pw and functionality 
-
-            add verify email address upon register
+                1) Your User model should have an active attribute that is false by default
+                2) When the user submits a valid signup form, create a new User (who's active will be false initially)
+                3) Create a long random string (128 characters is usually good) with a crypto library and store it in your database with a reference to the User ID
+                4) Send an email to the supplied email address with the hash as part of a link pointing back to a route on your server
+                5) When a user clicks the link and hits your route, check for the hash passed in the URL
+                6) If the hash exists in the database, get the related user and set their active property to true
+                7) Delete the hash from the database, it is no longer needed
+                8) Your user is now verified.
 
             for every email addition/put need to send confirmation emails upon request to verify if email not sent do not update if not verified in 
             24 hours set back to email from before
@@ -135,6 +127,8 @@ API to FE INTEGRATION:
 
 
 VERY END before deploy production:
+
+    figure out a way to test failure of payment on service post ir line 123 on in services router catch
 
     make desktops responsive,
     rego through and change how tag userids if changed to cookies.

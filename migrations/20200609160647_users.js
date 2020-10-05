@@ -25,7 +25,7 @@ exports.up = function(knex) {
       tbl.string('zipcode', [10])
         .notNullable()
       tbl.boolean('activated')
-        .defaultTo(1)
+        .defaultTo(0)
       tbl.string('profile_img_url')
         .unique();
       tbl.string('stripe_custyid');
