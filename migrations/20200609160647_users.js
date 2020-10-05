@@ -131,6 +131,18 @@ exports.up = function(knex) {
       
   })
 
+  .createTable('provider_verification', tbl => {
+    tbl.increments('id');
+    tbl.string('hash')
+      .notNullable();
+    tbl.integer('provider_id')
+      .unsigned()
+      .references('id')
+      .inTable('providers')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE'); 
+  })
+
    // migrations have 2 new tables: user_settings, and provider_settings 
   // in migrations tbl. ... =>privacy (boolean) for geolocation on/off, addresses (string), sms (boolean),
 
