@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const nodeMailer = require('nodemailer');
 const anyid = require('anyid').anyid;
 
 //make routes for login and register providers and users
@@ -13,7 +14,13 @@ const UserSettings = require('../api/endpoints/users/settings/settingsHelpers.js
 const UserVerify = require('./userVerificationHelpers.js');
 const ProviderVerify = require('./providerVerificationHelpers.js');
 
-
+const transporter = nodeMailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'manipedcustomerservice@gmail.com',
+    pass: process.env.GMAILPASS
+  }
+})
 
 // register new customer users
 router.post('/register', async (req, res) => {
@@ -32,6 +39,7 @@ router.post('/register', async (req, res) => {
       //make send out email to user's email to verify
       .then(settings => {
         res.status(201).json(settings)
+
       })
       .catch(err => {
         res.status(500).json({err, message: "error posting to the settings"})
@@ -43,7 +51,7 @@ router.post('/register', async (req, res) => {
     }
 
   } catch(err) {
-    console.log(err.message)
+    
   res.status(500).json({err, message: 'error entering the user in the db.'});
   }
 
