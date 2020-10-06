@@ -35,10 +35,36 @@ router.post('/register', async (req, res) => {
     if (saved) {
       console.log(saved)
       UserSettings.add({user_id: saved[0].id})
-      UserVerify.add({user_id: saved[0].id, hash: randomHash})
-      //make send out email to user's email to verify
+      
       .then(settings => {
-        res.status(201).json(settings)
+        console.log('success adding settings to db:', settings)
+
+        UserVerify.add({user_id: saved[0].id, hash: randomHash})
+        .then(verification => {
+          console.log('success adding hash to db for verification', verification)
+        })
+        .catch(err => {
+          res.status(500).json({message: 'error adding hash to db for verification', err})
+        })
+
+       //make send out email to user's email to verify
+          const link = `http://${req.get('host')}/verifyuser/${randomHash}`;
+          username = saved[0].username;
+          userEmail = saved[0].email;
+          const userMailOptions = {
+            from: 'manipedcustomerservice@gmail.com',
+            to: `${saved[0].email}`,
+            subject: 'Verify account',
+            html: "Hello,<br> Please Click on the link to verify your email.<br><a href="+link+">Click here to verify.  Thank you for choosing maniPed for your cosmetic needs!</a>"
+          }
+          transporter.sendMail(userMailOptions, function(err, info) {
+            if (err) {
+              console.log(err)
+            } else {
+              console.log(`Email sent, ${info.response}`)
+            }
+          })
+
 
       })
       .catch(err => {
@@ -85,7 +111,7 @@ router.post('/login', (req, res) => {
 router.post('/register/providers', async (req, res) => {
   
   let provider = req.body;
-  const hash = bcrypt.hashSync(provider.password, 10); // 2 ^ n
+  const hash = bcrypt.hashSync(provider.password, 10); 
   provider.password = hash;
   const randomHash = anyid().encode('Aa0').length(128).random().id();
 
@@ -261,6 +287,15 @@ function generateToken(user) {
   };
   return jwt.sign(payload, secret, options)
 }
+
+router.get('/verifyuser/:hash', (req, res) => {
+  const { hash } = req.params;
+//find where hash = hash
+//if user_id = the user's id
+//verify
+  UserVerify.findBy({hash})
+  .then()
+})
 
 function generateAdminToken(user) {
   const payload = {
