@@ -48,7 +48,7 @@ router.post('/register', async (req, res) => {
         })
 
        //make send out email to user's email to verify
-          const link = `http://${req.get('host')}/verifyuser/${randomHash}`;
+          const link = `http://${req.get('host')}/verifyuser/${saved[0].id}/${randomHash}`;
           username = saved[0].username;
           userEmail = saved[0].email;
           const userMailOptions = {
@@ -288,13 +288,26 @@ function generateToken(user) {
   return jwt.sign(payload, secret, options)
 }
 
-router.get('/verifyuser/:hash', (req, res) => {
-  const { hash } = req.params;
-//find where hash = hash
-//if user_id = the user's id
-//verify
+router.get('/verifyuser/:userId/:hash', (req, res) => {
+  const { hash, userId } = req.params;
+
   UserVerify.findBy({hash})
-  .then()
+  .then(r => {
+    if (r.userId === userId) {
+      //they are verified so activate their account
+      const body = {activated: 1}
+      Users.update(userId, body)
+      .then(u => {
+        console.log('account has been verified', u)
+      })
+      .catch(err => {
+        res.status(500).json({message: 'error activating user account', err})
+      })
+    }
+  })
+  .catch(err => {
+    res.status(500).json({message: 'error verifying user account with hash', err})
+  })
 })
 
 function generateAdminToken(user) {
