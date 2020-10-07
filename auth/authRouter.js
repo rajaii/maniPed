@@ -48,7 +48,7 @@ router.post('/register', async (req, res) => {
         })
 
        //make send out email to user's email to verify
-          const link = `http://${req.get('host')}/verifyuser/${saved[0].id}/${randomHash}`;
+          const link = `http://localhost:4000/api/auth/verifyuser/${saved[0].id}/${randomHash}`;
           username = saved[0].username;
           userEmail = saved[0].email;
           const userMailOptions = {
@@ -288,12 +288,13 @@ function generateToken(user) {
   return jwt.sign(payload, secret, options)
 }
 
-router.get('/verifyuser/:userId/:hash', (req, res) => {
-  const { hash, userId } = req.params;
+router.get('/verifyuser/:userId/:verhash', (req, res) => {
+  const { verhash, userId } = req.params;
 
-  UserVerify.findBy({hash})
+  UserVerify.findBy({hash: verhash})
   .then(r => {
-    if (r.userId === userId) {
+    console.log('userId:', userId, 'r[0].user_id:', r[0].user_id, 'verhash: ', verhash)
+    if (r[0].user_id == userId) {
       //they are verified so activate their account
       const body = {activated: 1}
       Users.update(userId, body)
@@ -305,6 +306,7 @@ router.get('/verifyuser/:userId/:hash', (req, res) => {
         res.status(500).json({message: 'error activating user account', err})
       })
     } else {
+      console.log('r: ',r)
       res.end("<h1>Bad Request</h1>");
     }
   })

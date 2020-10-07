@@ -13,7 +13,7 @@ function find() {
 }
 
 function findBy(filter) {
-  return db('user_verification').where(filter);
+  return db('user_verification').where(filter).select('id','hash','user_id');
 }
 
 function add(user) {
