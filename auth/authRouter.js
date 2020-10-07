@@ -299,10 +299,13 @@ router.get('/verifyuser/:userId/:hash', (req, res) => {
       Users.update(userId, body)
       .then(u => {
         console.log('account has been verified', u)
+        res.end("<h1>Email has been Successfully verified");
       })
       .catch(err => {
         res.status(500).json({message: 'error activating user account', err})
       })
+    } else {
+      res.end("<h1>Bad Request</h1>");
     }
   })
   .catch(err => {
