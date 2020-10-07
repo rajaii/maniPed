@@ -48,7 +48,7 @@ router.post('/register', async (req, res) => {
         })
 
        //make send out email to user's email to verify
-          const link = `http://localhost:4000/api/auth/verifyuser/${saved[0].id}/${randomHash}`;
+          const link = `http://${req.get('host')}/api/auth/verifyuser/${saved[0].id}/${randomHash}`;
           username = saved[0].username;
           userEmail = saved[0].email;
           const userMailOptions = {
@@ -300,14 +300,14 @@ router.get('/verifyuser/:userId/:verhash', (req, res) => {
       Users.update(userId, body)
       .then(u => {
         console.log('account has been verified', u)
-        res.end("<h1>Email has been Successfully verified");
+        res.end("Email has been Successfully verified");
       })
       .catch(err => {
         res.status(500).json({message: 'error activating user account', err})
       })
     } else {
       console.log('r: ',r)
-      res.end("<h1>Bad Request</h1>");
+      res.end("Bad Request");
     }
   })
   .catch(err => {
