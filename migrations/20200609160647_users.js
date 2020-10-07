@@ -388,10 +388,12 @@ exports.down = function(knex) {
   .dropTableIfExists('future_bookings')
   // .dropTableIfExists('provider_showcase')
   // .dropTableIfExists('provider_settings')
+  .dropTableIfExists('provider_verification')
   .dropTableIfExists('providers')
   // .dropTableIfExists('user_avatars')
   .dropTableIfExists('user_settings')
   .dropTableIfExists('addresses')
+  .dropTableIfExists('user_verification')
   .dropTableIfExists('users');
   //if won't drop
   // knex.raw('DROP TABLE manigods')
