@@ -19,19 +19,38 @@ CURRENT =>=>=>:
  
           
      ==>
-            add the button on ligin for forgot pw and functionality and account verification emia
+            add the button on ligin for forgot pw / username and functionality 
+                forgot username pseudo:
+                    make a ForgotUsername componenet:
+                        has within it an enter email address form, and when they submit it hits the forgotusername be route (designed simply to 
+                        take their info and send an email from the server) and 
+                        be sends an email to to them with their username that tells them they can use it to login
+                        upon success confirm box telling them to go to their email and check  
+                
+                forgot pw pseudo:
+                    make a ForgotPassword component:
+                        Similar look and flow of he ForgotUsername Component (may even be able to get away with 1)
+                        fill out email, and when they submit it will hit the be forgotUserPassword route 
+                        2 routes needed: forgotUserPassword and resetUserPassword:
+                            /forgotUserPassword route:
+                                resetuserpassword route will take the user info from the request,
+                                generate a hash with anyid
+                                make any db calls needed to garner more info if needed
+                                either make a put to the user_verification route changing the hash of that user to the new one 
+        (or delete the 
+        previous hash in the verifyuser route after verifying so hash's are fresh PROB THIS)  
+                                add to the userverify route entry with user_id and hash
+                                add the hash to a link to be emailed to them
+                                will send an email with the link that goes to the resetUserPassword route
+                            /resetUserPasswordLinkVerify route:
+                                will check if req.params.hash === the hash in the userVerify table with the user's ids
+                                if so will res.send a form with an enter password field that submits to link to a /resetpassword route
+                            /resetuserpassword route:   
+                                put route
+                                and runs the put on the pw copy from usersrouter has all the bcrypt logic in it.
+                            
 
                 
-                3) Create a long random string (128 characters is usually good) with a crypto library and store it in your database with a reference to the User ID
-                4) Send an email to the supplied email address with the hash as part of a link pointing back to a route on your server /verify
-                
-                5) When a user clicks the link and hits your route, check for the hash passed in the URL
-                6) If the hash exists in the database, get the related user and set their active property to true
-                7) Delete the hash from the database, it is no longer needed
-                8) Your user is now verified.
-
-            for every email addition/put need to send confirmation emails upon request to verify if email not sent do not update if not verified in 
-            24 hours set back to email from before
 
             display users rating on profile.
 

@@ -6,6 +6,7 @@ module.exports = {
   findBy,
   findById,
   update,
+  remove
 };
 
 function find() {
@@ -32,4 +33,10 @@ function findById(id) {
     .where({ id })
     .select('id','hash','provider_id')
     .first();
+}
+
+function remove(id) {
+  return db('provider_verification')
+  .where({id})
+  .del();
 }
