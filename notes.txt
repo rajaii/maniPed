@@ -22,7 +22,7 @@ CURRENT =>=>=>:
             add the button on ligin for forgot pw / username and functionality 
                 forgot username pseudo:
                     make a ForgotUsername componenet:
-                        has within it an enter email address form, and when they submit it hits the forgotusername be route (designed simply to 
+                        has within it an enter email address form, and when they submit it hits the /forgotusername be route (designed simply to 
                         take their info and send an email from the server) and 
                         be sends an email to to them with their username that tells them they can use it to login
                         upon success confirm box telling them to go to their email and check  
@@ -37,8 +37,6 @@ CURRENT =>=>=>:
                                 generate a hash with anyid
                                 make any db calls needed to garner more info if needed
                                 either make a put to the user_verification route changing the hash of that user to the new one 
-        (or delete the 
-        previous hash in the verifyuser route after verifying so hash's are fresh PROB THIS)  
                                 add to the userverify route entry with user_id and hash
                                 add the hash to a link to be emailed to them
                                 will send an email with the link that goes to the resetUserPassword route
