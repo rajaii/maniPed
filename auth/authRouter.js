@@ -276,17 +276,36 @@ router.post('/login/manigods', (req, res) => {
     });
 });
 
-function generateToken(user) {
-  const payload = {
-    subject: user.id,
-    username: user.username,
-  };
-  const secret = process.env.JWTSECRET || "manipedisthafuta1234356346+_:>{>:";
-  const options = {
-    expiresIn: '30 min'
-  };
-  return jwt.sign(payload, secret, options)
-}
+router.post('/forgotusername', async (req, res) => {
+
+          try {
+          const { email } = req.body;
+          const user = await Users.findBy({email})
+          if (user.length > 0) {
+            console.log('debugger: ', user)
+          const userMailOptions = {
+            from: 'manipedcustomerservice@gmail.com',
+            to: `${email}`,
+            subject: 'Your maniPed username',
+            text: `Hello ${user[0].first_name}, your username is ${user[0].username}.  Thank you for choosing maniPed for your cosmetic needs!c`
+          }
+          transporter.sendMail(userMailOptions, function(err, info) {
+            if (err) {
+              console.log(err)
+            } else {
+              console.log(`Email sent, ${info.response}`)
+            }
+          })
+          res.status(200).json({message: 'username sent to user'})
+        } else {
+          res.status(404).send('<h1>User with that email does not exist, try again...</h1>').json({message: "user with the specified email does not exist", err})
+        }
+        } catch (err) {
+          res.status(500).json({err, message: "error on the forgotusername route..."})
+        }
+})
+
+
 
 router.get('/verifyuser/:userId/:verhash', (req, res) => {
   const { verhash, userId } = req.params;
@@ -305,6 +324,7 @@ router.get('/verifyuser/:userId/:verhash', (req, res) => {
       .catch(err => {
         res.status(500).json({message: 'error activating user account', err})
       })
+      
     } else {
       console.log('r: ',r)
       res.end("Bad Request");
@@ -313,7 +333,37 @@ router.get('/verifyuser/:userId/:verhash', (req, res) => {
   .catch(err => {
     res.status(500).json({message: 'error verifying user account with hash', err})
   })
+  UserVerify.findBy({hash: verhash})
+  .then(r => {
+    console.log('success finding user second go for delete functionality')
+    UserVerify.remove(r[0].id)
+        .then(r => {
+          console.log('success removing the users hash from user_verification');
+        })
+        .catch(err => {
+          res.status(500).json({message: 'failed to delete the user hash from user_verification', err});
+        })
+  })
+  .catch(err => {
+    res.status(500).json({message: 'failed to find the user by hash in the delete functionality of the verify route', err})
+  })
+  
+        
 })
+
+
+function generateToken(user) {
+  const payload = {
+    subject: user.id,
+    username: user.username,
+  };
+  const secret = process.env.JWTSECRET || "manipedisthafuta1234356346+_:>{>:";
+  const options = {
+    expiresIn: '30 min'
+  };
+  return jwt.sign(payload, secret, options)
+}
+
 
 function generateAdminToken(user) {
   const payload = {
