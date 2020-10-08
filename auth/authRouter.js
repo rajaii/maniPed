@@ -305,6 +305,7 @@ router.get('/verifyuser/:userId/:verhash', (req, res) => {
       .catch(err => {
         res.status(500).json({message: 'error activating user account', err})
       })
+      
     } else {
       console.log('r: ',r)
       res.end("Bad Request");
@@ -313,6 +314,22 @@ router.get('/verifyuser/:userId/:verhash', (req, res) => {
   .catch(err => {
     res.status(500).json({message: 'error verifying user account with hash', err})
   })
+  UserVerify.findBy({hash: verhash})
+  .then(r => {
+    console.log('success finding user second go for delete functionality')
+    UserVerify.remove(r[0].id)
+        .then(r => {
+          console.log('success removing the users hash from user_verification');
+        })
+        .catch(err => {
+          res.status(500).json({message: 'failed to delete the user hash from user_verification', err});
+        })
+  })
+  .catch(err => {
+    res.status(500).json({message: 'failed to find the user by hash in the delete functionality of the verify route', err})
+  })
+  
+        
 })
 
 function generateAdminToken(user) {
