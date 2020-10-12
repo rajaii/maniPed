@@ -20,18 +20,14 @@ CURRENT =>=>=>:
           
      ==>
             add the button on ligin for forgot pw / username and functionality 
-                forgot username pseudo:
-                    make a ForgotUsername componenet:
-                        has within it an enter email address form, and when they submit it hits the /forgotusername be route (designed simply to 
-                        take their info and send an email from the server) and 
-                        be sends an email to to them with their username that tells them they can use it to login
-                        upon success confirm box telling them to go to their email and check  
                 
                 forgot pw pseudo:
                     make a ForgotPassword component:
                         Similar look and flow of he ForgotUsername Component (may even be able to get away with 1)
                         fill out email, and when they submit it will hit the be forgotUserPassword route 
-                        2 routes needed: forgotUserPassword and resetUserPassword:
+
+                        3 routes needed: forgotUserPassword, resetUserPassworkLinkVerification,  and resetUserPassword:
+                            DO NOT FORGET TO DELETE THE HASH FROM DB AFTER RESETTING PW
                             /forgotUserPassword route:
                                 resetuserpassword route will take the user info from the request,
                                 generate a hash with anyid
@@ -46,6 +42,10 @@ CURRENT =>=>=>:
                             /resetuserpassword route:   
                                 put route
                                 and runs the put on the pw copy from usersrouter has all the bcrypt logic in it.
+
+                            //make verification middleware that checks if the hash in the db with the username is legit,
+                            //or genrate a token and put in headers on form for put.  If the former willneed to erase the hash db entry
+                            //after that is done.
                             
 
                 
