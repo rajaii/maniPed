@@ -358,8 +358,9 @@ router.get('/resetuserpasswordverify/:userId/:verhash', (req, res) => {
   UserVerify.findBy({hash: verhash})
   .then(r => {
     if (r[0].user_id == userId) {
-      //proceed to give them a form that will send a put to /users to reset the password will need a verified middleware for this because they 
-      //will not be logged in  and the route is restricted
+      //proceed to give them a form that will send a put to /users to reset the password 
+    } else {
+      res.status(401).json({message: 'the user was not able to be verified for this process, please re-try...'})
     }
   })
   .catch(err => {
