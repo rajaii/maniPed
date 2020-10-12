@@ -282,7 +282,6 @@ router.post('/forgotusername', async (req, res) => {
           const { email } = req.body;
           const user = await Users.findBy({email})
           if (user.length > 0) {
-            console.log('debugger: ', user)
           const userMailOptions = {
             from: 'manipedcustomerservice@gmail.com',
             to: `${email}`,
@@ -298,9 +297,10 @@ router.post('/forgotusername', async (req, res) => {
           })
           res.status(200).json({message: 'username sent to user'})
         } else {
-          res.status(404).send('<h1>User with that email does not exist, try again...</h1>').json({message: "user with the specified email does not exist", err})
+          res.status(404).json({message: "user with the specified email does not exist"})
         }
-        } catch (err) {
+        } catch (error) {
+          console.log(error)
           res.status(500).json({err, message: "error on the forgotusername route..."})
         }
 })
@@ -333,6 +333,8 @@ router.get('/verifyuser/:userId/:verhash', (req, res) => {
   .catch(err => {
     res.status(500).json({message: 'error verifying user account with hash', err})
   })
+
+  //delete the hash from the db so can continue to use the table to verify the user if need be for pw changes
   UserVerify.findBy({hash: verhash})
   .then(r => {
     console.log('success finding user second go for delete functionality')
@@ -349,6 +351,63 @@ router.get('/verifyuser/:userId/:verhash', (req, res) => {
   })
   
         
+})
+
+router.get('/resetuserpasswordverify/:userId/:verhash', (req, res) => {
+  const { verhash, userId } = req.params;
+  UserVerify.findBy({hash: verhash})
+  .then(r => {
+    if (r[0].user_id == userId) {
+      //proceed to give them a form that will send a put to /users to reset the password 
+    } else {
+      res.status(401).json({message: 'the user was not able to be verified for this process, please re-try...'})
+    }
+  })
+  .catch(err => {
+    res.status(500).json({message: 'error verifying the user to change passwords...', err})
+  })
+
+})
+
+router.post('/forgotuserPassword', async (req, res) => {
+  try {
+  const { email } = req.body;
+  let user = await Users.findBy({email})
+  if(user.length > 0) {
+    const randomHash = anyid().encode('Aa0').length(128).random().id();
+    UserVerify.add({user_id: user[0].id, hash: randomHash})
+    .then(verification => {
+      console.log('success adding hash to db for resetting pw.', verification)
+    })
+    .catch(err => {
+      res.status(500).json({message: 'error adding hash to db for resetting pw.', err})
+    })
+
+    const link = `http://${req.get('host')}/api/auth/resetuserpasswordverify/${user[0].id}/${randomHash}`;
+    username = user[0].username;
+    userEmail = user[0].email;
+    const userMailOptions = {
+      from: 'manipedcustomerservice@gmail.com',
+      to: `${user[0].email}`,
+      subject: 'Verify account',
+      html: "Hello,<br> Please Click on the link to reset your password.<br><a href="+link+">Click here to reset your password.  Thank you for choosing maniPed for your cosmetic needs!</a>"
+    }
+    transporter.sendMail(userMailOptions, function(err, info) {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log(`Email sent, ${info.response}`)
+      }
+    })
+
+    res.status(200).json({message: 'email sent with link to reset password'})
+    
+  } else {
+    res.status(404).json({message: "user with the specified email does not exist"})
+  }
+} catch(err) {
+  res.status(500).json({err});
+}
 })
 
 
