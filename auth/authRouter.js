@@ -358,7 +358,17 @@ router.get('/resetuserpasswordverify/:userId/:verhash', (req, res) => {
   UserVerify.findBy({hash: verhash})
   .then(r => {
     if (r[0].user_id == userId) {
-      //proceed to give them a form that will send a put to /users to reset the password 
+      //redirect to a component that will run a put on user profile to change pw
+      UserVerify.remove(r[0].id)
+        .then(r => {
+          console.log('success removing the users hash from user_verification');
+        })
+        .catch(err => {
+          res.status(500).json({message: 'failed to delete the user hash from user_verification', err});
+        })
+        //we need to get the id into this component we are redirecting to V
+      res.redirect(`http://localhost:3000/resetpassword/`)
+
     } else {
       res.status(401).json({message: 'the user was not able to be verified for this process, please re-try...'})
     }
@@ -389,7 +399,7 @@ router.post('/forgotuserPassword', async (req, res) => {
     const userMailOptions = {
       from: 'manipedcustomerservice@gmail.com',
       to: `${user[0].email}`,
-      subject: 'Verify account',
+      subject: 'Reset account pw',
       html: "Hello,<br> Please Click on the link to reset your password.<br><a href="+link+">Click here to reset your password.  Thank you for choosing maniPed for your cosmetic needs!</a>"
     }
     transporter.sendMail(userMailOptions, function(err, info) {

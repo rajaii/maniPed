@@ -23,32 +23,17 @@ CURRENT =>=>=>:
                 
                 forgot pw pseudo:
                     make a ForgotPassword component:
-                        Similar look and flow of he ForgotUsername Component (may even be able to get away with 1)
-                        fill out email, and when they submit it will hit the be forgotUserPassword route 
+                       
+                            //have to pass id to res.redirect on line 369 authRouter.js
 
-                        3 routes needed: forgotUserPassword, resetUserPassworkLinkVerification,  and resetUserPassword:
-                            DO NOT FORGET TO DELETE THE HASH FROM DB AFTER RESETTING PW
-                            /forgotUserPassword route:
-                                resetuserpassword route will take the user info from the request,
-                                generate a hash with anyid
-                                make any db calls needed to garner more info if needed
-                                either make a put to the user_verification route changing the hash of that user to the new one 
-                                add to the userverify route entry with user_id and hash
-                                add the hash to a link to be emailed to them
-                                will send an email with the link that goes to the resetUserPassword route
-                            /resetUserPasswordLinkVerify route:
-                                will check if req.params.hash === the hash in the userVerify table with the user's ids
-                                if so will res.send a form with an enter password field that submits to link to a /resetpassword route
-                            /resetuserpassword route:   
-                                put route
-                                and runs the put on the pw copy from usersrouter has all the bcrypt logic in it.
-
+                            //middleware V
                             //make verification middleware that checks if the hash in the db with the username is legit,
                             //or genrate a token and put in headers on form for put.  If the former willneed to erase the hash db entry
                             //after that is done.
                             
 
-                
+            Do not let users login if their account is not verified, check the boolean activated if is false render a component that tells them to 
+            verify in their email.    
 
             display users rating on profile.
 
