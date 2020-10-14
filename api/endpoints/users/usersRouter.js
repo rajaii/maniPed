@@ -29,6 +29,7 @@ router.put('/:id', validateUserId, (req, res) => {
   } else {
   Users.update(id, req.body)
     .then(users => {
+      console.log('done with pw put!!!!!!!!!!!!!!!!!!!!!')
       res.status(200).json({users});
     })
     .catch(err => {

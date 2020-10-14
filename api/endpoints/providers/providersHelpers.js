@@ -13,7 +13,7 @@ function find() {
 }
 
 function findBy(filter) {
-  return db('providers').where(filter).select('id', 'username', 'first_name', 'last_name', 'username', 'email', 'phone_number', 'address', 'zipcode', 'profile_img_url', 'header', 'availability', 'nails_services_and_pricing', 'hair_services_and_pricing', 'massage_services_and_pricing', 'work_image_url_1','work_image_url_2','work_image_url_3','work_image_url_4','work_image_url_5','work_image_url_6','work_image_url_7','work_image_url_8', 'activated');
+  return db('providers').where(filter).select('id', 'username', 'first_name', 'last_name', 'username','password', 'email', 'phone_number', 'address', 'zipcode', 'profile_img_url', 'header', 'availability', 'nails_services_and_pricing', 'hair_services_and_pricing', 'massage_services_and_pricing', 'work_image_url_1','work_image_url_2','work_image_url_3','work_image_url_4','work_image_url_5','work_image_url_6','work_image_url_7','work_image_url_8', 'activated');
 }
 
 function add(provider) {

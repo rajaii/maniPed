@@ -13,7 +13,7 @@ function find() {
 }
 
 function findBy(filter) {
-  return db('users').where(filter).select('id', 'first_name', 'last_name', 'username', 'email', 'address', 'zipcode', 'phone_number', 'profile_img_url', 'stripe_custyid', 'activated');
+  return db('users').where(filter).select('id', 'first_name', 'last_name', 'username', 'password', 'email', 'address', 'zipcode', 'phone_number', 'profile_img_url', 'stripe_custyid', 'activated');
 }
 
 function add(user) {
