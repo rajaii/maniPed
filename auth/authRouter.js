@@ -367,7 +367,7 @@ router.get('/resetuserpasswordverify/:userId/:verhash', (req, res) => {
           res.status(500).json({message: 'failed to delete the user hash from user_verification', err});
         })
         //we need to get the id into this component we are redirecting to V
-      res.redirect(`http://localhost:3000/resetpassword/`)
+      res.redirect(`http://localhost:3000/resetpassword/?manid=${userId.toString()}`)
 
     } else {
       res.status(401).json({message: 'the user was not able to be verified for this process, please re-try...'})
