@@ -89,11 +89,15 @@ router.post('/login', (req, res) => {
   Users.findBy({ username })
     .first()
     .then(async user => {
-      if (!user.activated) {
-        res.redirect('http://localhost:3000/notverified')
+      console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!', user.activated)
+      if (user.activated === false) {
+        console.log('in')
+        res.status(401).json({message: 'please verify your account through your email before logging in...'})
+        
       }
 
       else {
+        
       let doneSync = await bcrypt.compareSync(password, user.password)
       console.log('doneSync: ', doneSync)
       if (user && doneSync === true) {
@@ -441,12 +445,12 @@ router.post('/resendverification', async (req, res) => {
     const { email } = req.body;
     let user = await Users.findBy({email});
     if (user) {
-      console.log('debugger:', user)
         
         //delete the previous hash associated with the user from the lost link in user_verify
-        UserVerify.findBy({user_id: user.id})
+        UserVerify.findBy({user_id: user[0].id})
         .then(u => {
-        UserVerify.remove(u.id)
+          
+        UserVerify.remove(u[0].id)
         .then(r => {
           console.log('success removing the users hash from user_verification');
         })
@@ -460,7 +464,7 @@ router.post('/resendverification', async (req, res) => {
         
         //add new hash to user_verify route
         const randomHash = anyid().encode('Aa0').length(128).random().id();
-        UserVerify.add({user_id: user.id, hash: randomHash})
+        UserVerify.add({user_id: user[0].id, hash: randomHash})
         .then(verification => {
           console.log('success adding hash to db for verification', verification)
         })
@@ -469,12 +473,13 @@ router.post('/resendverification', async (req, res) => {
         })
 
         //send link with the hash to their email
-        const link = `http://${req.get('host')}/api/auth/verifyuser/${user.id}/${randomHash}`;
-        username = user.username;
-        userEmail = user.email;
+       
+        const link = `http://${req.get('host')}/api/auth/verifyuser/${user[0].id}/${randomHash}`;
+        username = user[0].username;
+        userEmail = user[0].email;
         const userMailOptions = {
           from: 'manipedcustomerservice@gmail.com',
-          to: `${user.email}`,
+          to: `${user[0].email}`,
           subject: 'Verify account',
           html: "Hello,<br> Please Click on the link to verify your email.<br><a href="+link+">Click here to verify.  Thank you for choosing maniPed for your cosmetic needs!</a>"
         }
@@ -485,6 +490,7 @@ router.post('/resendverification', async (req, res) => {
             console.log(`Email sent, ${info.response}`)
           }
         })
+        res.status(200).json({Message: "success resending verification"});
     } else {
       res.status(401).json({message: "User with the specified email does not exists."})
     }

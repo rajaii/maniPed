@@ -20,7 +20,9 @@ CURRENT =>=>=>:
           
      ==>                
             Do not let users login if their account is not verified, check the boolean activated if is false render a component that tells them to 
-            verify in their email.    
+            verify in their email.  
+                in server do not issue token if not activated
+                on fe go into reducer and if error message from^ showing confrim(you must verify your email before logging in)  
 
             try setting up a duplicate account set an error instead of pushing to login after reg gets back the error from server
 
@@ -29,6 +31,8 @@ CURRENT =>=>=>:
             set up so if logged in home button goes to dashboard and login and signup are hidden
 
             set up protected routes or cookie login.  figure way around the bug from before.
+
+        
     
              
         
