@@ -18,23 +18,11 @@ CURRENT =>=>=>:
     https://stripe.com/docs/payments/save-and-reuse : custom
  
           
-     ==>
-            add the button on ligin for forgot pw / username and functionality 
-                
-                forgot pw pseudo:
-                    make a ForgotPassword component:
-                       
-                            //have to pass id to res.redirect on line 369 authRouter.js
-
-                            //middleware V
-                            //make verification middleware that checks if the hash in the db with the username is legit,
-                            //or genrate a token and put in headers on form for put.  If the former willneed to erase the hash db entry
-                            //after that is done.
-                            
-                            //cleanup ids if not used ie delete
-
+     ==>                
             Do not let users login if their account is not verified, check the boolean activated if is false render a component that tells them to 
             verify in their email.    
+
+            try setting up a duplicate account set an error instead of pushing to login after reg gets back the error from server
 
             display users rating on profile.
 
