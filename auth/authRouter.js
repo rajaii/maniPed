@@ -368,10 +368,16 @@ router.get('/resetuserpasswordverify/:userId/:verhash', (req, res) => {
         .catch(err => {
           res.status(500).json({message: 'failed to delete the user hash from user_verification', err});
         })
-        //we need to get the id into this component we are redirecting to V
-      res.redirect(`http://localhost:3000/resetpassword/?manid=${userId.toString()}`)
-      //now figure out a way to auth the user to do the put
-
+      let token;
+      Users.findById(userId)
+      .then(u => {
+        token = generateToken(u)
+        res.redirect(`http://localhost:3000/resetpassword/?manid=${userId.toString()}&t=${token}`)
+      })
+      .catch(err => {
+        res.status(500).json({message: 'error generating token for temp put on reset ps', err})
+      })
+    
     } else {
       res.status(401).json({message: 'the user was not able to be verified for this process, please re-try...'})
     }
