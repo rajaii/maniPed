@@ -32,8 +32,8 @@ router.post('/register', async (req, res) => {
 
   try {
     const saved = await Users.add(user);
+    console.log(saved)
     if (saved) {
-      console.log(saved)
       UserSettings.add({user_id: saved[0].id})
       
       .then(settings => {
@@ -92,8 +92,7 @@ router.post('/login', (req, res) => {
       console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!', user.activated)
       if (user.activated === false) {
         console.log('in')
-        res.status(401).json({message: 'please verify your account through your email before logging in...'})
-        
+        res.status(401).json({message: 'please verify your account through your email before logging in...'}) 
       }
 
       else {

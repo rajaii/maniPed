@@ -75,10 +75,11 @@ router.post('/', (req, res) => {
         who served them and userid will come from the user we send the rating screen to */ provider_id, user_id, service_id} = req.body;
 
     if (!rating || !provider_id || !user_id || !service_id) {
+      console.log(rating)
       res.status(400).json({message: 'please provide a rating to rate your provider...'});
     } else {
       const body = { rating, provider_id, user_id }
-    User_ratings.add(npmbody)
+    User_ratings.add(body)
       .then(rating => {
         //The service_id will have to be pulled from FE on a get to service to populate the info for service being rated and passed into the req.body
         Services.update(service_id, {"user_rating_id": `${rating[0].id}`})
