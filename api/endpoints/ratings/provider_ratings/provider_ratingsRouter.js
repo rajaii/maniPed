@@ -70,10 +70,12 @@ router.put('/:id', validateRatingId, (req, res) => {
 router.post('/', (req, res) => {
     const {rating, /*all but rating will be prepopulated by app service tied to the service/booking they are rating for provider will be the one 
         who is rating them and userid will come from the user they serviceed */ provider_id, user_id, service_id} = req.body;
-    if (!rating || !provider_id || !user_id || service_id) {
+    if (!rating || !provider_id || !user_id || !service_id) {
+      
       res.status(400).json({message: 'please provide a rating to rate your client...'});
     } else {
-    Provider_ratings.add(req.body)
+      const body = { rating, provider_id, user_id }
+    Provider_ratings.add(body)
     .then(rating => {
       //The service_id will have to be pulled from FE on a get to service to populate the info for service being rated and passed into the req.body
       Services.update(service_id, {"provider_rating_id": `${rating[0].id}`})
