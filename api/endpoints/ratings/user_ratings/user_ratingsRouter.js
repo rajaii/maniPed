@@ -79,6 +79,7 @@ router.post('/', (req, res) => {
       res.status(400).json({message: 'please provide a rating to rate your provider...'});
     } else {
       const body = { rating, provider_id, user_id }
+     
     User_ratings.add(body)
       .then(rating => {
         //The service_id will have to be pulled from FE on a get to service to populate the info for service being rated and passed into the req.body
