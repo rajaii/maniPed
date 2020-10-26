@@ -21,8 +21,7 @@ CURRENT =>=>=>:
      ==>               
 
 
-            line 84 in user_ratingsRouter, and double check logic in FeedSub.js rate service.  weird behavior, not always displaying the service 
-            rated already error.  further debug. last working try again and then add new services and rate and see
+            start reading react native
 
             
 
