@@ -14,10 +14,13 @@ const manigodsRouter = require('./endpoints/admin/manigods/manigodsRouter.js');
 const preAdminRouter = require('./endpoints/admin/pre_admin/preAdminRouter.js');
 const bookingsRouter = require('./endpoints/bookings_and_services/future_bookings/bookingsRouter.js');
 const servicesRouter = require('./endpoints/bookings_and_services/completed_services/servicesRouter.js');
+const nailsServicesRouter = require('./endpoints/bookings_and_services/nails_services/nails_servicesRouter.js');
+// const hairServicesRouter = require('./endpoints/bookings_and_services/hair_services/hair_servicesRouter.js');
+// const massageServicesRouter = require('./endpoints/bookings_and_services/massage_services/massage_servicesRouter.js');
+
 const user_ratingsRouter = require('./endpoints/ratings/user_ratings/user_ratingsRouter.js');
 const provider_ratingsRouter = require('./endpoints/ratings/provider_ratings/provider_ratingsRouter.js');
-const avatarsRouter = require('./endpoints/users/avatars/avatarsRouter.js');
-const showcaseRouter = require('./endpoints/providers/providerShowcase/showcaseRouter.js');
+
 const availableServicesRouter = require('./endpoints/bookings_and_services/available_services/available_servicesRouter.js');
 const nearbyProvidersRouter = require('./endpoints/providers/nearbyProvidersRouter.js');
 const userSettingsRouter = require('./endpoints/users/settings/settingsRouter.js');
@@ -45,10 +48,13 @@ server.use('/api/manigods', restricted, manigodsRouter);
 server.use('/api/preadmin', restricted, preAdminRouter);
 server.use('/api/future_bookings', /*restricted,*/ bookingsRouter);
 server.use('/api/services', /*restricted,*/ servicesRouter);
+console.log(nailsServicesRouter)
+server.use('/api/nails_servicesrouter', nailsServicesRouter);
+// server.use('/api/hair_servicesrouter', hairServicesRouter);
+// server.use('/api/massage_servicesrouter', massageServicesRouter);
+
 server.use('/api/user_ratings', /*restricted,*/ user_ratingsRouter);
 server.use('/api/provider_ratings', /*restricted,*/ provider_ratingsRouter);
-server.use('/api/avatars', /*restricted,*/ avatarsRouter);
-server.use('/api/showcase', /*restricted,*/ showcaseRouter);
 server.use('/api/available_services',  availableServicesRouter);
 server.use('/api/nearby', nearbyProvidersRouter);
 server.use('/api/user_settings', userSettingsRouter);

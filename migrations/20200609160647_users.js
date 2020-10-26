@@ -21,9 +21,9 @@ exports.up = function(knex) {
         .unique();
       tbl.string('password')
         .notNullable();
-      tbl.string('address');
       tbl.string('zipcode', [10])
         .notNullable()
+      tbl.string('address');
       tbl.boolean('activated')
         .defaultTo(0)
       tbl.string('profile_img_url')
@@ -94,10 +94,9 @@ exports.up = function(knex) {
       tbl.string('password')
         .notNullable();
       //validate from FE make in a way that they can either enter format 00000-0000 or 00000
-      tbl.string('address')
-        .notNullable();
       tbl.string('zipcode', [10])
         .notNullable();
+      tbl.string('address')
       tbl.string('profile_img_url')
         .unique();
       tbl.string('header');
@@ -106,9 +105,9 @@ exports.up = function(knex) {
       tbl.string('availability');
       //entered from radio select inputs, 1 for service, 1 for pricing of that service through frontend and posted as a string separated by |
       //so can separate the service from the price if needbe for gets
-      tbl.string('nails_services_and_pricing');
-      tbl.string('hair_services_and_pricing');
-      tbl.string('massage_services_and_pricing');
+      // tbl.string('nails_services_and_pricing');
+      // tbl.string('hair_services_and_pricing');
+      // tbl.string('massage_services_and_pricing');
       tbl.binary('work_image_url_1')
       .unique();
       tbl.binary('work_image_url_2')
@@ -129,6 +128,51 @@ exports.up = function(knex) {
         .defaultTo(0)
       tbl.timestamp('created_at').defaultTo(knex.fn.now());   
       
+  })
+
+  .createTable('nails_services', tbl => {
+    tbl.increments('id');
+    tbl.string('service')
+      .notNullable();
+    tbl.string('price')
+      .notNullable();
+    tbl.integer('provider_id')
+      .unsigned()
+      .references('id')
+      .inTable('providers')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE'); 
+
+  })
+
+  .createTable('hair_services', tbl => {
+    tbl.increments('id');
+    tbl.string('service')
+      .notNullable();
+    tbl.string('price')
+      .notNullable();
+    tbl.integer('provider_id')
+      .unsigned()
+      .references('id')
+      .inTable('providers')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE'); 
+
+  })
+
+  .createTable('massage_services', tbl => {
+    tbl.increments('id');
+    tbl.string('service')
+      .notNullable();
+    tbl.string('price')
+      .notNullable();
+    tbl.integer('provider_id')
+      .unsigned()
+      .references('id')
+      .inTable('providers')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE'); 
+
   })
 
   .createTable('provider_verification', tbl => {
@@ -389,6 +433,9 @@ exports.down = function(knex) {
   // .dropTableIfExists('provider_showcase')
   // .dropTableIfExists('provider_settings')
   .dropTableIfExists('provider_verification')
+  .dropTableIfExists('massage_services')
+  .dropTableIfExists('hair_services')
+  .dropTableIfExists('nails_services')
   .dropTableIfExists('providers')
   // .dropTableIfExists('user_avatars')
   .dropTableIfExists('user_settings')
