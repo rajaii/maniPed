@@ -4,44 +4,39 @@ module.exports = {
   add,
   find,
   findBy,
-  findByUserId,
+  findById,
   update,
   remove
 };
 
 function find() {
-  return db('user_settings').select('id', 'privacy', 'sms', 'user_id');
+  return db('nails_services').select('id', 'service', 'provider_id');
 }
 
 function findBy(filter) {
-  return db('user_settings').where(filter);
+  return db('nails_services').where(filter);
 }
 
 function add(service) {
   
- return db('user_settings').insert(service, ['id', 'privacy', 'sms', 'user_id'])
+ return db('nails_services').insert(service, ['id', 'service', 'provider_id'])
    
 }
 
-function update(user_id, info) {
-  return db('user_settings').where('user_id', Number(user_id))
-  .update(info, ['id', 'privacy', 'sms', 'user_id']);
-}
-
-// function findByUserId(user_id) {
-//   return db('user_settings')
-//     .where({user_id})
-//     .first();
-// }
-
-function findByUserId(user_id) {
-  return db('user_settings')
-    .where({user_id})
+function update(id, info) {
+  return db('nails_services').where('id', Number(id))
+  .update(info, ['id', 'service', 'provider_id']);
 }
 
 
-function remove(user_id) {
-  return db('user_settings')
-  .where({user_id})
+function findById(id) {
+  return db('nails_services')
+    .where({id})
+}
+
+
+function remove(id) {
+  return db('nails_services')
+  .where({id})
   .del();
 }
