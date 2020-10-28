@@ -48,7 +48,6 @@ server.use('/api/manigods', restricted, manigodsRouter);
 server.use('/api/preadmin', restricted, preAdminRouter);
 server.use('/api/future_bookings', /*restricted,*/ bookingsRouter);
 server.use('/api/services', /*restricted,*/ servicesRouter);
-console.log(nailsServicesRouter)
 server.use('/api/nails_servicesrouter', nailsServicesRouter);
 // server.use('/api/hair_servicesrouter', hairServicesRouter);
 // server.use('/api/massage_servicesrouter', massageServicesRouter);
