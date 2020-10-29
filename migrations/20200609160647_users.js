@@ -102,12 +102,6 @@ exports.up = function(knex) {
       tbl.string('header');
       //set from preselected list and enter from input type radio on FE and add to db string from there
       tbl.string('about_me');
-      tbl.string('availability');
-      //entered from radio select inputs, 1 for service, 1 for pricing of that service through frontend and posted as a string separated by |
-      //so can separate the service from the price if needbe for gets
-      // tbl.string('nails_services_and_pricing');
-      // tbl.string('hair_services_and_pricing');
-      // tbl.string('massage_services_and_pricing');
       tbl.binary('work_image_url_1')
       .unique();
       tbl.binary('work_image_url_2')
