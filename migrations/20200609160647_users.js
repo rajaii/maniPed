@@ -102,27 +102,25 @@ exports.up = function(knex) {
       tbl.string('header');
       //set from preselected list and enter from input type radio on FE and add to db string from there
       tbl.string('about_me');
-      tbl.string('availability');
-      //entered from radio select inputs, 1 for service, 1 for pricing of that service through frontend and posted as a string separated by |
-      //so can separate the service from the price if needbe for gets
-      // tbl.string('nails_services_and_pricing');
-      // tbl.string('hair_services_and_pricing');
-      // tbl.string('massage_services_and_pricing');
-      tbl.binary('work_image_url_1')
+      tbl.string('identification')
       .unique();
-      tbl.binary('work_image_url_2')
+      tbl.string('certification')
+      .unique();
+      tbl.string('work_image_url_1')
+      .unique();
+      tbl.string('work_image_url_2')
         .unique();
-      tbl.binary('work_image_url_3')
+      tbl.string('work_image_url_3')
         .unique();
-      tbl.binary('work_image_url_4')
+      tbl.string('work_image_url_4')
         .unique();
-      tbl.binary('work_image_url_5')
+      tbl.string('work_image_url_5')
         .unique();
-      tbl.binary('work_image_url_6')
+      tbl.string('work_image_url_6')
         .unique();
-      tbl.binary('work_image_url_7')
+      tbl.string('work_image_url_7')
         .unique();
-      tbl.binary('work_image_url_8')
+      tbl.string('work_image_url_8')
         .unique();
       tbl.boolean('activated')
         .defaultTo(0)

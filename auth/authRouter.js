@@ -125,12 +125,19 @@ router.post('/register/providers', async (req, res) => {
   const hash = bcrypt.hashSync(provider.password, 10); 
   provider.password = hash;
   const randomHash = anyid().encode('Aa0').length(128).random().id();
-
+  
   try {
     const saved = await Providers.add(provider);
+    const token = generateToken(provider);
     if (saved) {
       // ProviderVerify.add({provider_id: saved[0].id, hash: randomHash})
-      res.status(201).json(saved);
+      res.status(201).json({
+          message: `Welcome ${provider.username}!`,
+          id: provider.id,
+          jwt_token: token,
+          name: `${provider.first_name} ${provider.last_name[0]}`,
+          saved
+      });
     } else {
       res.status(409).json({err: 'profile tied to the entered username and/or email already exists.'});
     }
