@@ -122,6 +122,8 @@ exports.up = function(knex) {
         .unique();
       tbl.string('work_image_url_8')
         .unique();
+      tbl.boolean('verified')
+        .defaultTo(0)
       tbl.boolean('activated')
         .defaultTo(0)
       tbl.timestamp('created_at').defaultTo(knex.fn.now());   
