@@ -1,3 +1,4 @@
+require('dotenv').config()
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 
@@ -7,10 +8,11 @@ const Users = require('../api/endpoints/users/usersHelpers.js');
 module.exports = (req, res, next) => {
 
   try {
-    console.log(req.headers.authorization)
+    console.log(req.headers)
     
-  const token = req.headers.authorization;
-
+  // const token = req.headers.authorization.slice;
+  const token = req.headers.xcustomheaders;
+  console.log('here dude',token)
   if (token) {
     jwt.verify(token, process.env.JWTSECRET || "manipedisthafuta1234356346+_:>{>:", (err, decodedToken) => {
       if (err) {

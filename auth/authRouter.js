@@ -89,18 +89,19 @@ router.post('/login', (req, res) => {
   Users.findBy({ username })
     .first()
     .then(async user => {
-      console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!', user.activated)
+      
       if (user.activated === false) {
-        console.log('in')
+        
         res.status(401).json({message: 'please verify your account through your email before logging in...'}) 
       }
 
       else {
         
       let doneSync = await bcrypt.compareSync(password, user.password)
-      console.log('doneSync: ', doneSync)
+      
       if (user && doneSync === true) {
         const token = generateToken(user)
+        console.log(`token here: ${token}`)
         res.status(200).json({
           message: `Welcome ${user.username}!`,
           id: user.id,
