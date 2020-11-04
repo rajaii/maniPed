@@ -35,6 +35,7 @@ router.put('/:id', validateProviderId, (req, res) => {
       res.status(200).json({providers});
     })
     .catch(err => {
+      console.log(err.message)
       res.status(500).json(err)
     });
   }
@@ -52,6 +53,7 @@ async function validateProviderId(req, res, next) {
       res.status(404).json({message: 'invalid provider id'});
   }
 } catch(error) {
+  console.log(error)
   res.status(500).json(error);
 }
 };
