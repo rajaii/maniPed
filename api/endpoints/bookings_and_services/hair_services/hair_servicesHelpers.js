@@ -10,7 +10,7 @@ module.exports = {
 };
 
 function find() {
-  return db('hair_services').select('id', 'service', 'provider_id');
+  return db('hair_services').select('id', 'service', 'price', 'provider_id');
 }
 
 function findBy(filter) {
@@ -19,13 +19,13 @@ function findBy(filter) {
 
 function add(service) {
   
- return db('hair_services').insert(service, ['id', 'service', 'provider_id'])
+ return db('hair_services').insert(service, ['id', 'service', 'price', 'provider_id'])
    
 }
 
 function update(id, info) {
   return db('hair_services').where('id', Number(id))
-  .update(info, ['id', 'service', 'provider_id']);
+  .update(info, ['id', 'service', 'price', 'provider_id']);
 }
 
 
