@@ -10,22 +10,20 @@ module.exports = {
 };
 
 function find() {
-  return db('nails_services').select('id', 'service', 'provider_id');
+  return db('nails_services').select('id', 'service', 'price', 'provider_id');
 }
 
 function findBy(filter) {
   return db('nails_services').where(filter);
 }
 
-function add(service) {
-  
- return db('nails_services').insert(service, ['id', 'service', 'provider_id'])
-   
+function add(service) { 
+ return db('nails_services').insert(service, ['id', 'service', 'price', 'provider_id']); 
 }
 
 function update(id, info) {
   return db('nails_services').where('id', Number(id))
-  .update(info, ['id', 'service', 'provider_id']);
+  .update(info, ['id', 'service', 'price', 'provider_id']);
 }
 
 

@@ -162,6 +162,7 @@ router.post('/login/providers', (req, res) => {
         const token = generateToken(provider)
 
         res.status(200).json({
+          id: provider.id,
           message: `Welcome ${provider.username}!`,
           jwt_token: token
         });
