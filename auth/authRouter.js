@@ -126,29 +126,83 @@ router.post('/register/providers', async (req, res) => {
   const hash = bcrypt.hashSync(provider.password, 10); 
   provider.password = hash;
   const randomHash = anyid().encode('Aa0').length(128).random().id();
-  
+
   try {
     const saved = await Providers.add(provider);
-    const token = generateToken(provider);
+    
     if (saved) {
-      // ProviderVerify.add({provider_id: saved[0].id, hash: randomHash})
-      res.status(201).json({
-          message: `Welcome ${provider.username}!`,
-          id: provider.id,
-          jwt_token: token,
-          name: `${provider.first_name} ${provider.last_name[0]}`,
-          saved
-      });
+      //Fill and plug on this boilerplate when provider settings are programmed
+      // UserSettings.add({user_id: saved[0].id})
+      
+      // .then(settings => {
+      //   console.log('success adding settings to db:', settings)
+
+      //   UserVerify.add({user_id: saved[0].id, hash: randomHash})
+      //   .then(verification => {
+      //     console.log('success adding hash to db for verification', verification)
+      //   })
+      //   .catch(err => {
+      //     res.status(500).json({message: 'error adding hash to db for verification', err})
+      //   })
+
+       //make send out email to user's email to verify
+          const link = `http://${req.get('host')}/api/auth/verifyuser/${saved[0].id}/${randomHash}`;
+          username = saved[0].username;
+          userEmail = saved[0].email;
+          const userMailOptions = {
+            from: 'manipedcustomerservice@gmail.com',
+            to: `${saved[0].email}`,
+            subject: 'Verify account',
+            html: "Hello,<br> Please Click on the link to verify your email.<br><a href="+link+">Click here to verify.  Thank you for choosing maniPed for your cosmetic needs!</a>"
+          }
+          transporter.sendMail(userMailOptions, function(err, info) {
+            if (err) {
+              console.log(err)
+            } else {
+              console.log(`Email sent, ${info.response}`)
+            }
+          })
+
+
+      })
+      .catch(err => {
+        res.status(500).json({err, message: "error posting to the settings"})
+      })
+      res.status(201).json(saved);
+      //handle this part possibly by line 31, or something else later.
     } else {
-      res.status(409).json({err: 'profile tied to the entered username and/or email already exists.'});
+      res.status(409).json({message: 'profile tied to the entered username and/or email already exists.'});
     }
 
-  } catch(error) {
-    console.log(error)
-    res.status(500).json(error);
+  } catch(err) {
+    
+  res.status(500).json({err, message: 'error entering the user in the db.'});
   }
 
 });
+  
+//   try {
+//     const saved = await Providers.add(provider);
+//     const token = generateToken(provider);
+//     if (saved) {
+//       // ProviderVerify.add({provider_id: saved[0].id, hash: randomHash})
+//       res.status(201).json({
+//           message: `Welcome ${provider.username}!`,
+//           id: provider.id,
+//           jwt_token: token,
+//           name: `${provider.first_name} ${provider.last_name[0]}`,
+//           saved
+//       });
+//     } else {
+//       res.status(409).json({err: 'profile tied to the entered username and/or email already exists.'});
+//     }
+
+//   } catch(error) {
+//     console.log(error)
+//     res.status(500).json(error);
+//   }
+
+// });
 
 
 //providers login
@@ -372,6 +426,50 @@ router.get('/verifyuser/:userId/:verhash', (req, res) => {
   })
   
         
+})
+
+router.get('/verifyprovider/:userId/:verhash', (req, res) => {
+  const { verhash, userId } = req.params;
+
+  ProviderVerify.findBy({hash: verhash})
+  .then(v => {
+    
+    if (v[0].provider_id == userId) {
+      //they are verified so activate their account
+      const body = {activated: 1}
+      Providers.update(userId, body)
+      .then(p => {
+        console.log('account has been verified', p)
+        res.end("Email has been Successfully verified");
+      })
+      .catch(err => {
+        res.status(500).json({message: 'error activating provider user account', err})
+      })
+      
+    } else {
+      
+      res.end("Bad Request");
+    }
+  })
+  .catch(err => {
+    res.status(500).json({message: 'error verifying provider user account with hash', err})
+  })
+
+  //delete the hash from the db so can continue to use the table to verify the user if need be for pw changes
+  ProviderVerify.findBy({hash: verhash})
+  .then(v => {
+    console.log('success finding provider user second go for delete functionality')
+    UserVerify.remove(v[0].id)
+        .then(r => {
+          console.log('success removing the provide user\'s hash from user_verification');
+        })
+        .catch(err => {
+          res.status(500).json({message: 'failed to delete the provider user\'s hash from provider_verification', err});
+        })
+  })
+  .catch(err => {
+    res.status(500).json({message: 'failed to find the provider user by hash in the delete functionality of the verify route', err})
+  })
 })
 
 router.get('/resetuserpasswordverify/:userId/:verhash', (req, res) => {
