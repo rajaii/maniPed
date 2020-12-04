@@ -416,7 +416,7 @@ router.get('/verifyprovider/:userId/:verhash', (req, res) => {
     
     if (v[0].provider_id == userId) {
       //they are verified so activate their account
-      const body = {activated: 1}
+      const body = {verified: 1}
       Providers.update(userId, body)
       .then(p => {
         console.log('account has been verified', p)
