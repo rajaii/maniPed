@@ -180,10 +180,6 @@ router.post('/register/providers', async (req, res) => {
   }
 })
 
- 
-  
-
-
 
 //providers login
 router.post('/login/providers', (req, res) => {
@@ -205,6 +201,54 @@ router.post('/login/providers', (req, res) => {
       }
     })
     .catch(error => {
+      res.status(500).json(error);
+    });
+});
+
+router.post('/login/providers', (req, res) => {
+  let { username, password } = req.body;
+
+  Providers.findBy({ username })
+    .first()
+    .then(async user => {
+      //route to secondSignupPage if they have not filled out all the info mgmt needs to activate them
+      if (user.activated === false && (user.profile_img_url === null || user.identicication === null || user.certification === null 
+        || user.address === null || user.header === null || user.about_me === null)) {
+          res.status(401).json({message: 'Please fill out all fields to finish application'})
+        }
+     
+      //lock them out if they are not activated
+      else if (user.verified === false) {
+        
+        res.status(401).json({message: 'please verify your account through your email before logging in...'}) 
+      }
+
+      //lock them out if they are not activated
+      else if (user.activated === false) {
+        res.status(401).json({message: 'Management has not activated your account yet.'})
+      }
+
+      //they are verified, and activated
+      else {
+        
+      let doneSync = await bcrypt.compareSync(password, user.password)
+      
+      if (user && doneSync === true) {
+        const token = generateToken(user)
+        console.log(`token here: ${token}`)
+        res.status(200).json({
+          message: `Welcome ${user.username}!`,
+          id: user.id,
+          jwt_token: token,
+          name: `${user.first_name} ${user.last_name[0]}`
+        });
+      } else {
+        res.status(401).json({ message: 'Invalid Credentials' });
+      }
+    }
+    })
+    .catch(error => {
+      console.log(error)
       res.status(500).json(error);
     });
 });
