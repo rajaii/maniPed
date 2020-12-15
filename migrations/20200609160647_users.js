@@ -136,6 +136,8 @@ exports.up = function(knex) {
       .notNullable();
     tbl.string('price')
       .notNullable();
+    tbl.boolean('approved')
+    .defaultTo(0);
     tbl.integer('provider_id')
       .unsigned()
       .references('id')
@@ -151,6 +153,8 @@ exports.up = function(knex) {
       .notNullable();
     tbl.string('price')
       .notNullable();
+    tbl.boolean('approved')
+    .defaultTo(0);
     tbl.integer('provider_id')
       .unsigned()
       .references('id')
@@ -166,6 +170,8 @@ exports.up = function(knex) {
       .notNullable();
     tbl.string('price')
       .notNullable();
+    tbl.boolean('approved')
+      .defaultTo(0);
     tbl.integer('provider_id')
       .unsigned()
       .references('id')
