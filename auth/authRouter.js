@@ -130,20 +130,20 @@ router.post('/register/providers', async (req, res) => {
     const saved = await Providers.add(provider);
     
     if (saved) {
-      UserSettings.add({user_id: saved[0].id})
+      // UserSettings.add({user_id: saved[0].id})
       
       //Plug and play this boilerplate when provider settings get programmed in V:
 
       // .then(settings => {
       //   console.log('success adding settings to db:', settings)
 
-      //   UserVerify.add({user_id: saved[0].id, hash: randomHash})
-      //   .then(verification => {
-      //     console.log('success adding hash to db for verification', verification)
-      //   })
-      //   .catch(err => {
-      //     res.status(500).json({message: 'error adding hash to db for verification', err})
-      //   })
+        ProviderVerify.add({provider_id: saved[0].id, hash: randomHash})
+        .then(verification => {
+          console.log('success adding hash to db for verification', verification)
+        })
+        .catch(err => {
+          res.status(500).json({message: 'error adding hash to db for verification', err})
+        })
 
        //make send out email to user's email to verify
           const link = `http://${req.get('host')}/api/auth/verifyprovider/${saved[0].id}/${randomHash}`;
@@ -431,6 +431,7 @@ router.get('/verifyprovider/:userId/:verhash', (req, res) => {
       res.end("Bad Request");
     }
   })
+  //!!!!!!!!!!!!!!!!!!BREAK
   .catch(err => {
     res.status(500).json({message: 'error verifying provider user account with hash', err})
   })
