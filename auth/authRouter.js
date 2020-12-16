@@ -187,29 +187,6 @@ router.post('/login/providers', (req, res) => {
 
   Providers.findBy({ username })
     .first()
-    .then(provider => {
-      if (provider && bcrypt.compareSync(password, provider.password)) {
-        const token = generateToken(provider)
-
-        res.status(200).json({
-          id: provider.id,
-          message: `Welcome ${provider.username}!`,
-          jwt_token: token
-        });
-      } else {
-        res.status(401).json({ message: 'Invalid Credentials' });
-      }
-    })
-    .catch(error => {
-      res.status(500).json(error);
-    });
-});
-
-router.post('/login/providers', (req, res) => {
-  let { username, password } = req.body;
-
-  Providers.findBy({ username })
-    .first()
     .then(async user => {
       //route to secondSignupPage if they have not filled out all the info mgmt needs to activate them
       if (user.activated === false && (user.profile_img_url === null || user.identicication === null || user.certification === null 
