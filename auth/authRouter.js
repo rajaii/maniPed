@@ -191,7 +191,7 @@ router.post('/login/providers', (req, res) => {
       //route to secondSignupPage if they have not filled out all the info mgmt needs to activate them
       if (user.activated === false && (user.profile_img_url === null || user.identicication === null || user.certification === null 
         || user.address === null || user.header === null || user.about_me === null)) {
-          res.status(401).json({message: 'Please fill out all fields to finish application'})
+          res.status(401).json({message: 'Please fill out all fields to finish application', id: user.id})
         }
      
       //lock them out if they are not activated
