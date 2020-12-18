@@ -619,7 +619,7 @@ router.post('/resendproviderverification', async (req, res) => {
   if (user) {
       
       //delete the previous hash associated with the user from the lost link in user_verify
-      ProviderVerify.findBy({user_id: user[0].id})
+      ProviderVerify.findBy({provider_id: user[0].id})
       .then(u => {
       console.log(u)  ///////////////
       ProviderVerify.remove(u[0].id)
@@ -638,7 +638,7 @@ router.post('/resendproviderverification', async (req, res) => {
       
       //add new hash to user_verify route
       const randomHash = anyid().encode('Aa0').length(128).random().id();
-      ProviderVerify.add({user_id: user[0].id, hash: randomHash})
+      ProviderVerify.add({provider_id: user[0].id, hash: randomHash})
       .then(verification => {
         console.log('success adding hash to db for verification', verification)
       })
