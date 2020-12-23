@@ -91,8 +91,12 @@ router.post('/login', (req, res) => {
   Users.findBy({ username })
     .first()
     .then(async user => {
+
+      if (!user) {
+        res.status(401).json({ message: 'Invalid Credentials' });
+      }
       
-      if (user.activated === false) {
+      else if (user.activated === false) {
         
         res.status(401).json({message: 'please verify your account through your email before logging in...'}) 
       }
