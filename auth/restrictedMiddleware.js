@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
     
   // const token = req.headers.authorization.slice;
   const token = req.headers.xcustomheaders;
-  console.log('here dude',token)
+  console.log('here dude', token)
   if (token) {
     jwt.verify(token, process.env.JWTSECRET || "manipedisthafuta1234356346+_:>{>:", (err, decodedToken) => {
       if (err) {
