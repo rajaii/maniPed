@@ -91,8 +91,12 @@ router.post('/login', (req, res) => {
   Users.findBy({ username })
     .first()
     .then(async user => {
+
+      if (!user) {
+        res.status(401).json({ message: 'Invalid Credentials' });
+      }
       
-      if (user.activated === false) {
+      else if (user.activated === false) {
         
         res.status(401).json({message: 'please verify your account through your email before logging in...'}) 
       }
@@ -190,8 +194,12 @@ router.post('/login/providers', (req, res) => {
   Providers.findBy({ username })
     .first()
     .then(async user => {
+      //no user found
+      if (!user) {
+        res.status(401).json({ message: 'Invalid Credentials' });
+      }
       //lock them out if they are not activated
-      if (user.verified === false) {
+      else if (user.verified === false) {
         
         res.status(401).json({message: 'please verify your account through your email before logging in...'}) 
       }
