@@ -103,25 +103,33 @@ exports.up = function(knex) {
       //set from preselected list and enter from input type radio on FE and add to db string from there
       tbl.string('about_me');
       tbl.string('identification')
-      .unique();
+        .unique();
       tbl.string('certification')
-      .unique();
+        .unique();
       tbl.string('work_image_url_1')
-      .unique();
+        .unique();
+      tbl.string('work_image_url_1_name')
       tbl.string('work_image_url_2')
         .unique();
+      tbl.string('work_image_url_2_name')
       tbl.string('work_image_url_3')
         .unique();
+      tbl.string('work_image_url_3_name')
       tbl.string('work_image_url_4')
         .unique();
+      tbl.string('work_image_url_4_name')
       tbl.string('work_image_url_5')
         .unique();
+      tbl.string('work_image_url_5_name')
       tbl.string('work_image_url_6')
         .unique();
+      tbl.string('work_image_url_6_name')
       tbl.string('work_image_url_7')
         .unique();
+      tbl.string('work_image_url_7_name')
       tbl.string('work_image_url_8')
         .unique();
+      tbl.string('work_image_url_8_name')
       tbl.boolean('verified')
         .defaultTo(0)
       tbl.boolean('activated')
