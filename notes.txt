@@ -1,0 +1,180 @@
+PROJECT = custy app react and native, provider app react and native, admin app with 1 react app all on same api, manigod react app with 
+manigod reg and pre-admin access, and admin interface
+
+===============================================================================================================================================
+ Color combos :
+ #CC1559 - maroonish
+  #FF5EAA- pink one
+  #96B3D3- blueish one
+  #FFFFFF- white
+   #585858- dark grey
+   #646464- light grey
+   src: https://www.colorcombos.com/color-scheme-240.html
+
+
+CURRENT =>=>=>: 
+
+ =========>
+    https://stripe.com/docs/payments/save-and-reuse : custom
+ 
+          
+     ==>               
+
+
+            start reading react native
+
+            
+
+            
+
+        
+    
+             
+        
+
+         
+
+
+
+
+================================================================================================================================================
+
+TODO:
+
+
+PROGRAMMATICS (tweaks to those features that are added already):
+
+
+    API:
+
+        notifications 24 hours before and 1 hour before appointments to provider and user
+
+        google maps api for directions and showing where provider is on arrival time of appointments
+
+        socket.io messageing for users and providers  with bot messages regarding upcoming appointments
+
+        email/text notifications sent to all higher ups when anyone added to admin or manigods db
+
+        Documentation
+
+
+
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+    FRONT-END APPS:
+
+        Before finishing User REACT FE:
+             !!!!!!!!!!!!!!!!!!!! [   store tokens in cookie (security) or switch to oauth possibly ie figur out protected route bug somehow
+
+            dashboard not working on privateRoute giving this error V  
+
+
+        Role MGMT:
+        //Manigods UI app will be local only on manigods machines and accessed via the private repo that only I an d joseph have access too.  not deployed, 
+        //NOTE FOR FE: when making admin interface do not enter password field for updating profiles, api does not allow that too
+
+        PROVIDER FE:
+        DASH STUFF FOR PROVIDER NOT DONE ON THESE STEPS (was started when making email requests upon booking logic):
+       send out success message to user on dash, send out verification email to provider, and verification notice on provider dash FE
+            PSEUDO:
+            in bookingsRouter after the post, send an email to both provider to verify, and then to the user to congratulate
+
+            in the put router if they are verifying: send an email notice to the user and provider stating that it has been verified and 
+            also to the provider, and dash notices to both 
+
+===============================================================================================================================================
+
+
+PLANNING (possible future features not added in yet):
+
+    possbily tie available_services to providers and make route do more, just get for fe and post for admin for now done before this.
+
+    services: nails, massage, hair, waxing 
+
+
+API to FE INTEGRATION:
+
+    reg/login: 
+        if errors from BE display those to user ie username taken.
+
+        push user on fe to login on successful login, if decide to do on fe look at comments on register.js but props.history.push is a PIA with    
+        react-router-v4 try to do from BE
+
+    
+
+
+    RATINGS:
+    may need to tweak the nullability of the ratings and rating ids later when we see the flow of how services are entered from front end when done 
+    see line 70-72 user_ratingsRouter.js: the ids will come from where and the flow of the rating process to the user to rate the provider
+
+    no lifetime rating database column/table, will compute the rating on a get call to the users/providers ratings and take the avg and post that to the fe,
+
+
+    ADMIN:
+    may need to pull timestamps (created_at etc) in get calls and format that so admin can see when the profiles created etc.
+
+
+
+VERY END before deploy production:
+
+    figure out a way to test failure of payment on service post ir line 123 on in services router catch
+
+    make desktops responsive,
+    rego through and change how tag userids if changed to cookies.
+
+    set stripe test keys to live secret key
+
+    enter notification url in upload presets of cloudinary act settings > upload > maniped_preset
+    
+    UNCOMMENT THE CHECKROLES MIDDLEWARE CALLS ON THE ROUTES
+
+    prettify code
+
+
+
+===============================================================================================================================================
+
+DEBUGGINGS and Potential debuggings:
+
+    does not have info before pushing to dashboard after login, fix prob w async await 
+
+=====================================================================================================================================
+
+AFTER PROVIDER DESKTOP DONE DO THESE: {  
+              implement socket.io or twilio for mesaging and reminders
+
+            add in wishlist a messge provider button that takes to the messaging to them
+
+             [
+        
+            make it so they can message their provider in feed too. 
+            they can message the upcoming provider to notify them or remind them to confirm.
+            
+                ]
+
+                 implement google maps api for geolocation when 1 hr to apt
+
+                 
+            3)programmatically send reminders 24 hours and 1 hour before the meerting to both. TWILIO for this and for messaging  Fire up gps on provider and user within hour, have provider
+            tap button to indicate on the way and then show on user app how far they are.
+
+            later later must go through and send user proper errors from reducer if for example username is taken or email is taken on 
+            puts and posts
+
+            upon complettion of service add a notification to user with a rating screen and notify them that they can rate later in the past services
+            section of app
+
+             }
+
+
+
+
+
+
+
+
+
+
+
+

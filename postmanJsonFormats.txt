@@ -1,0 +1,88 @@
+ 
+USERS:
+
+"first_name": "",
+"last_name": "",
+"username": "",
+"email": "",
+"phone_number": "",
+"password": "",
+"zipcode": "",
+"address": ""
+
+==========================================================================
+
+PROVIDERS:
+
+"first_name": "",
+"last_name": "",
+"username": "",
+"email": "",
+"phone_number": "",
+"password": "",
+"zipcode": "",
+"address": ""
+
+==========================================================================
+
+BOOKINGS:
+
+"booking_date": "",
+"booking_time": "",
+"services_and_pricing": "",
+"provider_id": "",
+"user_id": "",
+"user_name": "",
+"provider_name": "",
+"service_address": ""
+
+
+===========================================================================
+
+COMPLETED_SERVICES:
+
+"type_of_service": "",
+"amount_billed": "",
+"booking_id": ,
+"user_id": ,
+"provider_id": ,
+"user_name": "",
+"provider_name": ""
+
+===========================================================================
+
+ADMIN || MANIGODS:
+
+"first_name": "",
+"last_name": "",
+"username": "",
+"role": ""
+"email": "",
+"phone_number": "",
+"password": "",
+"zipcode": ""
+
+
+PREADMIN:
+
+"first_name": "",
+"last_name": "",
+"role": ""
+
+
+
+===========================================================================
+
+USER_RATINGS
+
+"rating": 
+"service_id": "",
+"user_id": "",
+"provider_id": ""
+
+PROVIDER_RATINGS
+
+"rating":
+"service_id": "",
+"user_id": "",
+"provider_id": ""

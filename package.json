@@ -1,0 +1,43 @@
+{
+  "name": "maniPed",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "app": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rajaii/maniPed.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rajaii/maniPed/issues"
+  },
+  "homepage": "https://github.com/rajaii/maniPed#readme",
+  "dependencies": {
+    "anyid": "^1.0.7",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.23.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.1.0",
+    "helmet": "^3.22.0",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.21.1",
+    "multer": "^1.4.2",
+    "nodemailer": "^6.4.11",
+    "pg": "^8.2.1",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.5",
+    "socket.io": "^2.3.0",
+    "stripe": "^8.94.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
